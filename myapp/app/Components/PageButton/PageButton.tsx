@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from './PageButton.module.css'
 
 type PageButtonProps = {
@@ -6,9 +7,14 @@ type PageButtonProps = {
 
 export default function PageButton( {buttonName} : PageButtonProps) {
 
+    const link = "/" + buttonName;
+
     return (
-        <button className={styles.button}>
-            {buttonName}
-        </button>
+        <Link href={link}>
+            <button className={styles.button}>
+                {buttonName}
+            </button>
+        </Link>
+     
     )
 }
