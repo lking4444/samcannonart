@@ -1,6 +1,6 @@
 "use client";
 
-import Select, { MultiValue }from 'react-select'
+import Select from 'react-select'
 import { useState } from 'react';
 
 import styles from './MultiSelect.module.css'
@@ -39,13 +39,14 @@ export default function MultiSelect({multiSelectCategory, multiSelectOptions} : 
                 styles={{
                     control: (base, state) => ({
                     ...base,
-                    borderRadius: "25px",         
+                    borderRadius: "25px",     
+                    height: "1rem",
+                    padding: "0px",    
                     borderColor: state.isFocused ? "#555" : "#aaa",
                     boxShadow: "none",
                     "&:hover": {
                         borderColor: "#444",
                     },
-                    padding: "6px",
                     whiteSpace: "nowrap",
                     }),
                     placeholder: (base) => ({
