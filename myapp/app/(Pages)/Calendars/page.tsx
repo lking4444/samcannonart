@@ -1,3 +1,3 @@
 export default function CalendarsPage(){
-    return <h1>Calendars</h1>
+    return <h1>Spandex noodle</h1>
 }
