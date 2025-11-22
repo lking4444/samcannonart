@@ -1,0 +1,10 @@
+.searchFilters{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+
+.filterItem{
+    padding: 0px 10px 0px 10px;
+}

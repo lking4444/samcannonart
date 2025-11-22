@@ -51,9 +51,17 @@ export default function MultiSelect({multiSelectCategory, multiSelectOptions} : 
                     }),
                     placeholder: (base) => ({
                     ...base,
-                    fontWeight: "700", 
+                    fontWeight: "500", 
                     color: "#666",
                     }),
+                    menu: (base) => ({
+                        ...base,
+                        borderRadius: "25px",     
+                        }),
+                    menuList: (base) => ({
+                        ...base,
+                        borderRadius: "25px",     
+                        }),
                 }}
             />
         </div>

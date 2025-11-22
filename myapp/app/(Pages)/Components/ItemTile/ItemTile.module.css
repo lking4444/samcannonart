@@ -1,0 +1,12 @@
+.placeholderBox {
+    width: 200px;
+    height: 200px;
+    background-color: #ab7171;
+    border-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-size: 14px;
+    font-weight: 500;
+  }

@@ -1,0 +1,31 @@
+.keywordSearch {
+    padding: 5px;
+    padding-left: 40px; 
+    height: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid #aaaaaa;
+    outline: none; 
+}
+
+.keywordSearch:focus {
+    border-color: #000000;   
+}
+
+.keywordSearch:hover {
+    border-color: #000000;   
+  }
+
+
+.searchContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 10px;
+    pointer-events: none; 
+    opacity: 0.7;
+}
