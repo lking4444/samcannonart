@@ -1,0 +1,10 @@
+.buyNow{
+    background-color: rgb(98, 79, 173);
+    border-radius: 10px;
+    width: 100%;
+    align-self: center;
+    padding:  5px 15px 5px 15px;
+    margin-bottom: 10px;
+    color: white;
+
+}

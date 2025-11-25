@@ -1,0 +1,82 @@
+.placeholderImage {
+    width: 400px;
+    height: 400px;
+    background-color: #ab7171;
+    border-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.smallPlaceholderImage {
+    width: 75px;
+    height: 75px;
+    background-color: #ab7171;
+    border-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0px 10px 10px 10px;
+}
+
+.itemComponentContainer{
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}
+
+.alternateImageContainer{
+    display: flex; 
+    flex-direction: column;
+}
+
+
+.descriptionContainer{
+    padding: 0px 10px 0px 10px;
+}
+
+.purchaseButtons{
+    display: flex;
+    flex-direction: column;
+}
+
+.pageContentContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.itemName{
+    font-weight: 600;
+}
+
+.itemPrice{
+    font-size: small;
+}
+
+.itemDescription{
+    font-weight: 600;
+    font-size: small;
+}
+
+.itemSize{
+    font-weight: 600;
+    font-size: small;
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background: #ccc;  
+    margin: 0.5rem 0;  
+  }
+
+.sideImage{
+    margin: 0px 10px 10px 10px;
+}

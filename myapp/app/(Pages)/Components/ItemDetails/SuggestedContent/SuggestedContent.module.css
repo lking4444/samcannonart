@@ -1,0 +1,63 @@
+.suggestContentContainer{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    background-color: rgb(246, 246, 246);
+    height: 70%;
+}
+
+.carouselItemContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container{
+    padding-top: 75px;
+}
+
+.selectedWrapper {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.carouselButtonLeft,
+.carouselButtonRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;                  
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+}
+
+.carouselChevron {
+    color: white !important;
+}
+
+
+.carouselButtonLeft {
+    left: -2.5rem;     /* adjust as needed */
+  }
+  
+  /* Right button sits on the right side */
+  .carouselButtonRight {
+    right: -2.5rem;    /* adjust as needed */
+  }
+
+.image{
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    margin: 0px 20px 0px 20px;
+}
+
+.sideImage{
+    padding: 0px 10px 0px 10px;
+}

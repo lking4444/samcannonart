@@ -1,0 +1,50 @@
+.placeholderImage {
+    width: 200px;
+    height: 200px;
+    background-color: #ab7171;
+    border-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e7e7e7;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.suggestedContentBackground{
+    position: relative;
+    margin: -1rem 0rem -1rem 0rem; 
+}
+
+.selectedImage{
+    border-radius: 20px;
+    object-fit: cover;
+    height: 300px
+}
+
+.overlayText {
+    position: absolute;
+    bottom: 0;         
+    left: 0;
+    padding: 0px 0px 30px 10px;
+    z-index: 2;
+    color: white;
+}
+
+.itemName{
+    font-weight: 600;
+}
+
+.overlayBackground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0; 
+    background: rgba(0, 0, 0, 0.4); 
+    z-index: 1;
+    height: 30%;
+    border-bottom-left-radius: 20px;
+    backdrop-filter: blur(3px);    
+    -webkit-backdrop-filter: blur(3px); 
+    border-bottom-right-radius: 20px;
+  }

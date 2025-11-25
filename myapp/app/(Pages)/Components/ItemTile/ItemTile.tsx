@@ -1,13 +1,22 @@
-import Buy from "./Buy"
+import { ItemElement} from "../../Types"
 
 import styles from './ItemTile.module.css'
 
-export default function ItemTile(){
+type ItemTileProps = {
+    item: ItemElement
+}
+
+export default function ItemTile({item} : ItemTileProps){
+
+    const stringPrice: string = "£" + String(item.price);
+
     return (
-        <span>
+        <span className={styles.itemContainer}>
             <div className={styles.placeholderBox}></div>
-            <Buy/>
-            <Buy/>
+            <span className={styles.namePriceContainer}>
+                <text className={styles.nameContainer}>{item.name} 32x32</text>
+                <text className={styles.priceText}>{stringPrice}</text>
+            </span>
         </span>
     )
 }
