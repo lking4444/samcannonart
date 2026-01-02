@@ -1,0 +1,27 @@
+.homeTitle{
+    font-size: 8ch;
+    font-weight: 700;
+
+    padding-right: 20px;
+}
+
+.homeTitleBlue{
+    font-size: 2ch;
+    font-weight: 700;
+    color: rgb(69, 103, 132);
+}
+
+.titleContainer{
+    display: flex;
+    flex-direction: row;
+    padding-top: 2rem;
+}
+
+.artistDescription{
+    width: 40%;
+    font-weight: 700;
+}
+
+.infoContainer{
+    padding-left: 2rem;
+}

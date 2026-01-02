@@ -1,13 +1,14 @@
 "use client";
 
 import Select from 'react-select'
-import { useState } from 'react';
+import {useState, Dispatch, SetStateAction } from "react";
 
 import styles from './MultiSelect.module.css'
 
 type MultiSelectProps = {
     multiSelectCategory: string;
     multiSelectOptions: string[];
+    setOptions: Dispatch<SetStateAction<string | undefined>>;
 }
 
 type Option = {
@@ -15,8 +16,8 @@ type Option = {
     label: string;
   };
 
-export default function MultiSelect({multiSelectCategory, multiSelectOptions} : MultiSelectProps){
-    
+export default function MultiSelect({multiSelectCategory, multiSelectOptions, setOptions} : MultiSelectProps){
+
     const options: Option[] = multiSelectOptions.map((str) => ({
         value: str, label: str
     }));
@@ -27,6 +28,7 @@ export default function MultiSelect({multiSelectCategory, multiSelectOptions} : 
 
     const handleChange = (selected: Option | null) => {
         setSelectedValues(selected);
+        setOptions(selected?.label)
       };
     
     return (
@@ -43,9 +45,11 @@ export default function MultiSelect({multiSelectCategory, multiSelectOptions} : 
                     height: "1rem",
                     padding: "0px",    
                     borderColor: state.isFocused ? "#555" : "#aaa",
+                    transition: "background-color 0.2s ease, transform 0.15s ease",
                     boxShadow: "none",
                     "&:hover": {
                         borderColor: "#444",
+                        backgroundColor: "#f5f5f5"
                     },
                     whiteSpace: "nowrap",
                     }),

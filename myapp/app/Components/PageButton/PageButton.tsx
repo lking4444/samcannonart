@@ -10,11 +10,8 @@ export default function PageButton( {buttonName} : PageButtonProps) {
     const link = "/" + buttonName;
 
     return (
-        <Link href={link}>
-            <button className={styles.button}>
+        <Link href={link} className={styles.button}>
                 {buttonName}
-            </button>
         </Link>
-     
     )
 }

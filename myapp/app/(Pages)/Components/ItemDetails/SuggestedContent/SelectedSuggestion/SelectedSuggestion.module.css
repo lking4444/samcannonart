@@ -19,9 +19,14 @@
 .selectedImage{
     border-radius: 20px;
     object-fit: cover;
-    height: 300px
+    height: 300px;
+    animation: fadeIn 200ms ease;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
+}
 .overlayText {
     position: absolute;
     bottom: 0;         
@@ -47,4 +52,5 @@
     backdrop-filter: blur(3px);    
     -webkit-backdrop-filter: blur(3px); 
     border-bottom-right-radius: 20px;
+    transition: background-color 0.2s ease, transform 0.15s ease;
   }

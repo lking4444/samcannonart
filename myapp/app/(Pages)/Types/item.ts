@@ -1,3 +1,6 @@
+import { ItemType } from "@/app/generated/prisma/enums";
+
+
 export type Item = "Card" | "Calendar" | "Print" | "Original" | "Gift"
 
 export type ItemElement = {
@@ -7,6 +10,19 @@ export type ItemElement = {
     id: number; 
     imageSrc: string;
 }
+
+export type ItemClient = {
+    id: number;
+    name: string;
+    type: ItemType;
+    price: string;
+    image: string;
+    stock: number;
+    dimensions: string | null;
+    media: string | null;
+    description: string | null;
+    year: number | null;
+  };
 
 export const ItemExample: ItemElement[] = [
     {

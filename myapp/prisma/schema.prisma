@@ -14,7 +14,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ItemType {
+  SLATE
+  CARD
+  CALENDAR
+  PRINT
+  ORIGINAL
+  NOTEPAD
+  GIFT
+}
+
+
+enum GiftType {
+  MIXEDMEDIA
+  PEBBLES
+  TINYPEBBLES
+}
+
 model Item {
-  id Int @id @default(autoincrement())
-  itemType String
+  id          Int      @id @default(autoincrement())
+  name        String
+  type        ItemType
+  price       Decimal  @db.Decimal(10, 2) 
+  image       String  
+  stock       Int
+  dimensions  String?
+  media       String?
+  description String?
+  year        Int?
+
+  card      Card?
+  print     Print?
+  calendar  Calendar?
+  notePad   NotePad?
+  original  Original?
+  gift      Gift?
+  slate     Slate?
+}
+
+model Card {
+  itemId Int   @id
+  item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  cardId String @unique
+}
+
+model Print {
+  itemId Int   @id
+  item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  printId String @unique
+}
+
+model Calendar {
+  itemId Int   @id
+  item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+}
+
+model NotePad {
+  itemId Int   @id
+  item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  notePadName String @unique
+}
+
+model Original {
+  itemId Int   @id
+  item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+}
+
+model Gift {
+  itemId Int   @id
+  item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  giftNumber String 
+  giftType GiftType
+}
+
+model Slate {
+  itemId Int   @id
+  item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
 }

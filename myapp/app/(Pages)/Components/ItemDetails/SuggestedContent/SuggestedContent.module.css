@@ -37,6 +37,12 @@
   cursor: pointer;
 }
 
+.carouselButtonLeft:hover,
+.carouselButtonRight:hover{
+  background: rgba(69, 69, 69, 0.7);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
 .carouselChevron {
     color: white !important;
 }
@@ -49,7 +55,7 @@
   /* Right button sits on the right side */
   .carouselButtonRight {
     right: -2.5rem;    /* adjust as needed */
-  }
+}
 
 .image{
     height: 150px;

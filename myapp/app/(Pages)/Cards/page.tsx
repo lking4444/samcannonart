@@ -1,23 +1,24 @@
-import SearchFilter from "../Components/SearchFilter";
-import ItemTile from "../Components/ItemTile";
-
 import styles from './Cards.module.css'
-import { ItemElement } from "../Types";
 import ItemList from "../Components/ItemList";
+import { getAllCardItems } from "@/lib/db/items";
+import type { Item } from '@/app/generated/prisma/client';
+import { ItemClient } from '../Types';
 
 
-export default function CardsPage(){
-    const item: ItemElement = {
-        id: 1,
-        name: "Test",
-        type: "Card", 
-        price: 10,
-        imageSrc: "/Images/Art/image1.png"
-      };
+export default async function CardsPage(){
+    const items : Item[] = await getAllCardItems();
+    
+    if (!items){
+        return(<p>No Items</p>)
+    }
+
+    const clientItems : ItemClient[] = items.map((item) => ({
+        ...item,
+        price: item.price.toString(),
+      }));
 
     return <div className={styles.pageHeader}>
             <h1 className={styles.cardTitle}>Cards</h1>
-            <SearchFilter/>
-            <ItemList></ItemList>
+            <ItemList items={clientItems}></ItemList>
          </div>
 }

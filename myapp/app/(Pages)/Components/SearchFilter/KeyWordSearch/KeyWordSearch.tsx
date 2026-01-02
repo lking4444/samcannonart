@@ -28,7 +28,6 @@ export default function KeyWordSearch({keyword, setKeyword} : KeyWordSearchProps
                 value={keyword}
                 onChange={(e) => {setKeyword(e.target.value)}}
             />
-            {keyword}
         </div>
     )
 }

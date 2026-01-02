@@ -8,3 +8,9 @@
 .filterItem{
     padding: 0px 10px 0px 10px;
 }
+
+.select{
+    border: 1px;
+    border-radius: 2px;
+    padding: 5px;
+}
