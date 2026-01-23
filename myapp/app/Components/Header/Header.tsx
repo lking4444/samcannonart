@@ -14,6 +14,8 @@ export default function Header() {
             <PageButton buttonName='Originals'></PageButton>
             <PageButton buttonName='Prints'></PageButton>
             <PageButton buttonName='Gifts'></PageButton>
+            <PageButton buttonName='NotePads'></PageButton>
+            <PageButton buttonName='Slates'></PageButton>
             </span>
         </div>
     )
