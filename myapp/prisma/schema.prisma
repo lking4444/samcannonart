@@ -24,6 +24,14 @@ enum ItemType {
   GIFT
 }
 
+enum OrderStatus {
+  PENDING    
+  PAID        
+  SHIPPED
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
 
 enum GiftType {
   MIXEDMEDIA
@@ -43,14 +51,15 @@ model Item {
   description String?
   year        Int?
 
-  card      Card?
-  print     Print?
-  calendar  Calendar?
-  notePad   NotePad?
-  original  Original?
-  gift      Gift?
-  slate     Slate?
-  reservationItems ReservationItem[]
+  card              Card?
+  print             Print?
+  calendar          Calendar?
+  notePad           NotePad?
+  original          Original?
+  gift              Gift?
+  slate             Slate?
+  reservationItems  ReservationItem[]
+  orderItems        OrderItem[] 
 }
 
 model Card {
@@ -114,4 +123,41 @@ model ReservationItem {
 
   @@unique([reservationId, itemId])
   @@index([itemId])
+}
+
+model Order {
+  id          String   @id @default(cuid())
+
+  value       Decimal  @db.Decimal(10, 2)
+  currency    String   @default("GBP")
+
+  userEmail       String
+  userPhoneNumber String
+  userAddress     String
+
+  status      OrderStatus @default(PENDING)
+  paidAt      DateTime?
+  cancelledAt DateTime?
+  refundedAt  DateTime?
+
+  // Audit
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  items       OrderItem[]   
+}
+
+model OrderItem {
+  id       String @id @default(cuid())
+  orderId  String
+  itemId   Int
+
+  quantity  Int
+  unitPrice Decimal @db.Decimal(10, 2)
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  item  Item  @relation(fields: [itemId], references: [id], onDelete: Restrict)
+
+  @@unique([orderId, itemId])
 }

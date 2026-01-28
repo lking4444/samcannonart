@@ -1,0 +1,84 @@
+.image{
+    font: 1;
+}
+
+.name{
+    font-weight: bolder;
+    padding-bottom: 5px;
+}
+
+.price{
+    font-weight: bold;
+    font-size: medium;
+}
+
+.quantity{
+    font-weight: bold;
+    color: rgb(116, 116, 116);
+    font-size: medium;
+
+}
+
+.itemContainer{
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    justify-content: space-between;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.itemContainer:hover{
+    background-color: #cfcfcf;
+}
+
+.item{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.infoContainer{
+    display: flex;
+    flex-direction: column;
+    padding-left: 1em;
+}
+
+.adjustStock{
+    background-color: rgb(31, 31, 31);
+    color: #ffffff;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.adjustStock:has(.minusContainer:hover) {
+    background-color: #323232;
+  }
+
+.plus{
+    padding: 0px 0px 5px 0px;
+}
+
+.minus{
+    padding: 5px 0px 0px 0px;
+}
+
+.plusContainer{
+    background-color: #000000;
+    padding: 5px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+
+.plusContainer:hover{
+    background-color: #323232;
+}
+
+.minusContainer{
+    padding: 0px 5px 10px 5px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.minusContainer:hover{
+    background-color: #323232;
+}

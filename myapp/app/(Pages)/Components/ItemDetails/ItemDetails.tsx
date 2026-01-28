@@ -1,24 +1,31 @@
+'use client'
+
 import { ItemElement } from '../../Types';
 import AddToBasket from './AddToBasket';
 import BuyNow from './BuyNow';
 import styles from './ItemDetails.module.css'
 import SuggestedContent from './SuggestedContent';
 import Image from "next/image";
-import type { Item } from '@/app/generated/prisma/client';
+import type { Item, ItemType } from '@/app/generated/prisma/client';
 
-
-type ItemDetailsProps = {
-    item: Item
+type clientItem ={
+    name: string;
+    id: number;
+    type: ItemType;
+    price: number;
+    image: string;
+    stock: number;
+    dimensions: string | null;
+    media: string | null;
+    description: string | null;
+    year: number | null;
 }
 
-export default async function ItemDetails({item} : ItemDetailsProps){
+type ItemDetailsProps = {
+    item: clientItem
+}
 
-    /* Await item details here */
-
-    const itemName : string = "Pretty Flowers";
-    const itemCost : string = "£20";
-    const itemMaterialDescription : string = "Water Colours on Water Colour paper";
-    const itemSize: string = "25x25";
+export default function ItemDetails({item} : ItemDetailsProps){
 
     return (
         <span className={styles.pageContentContainer}>
@@ -38,7 +45,7 @@ export default async function ItemDetails({item} : ItemDetailsProps){
                         <hr className={styles.divider} />
                     <div className={styles.purchaseButtons}>
                         <BuyNow/>
-                        <AddToBasket/>
+                        <AddToBasket itemId={item.id}/>
                     </div>
                 </span>
             </div>  

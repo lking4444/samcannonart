@@ -32,6 +32,16 @@
 .circlePlaceholder {
     height: 50px;
     width: 50px;
-    background-color: #a3a3a3;
+    background-color: #ffffff;
     border-radius: 50%;
+}
+
+
+.circle {
+    height: 50px;
+    width: 50px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    justify-content: center;
+    display: flex;
 }

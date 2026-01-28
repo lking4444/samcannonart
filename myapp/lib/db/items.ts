@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import type { Item } from '@/app/generated/prisma/client';
 
 export async function getAllCardItems(){
     return prisma.item.findMany({
@@ -50,9 +51,47 @@ export async function getAllNotepadItems(){
     });
 }
 
+export async function getAllItemsById(ids: number[]) {
+    return prisma.item.findMany({
+      where: {
+        id: { in: ids },
+      },
+    })
+}
 
-export async function getItem(id: Number){
+
+export async function getItem(id: number){
     return prisma.item.findUnique({
-        where: {id: Number(id)},
+        where: {id},
+    });
+}
+
+
+
+export async function changeStock(changeValue : number, id : number){
+    const item: Item | null = await prisma.item.findUnique({
+        where: { id },
+    });
+}
+
+export async function decrementStock(amount : number, id : number){
+    return prisma.item.update({
+        where: {id},
+        data: {
+            stock: {
+                decrement: amount,
+            },
+        },
+    });
+}
+
+export async function incrementStock(amount : number, id : number){
+    return prisma.item.update({
+        where: {id},
+        data: {
+            stock: {
+                increment: amount,
+            },
+        },
     });
 }
