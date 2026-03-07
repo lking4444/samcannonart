@@ -3,7 +3,7 @@
 import styles from './SearchFilter.module.css'
 
 import { Dispatch, SetStateAction } from "react";
-import KeyWordSearch from "./KeyWordSearch";
+import KeyWordSearch from "../KeyWordSearch";
 import MultiSelect from "./MultiSelect";
 
 
@@ -12,9 +12,11 @@ type SearchFilterProps = {
     setKeyword: Dispatch<SetStateAction<string>>;
     dimensionOptions: string[];
     setDimension: Dispatch<SetStateAction<string | undefined>>;
+    sortOrder: string[]; 
+    setSortOrder: Dispatch<SetStateAction<string | undefined>>;
 }
 
-export default function SearchFilter({keyword, setKeyword, dimensionOptions, setDimension} : SearchFilterProps){
+export default function SearchFilter({keyword, setKeyword, dimensionOptions, setDimension, sortOrder, setSortOrder} : SearchFilterProps){
 
     return (
         <span className={styles.searchFilters}>
@@ -25,7 +27,7 @@ export default function SearchFilter({keyword, setKeyword, dimensionOptions, set
                 <MultiSelect multiSelectCategory="Card Sizes" multiSelectOptions={dimensionOptions} setOptions={setDimension}/> 
             </span>
             <span className={styles.filterItem}>
-                <MultiSelect multiSelectCategory="Sort by Price" multiSelectOptions={["High to Low", "Low to High", "Default"]} setOptions={setDimension}/> 
+                <MultiSelect multiSelectCategory="Sort by Price" multiSelectOptions={sortOrder} setOptions={setSortOrder}/> 
             </span>
             <span className={styles.filterItem}>
                 <MultiSelect multiSelectCategory="Card Themes" multiSelectOptions={["Love", "Friendship", "Happiness"]} setOptions={setDimension}/>

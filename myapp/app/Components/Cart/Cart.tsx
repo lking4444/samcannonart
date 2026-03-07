@@ -1,10 +1,14 @@
+'use client'
+
 import * as Dialog from "@radix-ui/react-dialog"
 import styles from './Cart.module.css'
 import Image from 'next/image'
-import CartItem from "./CartItem"
-import { useCartStore } from "@/app/Store/cartStore"
+import { CartItem, useCartStore } from "@/app/Store/cartStore"
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
+import CartItemUI from "./CartItem/CartItem"
+import type { Reservation } from "@/app/generated/prisma/client"
+import Loading from "@/app/(Pages)/Components/Loading"
 
 type CartDrawerProps = {
   open: boolean
@@ -16,6 +20,32 @@ type DbItem = {
     name: string
     image: string
     price: any
+}
+
+async function goToCheckout(total : number, cartItems : CartItem[]) {
+
+    const response = await fetch("/api/reservations/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: cartItems }),
+    })
+    
+    if (!response.ok) {
+        const { error } = await response.json()
+        throw new Error(error ?? "Failed to reserve items")
+    }
+
+    const reservation : Reservation = await response.json()
+    const reservationId = reservation.id as string
+
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({reservationId}),
+    })
+
+    const { url } = await res.json()
+    window.location.href = url
   }
 
 export default function Cart({ open, onClose }: CartDrawerProps) {
@@ -24,25 +54,24 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
 
     const cartIds = useMemo(() => cartItems.map((i) => i.itemId), [cartItems]);
 
-   
-
     const [items, setItems] = useState<DbItem[]>([])
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!open) return
         if (cartIds.length === 0) {
-        setItems([])
-        return
+            setItems([])
+            return
         }
 
-        ;(async () => {
-        const res = await fetch("/api/items/by-ids", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ids: cartIds }),
-        })
-        const data = await res.json()
-        setItems(data)
+        (async () => {
+            const res = await fetch("/api/items/by-ids", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ids: cartIds }),
+            })
+            const data = await res.json()
+            setItems(data)
         })()
     }, [open, cartIds])
 
@@ -100,13 +129,13 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                         <div className={styles.itemContainer}>
                             {itemsWithQuantity.map(item => (
                                 <Link href={`/Item/${item.id}`} className={styles.link} key={item.id}>
-                                     <CartItem
-                                    key={item.id}
-                                    imgSrc={item.image}
-                                    id={item.id}
-                                    itemName={item.name}
-                                    price={item.price.toString()}
-                                    quantity={item.quantity}
+                                     <CartItemUI
+                                        key={item.id}
+                                        imgSrc={item.image}
+                                        id={item.id}
+                                        itemName={item.name}
+                                        price={item.price.toString()}
+                                        quantity={item.quantity}
                                     />
                                 </Link>
                             ))}
@@ -128,8 +157,8 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                     <p>£{total}</p>
                                 </span>
                             </span>
-                            <button className={styles.checkoutButton}>
-                                Checkout
+                            <button className={styles.checkoutButton} onClick={() => {setLoading(true); goToCheckout(total, cartItems);}}>
+                                {loading ? <Loading /> : "Checkout"}
                             </button>
                         </div>
                     </div>

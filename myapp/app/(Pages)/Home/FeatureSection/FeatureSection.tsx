@@ -1,0 +1,59 @@
+import Image from "next/image";
+import Link from "next/link";
+import styles from "./FeatureSection.module.css";
+
+type Side = "left" | "right";
+
+type FeatureSectionProps = {
+  title: string;
+  description: string;
+  images: [string, string, string];
+  href: string;
+  side?: Side;
+};
+
+export default function FeatureSection({
+  title,
+  description,
+  images,
+  href,
+  side = "left",
+}: FeatureSectionProps) {
+  const isRight = side === "right";
+
+  return (
+    <section className={`${styles.section} ${!isRight ? styles.leftSection : styles.rightSection}`}>
+      <div
+        className={`${styles.sectionContentContainer} ${
+          isRight ? styles.sectionContentRight : ""
+        }`}
+      >
+        <div
+          className={`${styles.sectionInfoContainer} ${
+            isRight ? styles.sectionInfoRight : ""
+          }`}
+        >
+          <h1 className={styles.title}>{title}</h1>
+          <p className={styles.text}>{description}</p>
+          <Link href={href} className={styles.link}>
+            Explore
+          </Link>
+        </div>
+
+        <div className={styles.gridWrapper}>
+          <div className={styles.imagesContainer}>
+            <div className={styles.imageItem}>
+              <Image src={images[0]} width={300} height={100} alt="image" />
+            </div>
+            <div className={styles.imageItem}>
+              <Image src={`/api/images/longtailedtits.png`} width={300} height={100} alt="image" />
+            </div>
+            <div className={styles.imageItem}>
+              <Image src={images[2]} width={300} height={100} alt="image" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,7 +1,6 @@
 
 import { prisma } from '@/lib/prisma';
 import { OrderStatus } from '@/app/generated/prisma/enums';
-import { Item } from '@/app/generated/prisma/client';
 
 type OrderItems = {
     itemId: number, 
@@ -16,6 +15,7 @@ type CreateOrderInput = {
     userPhoneNumber: string;
     userAddress: string;
     status: OrderStatus;
+    sessionId: string;
     paidAt: Date;
     items: OrderItems[];
 };
@@ -32,6 +32,7 @@ export async function createOrder(data : CreateOrderInput){
           userAddress: data.userAddress,
           status: data.status,
           paidAt: data.paidAt,
+          SessionId: data.sessionId,
           items : {
             create : data.items.map(item =>
                 ({
@@ -41,7 +42,6 @@ export async function createOrder(data : CreateOrderInput){
                 })),
           },
         },
+        include: { items: true },
       })
-
-
 }

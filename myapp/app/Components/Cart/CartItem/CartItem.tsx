@@ -11,7 +11,7 @@ type CartItemProps = {
     quantity: number;
 }
 
-export default function CartItem({itemName, id, imgSrc, price, quantity} : CartItemProps){
+export default function CartItemUI({itemName, id, imgSrc, price, quantity} : CartItemProps){
     const addItem = useCartStore((s) => s.addItem)
     const setQuantity = useCartStore((s) => s.setQuantity)
     const removeItem = useCartStore((s) => s.removeItem)

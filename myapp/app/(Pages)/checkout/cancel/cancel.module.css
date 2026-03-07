@@ -1,0 +1,97 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-family: var(--font-inter);
+  }
+  
+  .header {
+    font-size: x-large;
+    font-weight: 500;
+    align-self: center;
+    padding-bottom: 10px;
+  }
+  
+  .cancelContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 0px 50px 50px 50px;
+    align-self: center;
+    width: 100%;
+    max-width: 1000px;
+  }
+  
+  .halfPageContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    flex: 1;
+  }
+  
+  .sectionHeader {
+    font-size: large;
+    font-weight: 500;
+    padding-bottom: 10px;
+  }
+  
+  .message {
+    font-size: small;
+    padding-bottom: 10px;
+  }
+  
+  .smallHeader {
+    color: rgb(148, 148, 148);
+    font-size: small;
+    padding-bottom: 10px;
+  }
+  
+  .pageBreak {
+    margin: 10px 0px;
+    border: none;
+    border-top: 1px solid rgb(230, 230, 230);
+  }
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+  }
+  
+  .primaryButton {
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: small;
+    font-weight: 500;
+    border: 1px solid rgb(20, 20, 20);
+    color: rgb(255, 255, 255);
+    background: rgb(20, 20, 20);
+    text-align: center;
+  }
+  
+  .secondaryButton {
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: small;
+    font-weight: 500;
+    border: 1px solid rgb(220, 220, 220);
+    color: rgb(20, 20, 20);
+    background: rgb(255, 255, 255);
+    text-align: center;
+  }
+  
+  .helpBox {
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+  }
+  
+  .helpTitle {
+    font-size: small;
+    font-weight: 500;
+    padding-bottom: 6px;
+  }
+  

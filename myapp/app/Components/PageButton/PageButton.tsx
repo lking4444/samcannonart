@@ -1,17 +1,35 @@
 import Link from 'next/link'
 import styles from './PageButton.module.css'
+import Image from 'next/image';
 
 type PageButtonProps = {
-    buttonName: string
+    buttonName: string,
+    icon?: string
 }
 
-export default function PageButton( {buttonName} : PageButtonProps) {
+export default function PageButton( {buttonName, icon} : PageButtonProps) {
 
     const link = "/" + buttonName;
 
-    return (
-        <Link href={link} className={styles.button}>
-                {buttonName}
-        </Link>
-    )
+    if (icon) {
+        return (
+            <Link href={link} className={styles.button}>
+                <Image  
+                    className={styles.icon} 
+                    src={icon}
+                    alt="Left"
+                    width={24}
+                    height={24}
+                />
+            </Link>
+        )
+    } else {
+        return (
+            <Link href={link} className={styles.button}>
+                    {buttonName}
+            </Link>
+        )
+    }
+
+
 }

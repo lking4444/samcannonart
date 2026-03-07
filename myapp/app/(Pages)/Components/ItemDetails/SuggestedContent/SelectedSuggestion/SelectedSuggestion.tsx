@@ -2,9 +2,11 @@ import { ItemElement } from "@/app/(Pages)/Types"
 
 import styles from './SelectedSuggestion.module.css'
 import Image from "next/image";
+import { ItemClient } from "../../../../Types";
+
 
 type SelectedSuggestionProps = {
-    item : ItemElement
+    item : ItemClient
 }
 
 export default function SelectedSuggestion({item} : SelectedSuggestionProps){
@@ -12,7 +14,7 @@ export default function SelectedSuggestion({item} : SelectedSuggestionProps){
     return(
         <div>
             <div className={styles.suggestedContentBackground}>
-                <Image  className={styles.selectedImage}src={item.imageSrc} key={item.imageSrc} width={200} height={200} alt={"image"}/>
+                <Image  className={styles.selectedImage}src={item.image} key={item.image} width={200} height={200} alt={"image"}/>
                 <div className={styles.overlayBackground}></div>
                 <div className={styles.overlayText}>
                     <p className={styles.itemName}>{item.name}</p>

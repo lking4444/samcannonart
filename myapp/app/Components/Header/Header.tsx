@@ -11,10 +11,8 @@ export default function Header({ onCartClick }: HeaderProps)  {
 
     return (
         <div className={styles.headerContainer}>
-            <span className={styles.logoContainer}>
-                <span className={styles.circlePlaceholder}></span>
-            </span>
             <span className={styles.pagesContainer}>
+            <PageButton buttonName='' icon='/icons/home.svg'></PageButton>
             <PageButton buttonName='Cards'></PageButton>
             <PageButton buttonName='Calendars'></PageButton>
             <PageButton buttonName='Originals'></PageButton>

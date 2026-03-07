@@ -1,5 +1,5 @@
 .button {
-    background-color: #ffffff;
+    background-color: #dddddd;
     border: none;
     color: rgb(0, 0, 0);
     text-align: center;
@@ -12,11 +12,17 @@
     margin: 0px 10px 0px 10px;
     font-weight:600;
     transition: background-color 0.2s ease, transform 0.15s ease;
+    font-family: var(--font-inter);
+    min-width: max-content;
   }
   
   .button:hover {
     border: 1px solid #dedede;
     background-color: #f1f1f1;
     color: rgb(62, 62, 62);
+  }
+
+  .icon{
+    min-width: max-content;
   }
   

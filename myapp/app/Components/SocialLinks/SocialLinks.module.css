@@ -1,0 +1,41 @@
+.circle {
+
+    background-color: #dddddd;
+    border: none;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    border: 1px solid transparent;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 25px;
+    padding:  10px 15px 10px 15px;
+    margin: 0px 10px 0px 0px;
+    font-weight:600;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    font-family: var(--font-inter);
+    min-width: max-content;
+
+    justify-content: center;
+    display: flex;
+
+}
+
+.circle:hover {
+    border: 1px solid #dedede;
+    background-color: #f1f1f1;
+    color: rgb(62, 62, 62);
+}
+
+.linksContainer{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    align-items: center;
+}
+
+.socialLinksContainer{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+}

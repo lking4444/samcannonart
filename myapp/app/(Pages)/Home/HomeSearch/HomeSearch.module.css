@@ -1,0 +1,126 @@
+.homeSearchContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.result{
+    padding: 15px 15px 15px 15px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: -4px 0 5px rgba(121, 121, 121, 0.15);
+    transform: scale(1);
+    transition: transform 500ms cubic-bezier(.2,.9,.2,1);
+    will-change: transform;
+}
+.result:hover {
+transform: scale(1.06);
+}
+
+.results {
+    max-height: 500px;    
+    overflow-y: auto;
+  
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  
+    padding: 30px;
+    border-radius: 12px;
+    width: 700px;
+  }
+
+.nameAndType{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    font-family: var(--font-inter);
+    font-size: large;
+
+}
+
+.itemInfo{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.itemName{
+    color: black;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 0; 
+    width: max-content;
+}
+
+.itemType{
+    color: rgb(154, 154, 154);
+}
+
+.searchBar{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.price{
+    font-family: var(--font-inter);
+}
+
+.buttonContainer{
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.button{
+    background-color: rgb(206, 106, 0);
+    padding: 10px 14px;
+    color: white;
+    font-family: var(--font-inter);
+    border-radius: 10px;
+    font-weight: 600;
+  
+    border: 2px solid rgb(206, 106, 0);
+    cursor: pointer;
+  
+    transform: scale(1);
+    transition:
+      transform 220ms cubic-bezier(.2,.9,.2,1),
+      background-color 220ms cubic-bezier(.2,.9,.2,1),
+      color 220ms cubic-bezier(.2,.9,.2,1),
+      border-color 220ms cubic-bezier(.2,.9,.2,1),
+      box-shadow 220ms cubic-bezier(.2,.9,.2,1);
+    will-change: transform;
+  }
+  
+  .button:hover{
+    transform: scale(1.08);
+  
+    /* colour inversion */
+    background-color: white;
+    color: rgb(206, 106, 0);
+    border-color: rgb(206, 106, 0);
+  
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  }
+  
+  .button:active{
+    transform: scale(1.04);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.10);
+  }
+  
+  .button:focus-visible{
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(206, 106, 0, 0.25);
+  }
+  
+  @media (prefers-reduced-motion: reduce){
+    .button{
+      transition: none;
+    }
+  }

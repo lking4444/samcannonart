@@ -1,0 +1,13 @@
+.tileContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 400px);
+    max-width: 100%;
+    margin: 0 auto;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.tileSubContainer{
+    display: flex;
+  }

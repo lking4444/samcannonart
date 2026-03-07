@@ -1,11 +1,13 @@
 .title {
     font-size: 2rem;
+    font-family: var(--font-inter);
     color: #333;
     text-align: center;
 }
 
 .subtitle {
     font-size: 1rem;
+    font-family: var(--font-inter);
     color: #777;
 }
 
@@ -14,7 +16,10 @@
     flex-direction: row;
     align-items: center;
     padding: 20px 10px 20px 10px;
-    background-color: rgb(127, 147, 213);
+    background-color: rgb(255, 255, 255);
+    position: sticky;
+    top: 0;           /* ✅ required */
+    z-index: 4;  
 }
 
 .headerContainer .pagesContainer{
@@ -32,16 +37,36 @@
 .circlePlaceholder {
     height: 50px;
     width: 50px;
-    background-color: #ffffff;
+    background-color: #b8b8b8;
     border-radius: 50%;
 }
 
 
 .circle {
-    height: 50px;
-    width: 50px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    justify-content: center;
-    display: flex;
+
+        background-color: #dddddd;
+        border: none;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        border: 1px solid transparent;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 25px;
+        padding:  10px 15px 10px 15px;
+        margin: 0px 10px 0px 0px;
+        font-weight:600;
+        transition: background-color 0.2s ease, transform 0.15s ease;
+        font-family: var(--font-inter);
+        min-width: max-content;
+
+        justify-content: center;
+        display: flex;
+
 }
+
+.circle:hover {
+    border: 1px solid #dedede;
+    background-color: #f1f1f1;
+    color: rgb(62, 62, 62);
+  }

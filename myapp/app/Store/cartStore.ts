@@ -1,7 +1,7 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-type CartItem = { itemId: number; quantity: number }
+export type CartItem = { itemId: number; quantity: number }
 
 type CartState = {
     items: CartItem[]

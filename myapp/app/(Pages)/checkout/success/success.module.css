@@ -1,0 +1,97 @@
+.header{
+    font-size: large;
+    font-weight: 500;
+    padding-bottom: 10px;
+
+}
+
+.thankYouHeader{
+    font-size: x-large;
+    font-weight:bold;
+    align-self: center; 
+    font-weight: 500;
+    font-family: var(--font-inter);
+}
+
+.checkEmail{
+    font-size: small;
+    color: rgb(148, 148, 148);
+}
+
+.smallHeader{
+    color: rgb(148, 148, 148);
+    font-size: small;
+}
+
+.orderTotalValue{
+    color: rgb(148, 148, 148);
+    font-size: small;
+}
+
+.address{
+    font-size: small;
+}
+
+.halfPageContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.orderInfoWrapper{
+    padding: 20px 0px 0px 0px;
+}
+
+.emailInfo{
+    padding-bottom: 20px;
+}
+
+.pageContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.orderConfirmationContainer{
+    display: flex;
+    flex-direction: row;
+    padding: 0px 50px 50px 50px;
+    font-family: var(--font-inter);
+    align-self: center;
+}
+
+.summaryContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.summaryInfoGray{
+    color: rgb(148, 148, 148);
+    font-size: small;
+}
+
+.total{
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    font-size: small;
+    padding: 5px;
+}
+
+.totalGray{
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    font-size: small;
+    padding: 5px;
+    color: rgb(148, 148, 148);
+
+}
+
+.summaryInfoContainer{
+    padding: 0px 10px 10px 10px;
+}
+
+.priceInfo{
+    padding-top: 10px;
+}

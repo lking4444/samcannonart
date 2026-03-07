@@ -51,6 +51,8 @@ model Item {
   description String?
   year        Int?
 
+  tags        String[] @default([])
+
   card              Card?
   print             Print?
   calendar          Calendar?
@@ -130,6 +132,7 @@ model Order {
 
   value       Decimal  @db.Decimal(10, 2)
   currency    String   @default("GBP")
+  SessionId   String   @unique
 
   userEmail       String
   userPhoneNumber String

@@ -1,6 +1,7 @@
 .cardTitle{
     font-size: 50px;
     font-weight: 550;
+    font-family: var(--font-inter);
 }
 
 .pageHeader{

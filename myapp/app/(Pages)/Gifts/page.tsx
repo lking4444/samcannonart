@@ -1,24 +1,11 @@
 import styles from '../pages.module.css'
-import ItemList from "../Components/ItemList";
-import { getAllGiftItems } from "@/lib/db/items";
-import type { Item } from '@/app/generated/prisma/client';
-import { ItemClient } from '../Types';
+import { ItemType} from '@/app/generated/prisma/client';
+import ScrollableItemList from '../Components/ScrollableItemList';
 
 
 export default async function GiftsPage(){
-    const items : Item[] = await getAllGiftItems();
-    
-    if (!items){
-        return(<p>No Items</p>)
-    }
-
-    const clientItems : ItemClient[] = items.map((item) => ({
-        ...item,
-        price: item.price.toString(),
-      }));
-
     return <div className={styles.pageHeader}>
-            <h1 className={styles.cardTitle}>Gifts</h1>
-            <ItemList items={clientItems}></ItemList>
-         </div>
+              <h1 className={styles.cardTitle}>Gifts</h1>
+              <ScrollableItemList type={ItemType.GIFT} pageSize={10} />
+            </div>
 }

@@ -5,18 +5,20 @@
 .name{
     font-weight: bolder;
     padding-bottom: 5px;
+    font-family: var(--font-inter);
 }
 
 .price{
     font-weight: bold;
     font-size: medium;
+    font-family: var(--font-inter);
 }
 
 .quantity{
     font-weight: bold;
     color: rgb(116, 116, 116);
     font-size: medium;
-
+    font-family: var(--font-inter);
 }
 
 .itemContainer{
@@ -52,7 +54,7 @@
 
 .adjustStock:has(.minusContainer:hover) {
     background-color: #323232;
-  }
+}
 
 .plus{
     padding: 0px 0px 5px 0px;

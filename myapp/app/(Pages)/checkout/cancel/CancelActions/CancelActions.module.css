@@ -1,0 +1,57 @@
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+  
+.primaryButton {
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: small;
+    font-weight: 500;
+    border: 1px solid rgb(20, 20, 20);
+    color: rgb(255, 255, 255);
+    background: rgb(20, 20, 20);
+    text-align: center;
+    cursor: pointer;
+  
+    transition: 
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.15s ease;
+  }
+  
+  .primaryButton:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(20, 20, 20);
+    border-color: rgb(20, 20, 20);
+    transform: translateY(-1px);
+  }
+  
+  .secondaryButton {
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: small;
+    font-weight: 500;
+    border: 1px solid rgb(220, 220, 220);
+    color: rgb(20, 20, 20);
+    background: rgb(255, 255, 255);
+    text-align: center;
+    cursor: pointer;
+  
+    transition: 
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.15s ease;
+  }
+  
+  .secondaryButton:hover {
+    background-color: rgb(245, 245, 245);
+    border-color: rgb(152, 152, 152);
+    transform: translateY(-1px);
+  }

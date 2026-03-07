@@ -8,7 +8,7 @@ import SuggestedContent from './SuggestedContent';
 import Image from "next/image";
 import type { Item, ItemType } from '@/app/generated/prisma/client';
 
-type clientItem ={
+export type clientItem ={
     name: string;
     id: number;
     type: ItemType;
@@ -44,12 +44,12 @@ export default function ItemDetails({item} : ItemDetailsProps){
                         <p className={styles.itemSize}>{item.dimensions}cm</p>
                         <hr className={styles.divider} />
                     <div className={styles.purchaseButtons}>
-                        <BuyNow/>
+                        <BuyNow item={item}/>
                         <AddToBasket itemId={item.id}/>
                     </div>
                 </span>
             </div>  
-            <SuggestedContent/>
+            <SuggestedContent id={String(item.id)}/>
         </span>
         
     )

@@ -17,6 +17,8 @@
     background: rgb(243, 243, 243);
     box-shadow: -4px 0 400px rgba(0,0,0,0.15);
     will-change: transform;
+    z-index: 6;
+
 }
 
 .cartDrawer[data-state="open"] {
@@ -30,11 +32,13 @@
 .cartTitle{
     font-size:x-large;
     align-self: center;
+    font-family: var(--font-inter);
 }
 .cartTitleBold{
     font-size:x-large;
     align-self: center;
     font-weight: bolder;
+    font-family: var(--font-inter);
 }
 
 .cartContent{
@@ -46,6 +50,7 @@
 .cartHeader{
     padding: 20px 0px 0px 20px;
     display: flex;
+    font-family: var(--font-inter);
 }
 
 .circle {
@@ -115,13 +120,18 @@
 .checkoutButton{
     background-color: #7f93d5;
     color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 12px;
     width: 75%;
     border-radius: 10px;
     font-weight: bold;
-    margin-top: auto;
+    margin-top: 30px;
     margin-bottom: 30px;
     transition: background-color 0.2s ease, transform 0.15s ease;
+    font-family: var(--font-inter);
+
 }
 
 .checkoutButton:hover{
@@ -136,6 +146,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: var(--font-inter);
 }
 
 .topBar{

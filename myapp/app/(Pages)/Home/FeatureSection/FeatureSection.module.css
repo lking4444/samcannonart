@@ -1,0 +1,97 @@
+/* Section background variant */
+.leftSection {
+    background-color: rgb(255, 255, 255);
+  }
+
+.rightSection{
+    background-color: rgb(246, 246, 246);
+}
+  
+.sectionContentContainer {
+display: flex;
+align-items: center;
+gap: 40px;
+padding: 4em;
+}
+
+
+.sectionContentRight {
+flex-direction: row-reverse;
+}
+
+
+.sectionInfoContainer {
+flex: 0 0 clamp(320px, 32vw, 520px);
+display: flex;
+flex-direction: column;
+}
+
+
+.sectionInfoRight {
+align-items: flex-end;
+text-align: right;
+}
+
+.title {
+font-size: xx-large;
+font-family: var(--font-inter);
+font-weight: 600;
+padding: 0 0 10px 0;
+margin: 0;
+color: rgb(200, 87, 34);
+
+}
+
+.text {
+font-family: var(--font-inter);
+padding: 0 0 10px 0;
+margin: 0;
+}
+
+
+.link {
+padding: 10px 15px;
+background-color: rgb(200, 87, 34);
+width: max-content;
+border-radius: 30px;
+text-decoration: none;
+color: inherit;
+color: white;
+}
+
+
+.gridWrapper {
+flex: 1 1 0;
+min-width: 0;              
+display: flex;
+justify-content: center;  
+}
+
+.imagesContainer {
+display: flex;
+flex-wrap: nowrap;
+gap: 30px;
+overflow: hidden;
+width: fit-content;
+max-width: 100%;
+}
+
+
+.imageItem {
+flex: 0 0 300px;
+}
+
+
+@media (max-width: 1550px) {
+.imagesContainer .imageItem:nth-child(3) {
+    display: none;
+}
+}
+
+
+@media (max-width: 1050px) {
+.imagesContainer .imageItem:nth-child(2) {
+    display: none;
+}
+}
+  

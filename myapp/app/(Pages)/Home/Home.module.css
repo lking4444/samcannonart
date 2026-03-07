@@ -1,27 +1,114 @@
-.homeTitle{
-    font-size: 8ch;
-    font-weight: 700;
+.homeTitle {
+  font-size: 8ch;
+  font-weight: 800;
+  padding-right: 20px;
+  text-align: center;
+  font-family: var(--font-inter);
 
-    padding-right: 20px;
+  color: #111;
+  transform: scale(1);
+  transition:
+    transform 400ms cubic-bezier(.2,.9,.2,1),
+    color 400ms cubic-bezier(.2,.9,.2,1);
 }
 
-.homeTitleBlue{
-    font-size: 2ch;
-    font-weight: 700;
-    color: rgb(69, 103, 132);
+.homeTitleBlue {
+  font-weight: 800;
+  font-family: var(--font-inter);
+  color: rgb(199, 86, 0);
+
+  transition: color 400ms cubic-bezier(.2,.9,.2,1);
 }
 
-.titleContainer{
+/* Hover effect */
+.homeTitle:hover {
+    transform: scale(1.06);
+  
+    background-image: linear-gradient(
+      90deg,
+      rgb(196, 82, 25),
+      rgb(212, 135, 28)
+    );
+  
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  
+    background-position: 100% 50%;
+  }
+
+.homeTitle:hover .homeTitleBlue {
+  color: #111; /* Art → black */
+}
+
+/* Optional: cursor hint */
+.homeTitle {
+  cursor: default;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .homeTitle,
+  .homeTitleBlue {
+    transition: none;
+  }
+}
+.titleContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     padding-top: 2rem;
 }
 
-.artistDescription{
+.artistDescription {
     width: 40%;
     font-weight: 700;
+    text-align: center;
+    margin: 0 auto;
+    font-family: var(--font-inter);
+    transition: transform 400ms cubic-bezier(.2,.9,.2,1);
 }
 
-.infoContainer{
-    padding-left: 2rem;
+.artistDescription:hover {
+    transform: scale(1.06);
 }
+
+
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 0;
+}
+
+.siteBackground {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url("/Images/Art/image.png");
+    background-size: cover;
+    background-position: center calc(50% + 130px);
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;  
+    align-items: flex-start; 
+}
+
+.search{
+    padding-top: 20px;
+}
+
+.popularText{
+    font-family: var(--font-inter);
+    font-size: xx-large;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.popularHeader {
+    display: flex;
+    justify-content: center; 
+  }
+
