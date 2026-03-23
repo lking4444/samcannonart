@@ -8,6 +8,7 @@ type CreateOriginalsInput = {
     stock: number;
     dimensions?: string;
     media?: string;
+    tags: string[];
     description?: string;
     year?: number;
   };
@@ -22,6 +23,7 @@ export async function createOriginal(data: CreateOriginalsInput) {
         stock: data.stock,
         dimensions: data.dimensions,
         media: data.media,
+        tags: data.tags,
         description: data.description,
         year: data.year,
         original: {

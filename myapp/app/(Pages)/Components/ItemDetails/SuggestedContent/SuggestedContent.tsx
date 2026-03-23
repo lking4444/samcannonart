@@ -88,8 +88,8 @@ export default function SuggestedContent({id} : SuggestedContentProps){
             <div className={styles.container}>
                 <div className={styles.suggestContentContainer}>
                     <span className={styles.carouselItemContainer}>
-                    <img src={items[order[0]].image} width={75} height={75} className={styles.image}></img>
-                    <img src={items[order[1]].image} width={75} height={75} className={styles.image}></img>
+                    <img src={items[order[0]].image} width={75} height={75} className={styles.outerImage}></img>
+                    <img src={items[order[1]].image} width={75} height={75} className={styles.innerImage}></img>
                         <div className={styles.selectedWrapper}>
                             <button onClick={shiftLeft} className={styles.carouselButtonLeft}>
                                 <Image   
@@ -113,8 +113,8 @@ export default function SuggestedContent({id} : SuggestedContentProps){
                                 />
                             </button>
                         </div>
-                        <img src={items[order[3]].image} width={75} height={75} className={styles.image}></img>
-                        <img src={items[order[4]].image} width={75} height={75} className={styles.image}></img>
+                        <img src={items[order[3]].image} width={75} height={75} className={styles.innerImage}></img>
+                        <img src={items[order[4]].image} width={75} height={75} className={styles.outerImage}></img>
 
                     </span>
                 </div>

@@ -57,13 +57,36 @@
     right: -2.5rem;    /* adjust as needed */
 }
 
-.image{
+.outerImage{
     height: 150px;
     width: 150px;
     object-fit: cover;
     margin: 0px 20px 0px 20px;
 }
 
+.innerImage{
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  margin: 0px 20px 0px 20px;
+}
+
 .sideImage{
     padding: 0px 10px 0px 10px;
+}
+
+@media (max-width: 1000px) {
+  .outerImage {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .innerImage {
+    display: none;
+  }
+
+  .outerImage {
+    display: none;
+  }
 }

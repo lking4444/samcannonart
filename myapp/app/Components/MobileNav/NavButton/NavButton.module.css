@@ -1,0 +1,12 @@
+.button{
+    font-family: var(--font-inter);
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    font-size: xx-large;
+}
+
+.button:hover {
+    color: rgb(120, 120, 120);
+    transform: scale(1.06);
+  }

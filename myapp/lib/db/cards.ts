@@ -6,6 +6,7 @@ type CreateCardInput = {
     image: string;
     price: string;
     stock: number;
+    tags: string[];
     dimensions?: string;
     media?: string;
     description?: string;
@@ -21,6 +22,7 @@ export async function createCard(data: CreateCardInput) {
         image: data.image,
         price: data.price,
         stock: data.stock,
+        tags: data.tags,
         dimensions: data.dimensions,
         media: data.media,
         description: data.description,

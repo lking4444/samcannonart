@@ -25,8 +25,8 @@ export default function PopularContent(){
             <div className={styles.container}>
                 <div className={styles.suggestContentContainer}>
                     <span className={styles.carouselItemContainer}>
-                    <img src={ItemExample[order[0]].imageSrc} width={75} height={75} className={styles.image}></img>
-                    <img src={ItemExample[order[1]].imageSrc} width={75} height={75} className={styles.image}></img>
+                    <img src={ItemExample[order[0]].imageSrc} width={75} height={75} className={styles.outerImage}></img>
+                    <img src={ItemExample[order[1]].imageSrc} width={75} height={75} className={styles.innerImage}></img>
                         <div className={styles.selectedWrapper}>
                             <button onClick={shiftLeft} className={styles.carouselButtonLeft}>
                                 <Image   
@@ -48,8 +48,8 @@ export default function PopularContent(){
                                 />
                             </button>
                         </div>
-                        <img src={ItemExample[order[3]].imageSrc} width={75} height={75} className={styles.image}></img>
-                        <img src={ItemExample[order[4]].imageSrc} width={75} height={75} className={styles.image}></img>
+                        <img src={ItemExample[order[3]].imageSrc} width={75} height={75} className={styles.innerImage}></img>
+                        <img src={ItemExample[order[4]].imageSrc} width={75} height={75} className={styles.outerImage}></img>
 
                     </span>
                 </div>

@@ -5,6 +5,7 @@
     border-radius: 20px;
     border: 1px solid #aaaaaa;
     outline: none; 
+    font-weight: 500;
 }
 
 .keywordSearch:focus {
@@ -24,6 +25,7 @@
     border-radius: 20px;
     transition: background-color 0.2s ease, transform 0.15s ease;
     max-width: min-content;
+    background: white;
 }
 
 .searchContainer:hover{

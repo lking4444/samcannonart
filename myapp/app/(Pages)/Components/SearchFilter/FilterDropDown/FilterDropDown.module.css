@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .dropdownAnchor {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .filterButton {
+    background-color: rgb(221, 221, 221);
+    border-radius: 25px;
+    padding: 10px 20px 10px 20px;
+    font-weight: 600;
+    font-family: var(--font-inter);
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    border: 1px solid rgb(221, 221, 221);
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+  }
+  
+  .filterButton:hover {
+    border: 1px solid #dedede;
+    background-color: #f1f1f1;
+    color: rgb(62, 62, 62);
+  }
+  
+  .filterContainer {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px) scale(0.98);
+    transform-origin: top center;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(221, 221, 221);
+    padding: 10px;
+    gap: 10px;
+    border-radius: 20px;
+    z-index: 10;
+    min-width: max-content;
+  
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.22s ease,
+      transform 0.22s ease,
+      visibility 0.22s ease;
+  }
+  
+  .filterOpen {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  
+  .filterClosed {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(-8px) scale(0.98);
+  }

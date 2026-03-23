@@ -7,6 +7,7 @@ import styles from './ItemDetails.module.css'
 import SuggestedContent from './SuggestedContent';
 import Image from "next/image";
 import type { Item, ItemType } from '@/app/generated/prisma/client';
+import { getImageKey } from '@/lib/imagepaths';
 
 export type clientItem ={
     name: string;
@@ -27,15 +28,12 @@ type ItemDetailsProps = {
 
 export default function ItemDetails({item} : ItemDetailsProps){
 
+    const imagePath = getImageKey(item.type, item.image);
+
     return (
         <span className={styles.pageContentContainer}>
             <div className={styles.itemComponentContainer}>
-                <span className={styles.alternateImageContainer}>
-                    <Image src={item.image} width={75} height={75} alt={"image"} className={styles.sideImage}/>
-                    <Image src={item.image} width={75} height={75} alt={"image"} className={styles.sideImage}/>
-                    <Image src={item.image} width={75} height={75} alt={"image"} className={styles.sideImage}/>
-                </span>
-                <Image src={item.image} width={400} height={400} alt={"image"}/>
+                <Image src={`/api/images/${imagePath}`} width={400} height={400} alt={"image"}/>
                 <span className={styles.descriptionContainer}>
                     <h1 className={styles.itemName}>{item.name}</h1>
                         <p className={styles.itemPrice}>£{String(item.price)}</p>

@@ -5,6 +5,7 @@ import styles from "./HomeSearch.module.css";
 import KeyWordSearch from "../../Components/KeyWordSearch";
 import Image from "next/image";
 import Loading from "../../Components/Loading";
+import Link from "next/link";
 
 type SearchItem = {
   id: number;
@@ -66,8 +67,9 @@ export default function HomeSearch() {
 
       <div className={styles.results}>
         {keyword.length > 0 && items.map((item) => (
+          <Link key={item.id} href={`/Item/${item.id}`} >
           <div key={item.id} className={styles.result}>
-            <Image src={item.image} width={110} height={110} alt={item.name} />
+            <Image src={`/${item.image}`} width={110} height={110} alt={item.name} />
             <div className={styles.itemInfo}>
               <div className={styles.nameAndType}>
                 <p className={styles.itemName}>{item.name}</p>
@@ -79,6 +81,8 @@ export default function HomeSearch() {
               <button className={styles.button}>Add to Basket</button>
             </div>
           </div>
+          </Link>
+          
         ))}
 
        {loading && page > 1 && <Loading/>}

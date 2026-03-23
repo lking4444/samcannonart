@@ -11,245 +11,245 @@ async function main() {
 
     await prisma.item.deleteMany();
 
-    await createCard({
-        name: 'Blue Meadow',
-        image: '/Images/Art/image2.png',
-        price: '3.50',
-        stock: 20,
-        dimensions: '10x15',
-        media: 'Watercolour',
-        description: 'A calm meadow scene',
-        year: 2023,
-        cardId: 'SQ-001',
-      });
+    // await createCard({
+    //     name: 'Blue Meadow',
+    //     image: '/Images/Art/image2.png',
+    //     price: '3.50',
+    //     stock: 20,
+    //     dimensions: '10x15',
+    //     media: 'Watercolour',
+    //     description: 'A calm meadow scene',
+    //     year: 2023,
+    //     cardId: 'SQ-001',
+    //   });
       
-      await createCard({
-        name: 'Blue Night',
-        image: '/Images/Art/image3.png',
-        price: '3.50',
-        stock: 22,
-        dimensions: '20x15',
-        media: 'Watercolour',
-        description: 'A calm evening scene',
-        year: 2023,
-        cardId: 'SQ-002',
-      });
+    //   await createCard({
+    //     name: 'Blue Night',
+    //     image: '/Images/Art/image3.png',
+    //     price: '3.50',
+    //     stock: 22,
+    //     dimensions: '20x15',
+    //     media: 'Watercolour',
+    //     description: 'A calm evening scene',
+    //     year: 2023,
+    //     cardId: 'SQ-002',
+    //   });
       
-      await createCard({
-        name: 'Golden Fields',
-        image: '/Images/Art/image4.png',
-        price: '4.00',
-        stock: 18,
-        dimensions: '15x15',
-        media: 'Ink and wash',
-        description: 'Rolling fields under warm light',
-        year: 2022,
-        cardId: 'SQ-003',
-      });
+    //   await createCard({
+    //     name: 'Golden Fields',
+    //     image: '/Images/Art/image4.png',
+    //     price: '4.00',
+    //     stock: 18,
+    //     dimensions: '15x15',
+    //     media: 'Ink and wash',
+    //     description: 'Rolling fields under warm light',
+    //     year: 2022,
+    //     cardId: 'SQ-003',
+    //   });
       
-      await createCard({
-        name: 'Quiet Shore',
-        image: '/Images/Art/image5.png',
-        price: '4.00',
-        stock: 25,
-        dimensions: '10x14',
-        media: 'Watercolour',
-        description: 'A peaceful shoreline at dusk',
-        year: 2024,
-        cardId: 'SQ-004',
-      });
+    //   await createCard({
+    //     name: 'Quiet Shore',
+    //     image: '/Images/Art/image5.png',
+    //     price: '4.00',
+    //     stock: 25,
+    //     dimensions: '10x14',
+    //     media: 'Watercolour',
+    //     description: 'A peaceful shoreline at dusk',
+    //     year: 2024,
+    //     cardId: 'SQ-004',
+    //   });
       
-      await createCard({
-        name: 'Morning Light',
-        image: '/Images/Art/image6.png',
-        price: '3.75',
-        stock: 30,
-        dimensions: '12x18',
-        media: 'Watercolour',
-        description: 'Soft morning light over hills',
-        year: 2024,
-        cardId: 'SQ-005',
-      });
+    //   await createCard({
+    //     name: 'Morning Light',
+    //     image: '/Images/Art/image6.png',
+    //     price: '3.75',
+    //     stock: 30,
+    //     dimensions: '12x18',
+    //     media: 'Watercolour',
+    //     description: 'Soft morning light over hills',
+    //     year: 2024,
+    //     cardId: 'SQ-005',
+    //   });
       
-      await createCard({
-        name: 'Autumn Path',
-        image: '/Images/Art/image7.png',
-        price: '4.25',
-        stock: 16,
-        dimensions: '10x15',
-        media: 'Ink and watercolour',
-        description: 'A winding path through autumn trees',
-        year: 2023,
-        cardId: 'SQ-006',
-      });
+    //   await createCard({
+    //     name: 'Autumn Path',
+    //     image: '/Images/Art/image7.png',
+    //     price: '4.25',
+    //     stock: 16,
+    //     dimensions: '10x15',
+    //     media: 'Ink and watercolour',
+    //     description: 'A winding path through autumn trees',
+    //     year: 2023,
+    //     cardId: 'SQ-006',
+    //   });
       
-      await createCard({
-        name: 'Sea Breeze',
-        image: '/Images/Art/image2.png',
-        price: '3.75',
-        stock: 21,
-        dimensions: '14x14',
-        media: 'Watercolour',
-        description: 'A breezy coastal scene',
-        year: 2022,
-        cardId: 'SQ-007',
-      });
+    //   await createCard({
+    //     name: 'Sea Breeze',
+    //     image: '/Images/Art/image2.png',
+    //     price: '3.75',
+    //     stock: 21,
+    //     dimensions: '14x14',
+    //     media: 'Watercolour',
+    //     description: 'A breezy coastal scene',
+    //     year: 2022,
+    //     cardId: 'SQ-007',
+    //   });
       
-      await createCard({
-        name: 'Evening Glow',
-        image: '/Images/Art/image3.png',
-        price: '4.00',
-        stock: 19,
-        dimensions: '15x20',
-        media: 'Watercolour',
-        description: 'Warm glow over a quiet town',
-        year: 2023,
-        cardId: 'SQ-008',
-      });
+    //   await createCard({
+    //     name: 'Evening Glow',
+    //     image: '/Images/Art/image3.png',
+    //     price: '4.00',
+    //     stock: 19,
+    //     dimensions: '15x20',
+    //     media: 'Watercolour',
+    //     description: 'Warm glow over a quiet town',
+    //     year: 2023,
+    //     cardId: 'SQ-008',
+    //   });
       
-      await createCard({
-        name: 'Forest Stillness',
-        image: '/Images/Art/image4.png',
-        price: '3.25',
-        stock: 14,
-        dimensions: '10x15',
-        media: 'Ink',
-        description: 'A still forest interior',
-        year: 2021,
-        cardId: 'SQ-009',
-      });
+    //   await createCard({
+    //     name: 'Forest Stillness',
+    //     image: '/Images/Art/image4.png',
+    //     price: '3.25',
+    //     stock: 14,
+    //     dimensions: '10x15',
+    //     media: 'Ink',
+    //     description: 'A still forest interior',
+    //     year: 2021,
+    //     cardId: 'SQ-009',
+    //   });
       
-      await createCard({
-        name: 'Soft Rain',
-        image: '/Images/Art/image5.png',
-        price: '3.75',
-        stock: 28,
-        dimensions: '12x16',
-        media: 'Watercolour',
-        description: 'Rain falling gently across rooftops',
-        year: 2024,
-        cardId: 'SQ-010',
-      });
+    //   await createCard({
+    //     name: 'Soft Rain',
+    //     image: '/Images/Art/image5.png',
+    //     price: '3.75',
+    //     stock: 28,
+    //     dimensions: '12x16',
+    //     media: 'Watercolour',
+    //     description: 'Rain falling gently across rooftops',
+    //     year: 2024,
+    //     cardId: 'SQ-010',
+    //   });
       
-      await createCard({
-        name: 'Hilltop View',
-        image: '/Images/Art/image6.png',
-        price: '4.00',
-        stock: 17,
-        dimensions: '15x15',
-        media: 'Watercolour',
-        description: 'A wide view from a hilltop',
-        year: 2022,
-        cardId: 'SQ-011',
-      });
+    //   await createCard({
+    //     name: 'Hilltop View',
+    //     image: '/Images/Art/image6.png',
+    //     price: '4.00',
+    //     stock: 17,
+    //     dimensions: '15x15',
+    //     media: 'Watercolour',
+    //     description: 'A wide view from a hilltop',
+    //     year: 2022,
+    //     cardId: 'SQ-011',
+    //   });
       
-      await createCard({
-        name: 'Winter Quiet',
-        image: '/Images/Art/image7.png',
-        price: '3.25',
-        stock: 12,
-        dimensions: '10x14',
-        media: 'Ink and wash',
-        description: 'A quiet winter landscape',
-        year: 2021,
-        cardId: 'SQ-012',
-      });
+    //   await createCard({
+    //     name: 'Winter Quiet',
+    //     image: '/Images/Art/image7.png',
+    //     price: '3.25',
+    //     stock: 12,
+    //     dimensions: '10x14',
+    //     media: 'Ink and wash',
+    //     description: 'A quiet winter landscape',
+    //     year: 2021,
+    //     cardId: 'SQ-012',
+    //   });
       
-      await createCard({
-        name: 'Spring Lane',
-        image: '/Images/Art/image2.png',
-        price: '3.75',
-        stock: 26,
-        dimensions: '12x18',
-        media: 'Watercolour',
-        description: 'A lane blooming with spring flowers',
-        year: 2024,
-        cardId: 'SQ-013',
-      });
+    //   await createCard({
+    //     name: 'Spring Lane',
+    //     image: '/Images/Art/image2.png',
+    //     price: '3.75',
+    //     stock: 26,
+    //     dimensions: '12x18',
+    //     media: 'Watercolour',
+    //     description: 'A lane blooming with spring flowers',
+    //     year: 2024,
+    //     cardId: 'SQ-013',
+    //   });
       
-      await createCard({
-        name: 'Low Tide',
-        image: '/Images/Art/image3.png',
-        price: '4.00',
-        stock: 20,
-        dimensions: '14x18',
-        media: 'Watercolour',
-        description: 'Shoreline revealed at low tide',
-        year: 2022,
-        cardId: 'SQ-014',
-      });
+    //   await createCard({
+    //     name: 'Low Tide',
+    //     image: '/Images/Art/image3.png',
+    //     price: '4.00',
+    //     stock: 20,
+    //     dimensions: '14x18',
+    //     media: 'Watercolour',
+    //     description: 'Shoreline revealed at low tide',
+    //     year: 2022,
+    //     cardId: 'SQ-014',
+    //   });
       
-      await createCard({
-        name: 'Hidden Garden',
-        image: '/Images/Art/image4.png',
-        price: '4.25',
-        stock: 15,
-        dimensions: '10x15',
-        media: 'Ink and watercolour',
-        description: 'A secluded garden space',
-        year: 2023,
-        cardId: 'SQ-015',
-      });
+    //   await createCard({
+    //     name: 'Hidden Garden',
+    //     image: '/Images/Art/image4.png',
+    //     price: '4.25',
+    //     stock: 15,
+    //     dimensions: '10x15',
+    //     media: 'Ink and watercolour',
+    //     description: 'A secluded garden space',
+    //     year: 2023,
+    //     cardId: 'SQ-015',
+    //   });
       
-      await createCard({
-        name: 'Distant Hills',
-        image: '/Images/Art/image5.png',
-        price: '3.75',
-        stock: 23,
-        dimensions: '15x20',
-        media: 'Watercolour',
-        description: 'Hills fading into the distance',
-        year: 2022,
-        cardId: 'SQ-016',
-      });
+    //   await createCard({
+    //     name: 'Distant Hills',
+    //     image: '/Images/Art/image5.png',
+    //     price: '3.75',
+    //     stock: 23,
+    //     dimensions: '15x20',
+    //     media: 'Watercolour',
+    //     description: 'Hills fading into the distance',
+    //     year: 2022,
+    //     cardId: 'SQ-016',
+    //   });
       
-      await createCard({
-        name: 'City Haze',
-        image: '/Images/Art/image6.png',
-        price: '3.50',
-        stock: 18,
-        dimensions: '12x16',
-        media: 'Ink',
-        description: 'A city softened by haze',
-        year: 2021,
-        cardId: 'SQ-017',
-      });
+    //   await createCard({
+    //     name: 'City Haze',
+    //     image: '/Images/Art/image6.png',
+    //     price: '3.50',
+    //     stock: 18,
+    //     dimensions: '12x16',
+    //     media: 'Ink',
+    //     description: 'A city softened by haze',
+    //     year: 2021,
+    //     cardId: 'SQ-017',
+    //   });
       
-      await createCard({
-        name: 'Sunlit Path',
-        image: '/Images/Art/image7.png',
-        price: '4.00',
-        stock: 27,
-        dimensions: '10x15',
-        media: 'Watercolour',
-        description: 'Sunlight falling across a path',
-        year: 2024,
-        cardId: 'SQ-018',
-      });
+    //   await createCard({
+    //     name: 'Sunlit Path',
+    //     image: '/Images/Art/image7.png',
+    //     price: '4.00',
+    //     stock: 27,
+    //     dimensions: '10x15',
+    //     media: 'Watercolour',
+    //     description: 'Sunlight falling across a path',
+    //     year: 2024,
+    //     cardId: 'SQ-018',
+    //   });
       
-      await createCard({
-        name: 'Quiet Harbour',
-        image: '/Images/Art/image2.png',
-        price: '3.75',
-        stock: 16,
-        dimensions: '14x14',
-        media: 'Watercolour',
-        description: 'Boats resting in a quiet harbour',
-        year: 2023,
-        cardId: 'SQ-019',
-      });
+    //   await createCard({
+    //     name: 'Quiet Harbour',
+    //     image: '/Images/Art/image2.png',
+    //     price: '3.75',
+    //     stock: 16,
+    //     dimensions: '14x14',
+    //     media: 'Watercolour',
+    //     description: 'Boats resting in a quiet harbour',
+    //     year: 2023,
+    //     cardId: 'SQ-019',
+    //   });
       
-      await createCard({
-        name: 'Fading Light',
-        image: '/Images/Art/image3.png',
-        price: '3.50',
-        stock: 19,
-        dimensions: '15x18',
-        media: 'Watercolour',
-        description: 'Light fading at the end of the day',
-        year: 2022,
-        cardId: 'SQ-020',
-      });   
+    //   await createCard({
+    //     name: 'Fading Light',
+    //     image: '/Images/Art/image3.png',
+    //     price: '3.50',
+    //     stock: 19,
+    //     dimensions: '15x18',
+    //     media: 'Watercolour',
+    //     description: 'Light fading at the end of the day',
+    //     year: 2022,
+    //     cardId: 'SQ-020',
+    //   });   
       // ===== CARDS =====
   // ===== PRINTS =====
   await createPrint({
@@ -360,38 +360,38 @@ async function main() {
   });
   
   // ===== ORIGINALS =====
-  await createOriginal({
-    name: 'Silent Horizon',
-    image: '/Images/Art/image5.png',
-    price: '240.00',
-    stock: 1,
-    dimensions: '50x70',
-    media: 'Watercolour on paper',
-    description: 'Original landscape painting',
-    year: 2022,
-  });
+  // await createOriginal({
+  //   name: 'Silent Horizon',
+  //   image: '/Images/Art/image5.png',
+  //   price: '240.00',
+  //   stock: 1,
+  //   dimensions: '50x70',
+  //   media: 'Watercolour on paper',
+  //   description: 'Original landscape painting',
+  //   year: 2022,
+  // });
   
-  await createOriginal({
-    name: 'Winter Stillness',
-    image: '/Images/Art/image1.png',
-    price: '320.00',
-    stock: 1,
-    dimensions: '60x80',
-    media: 'Ink and wash on paper',
-    description: 'Minimal winter scene',
-    year: 2023,
-  });
+  // await createOriginal({
+  //   name: 'Winter Stillness',
+  //   image: '/Images/Art/image1.png',
+  //   price: '320.00',
+  //   stock: 1,
+  //   dimensions: '60x80',
+  //   media: 'Ink and wash on paper',
+  //   description: 'Minimal winter scene',
+  //   year: 2023,
+  // });
   
-  await createOriginal({
-    name: 'Low Light',
-    image: '/Images/Art/image6.png',
-    price: '280.00',
-    stock: 1,
-    dimensions: '55x75',
-    media: 'Mixed media on paper',
-    description: 'Soft evening tones',
-    year: 2024,
-  });
+  // await createOriginal({
+  //   name: 'Low Light',
+  //   image: '/Images/Art/image6.png',
+  //   price: '280.00',
+  //   stock: 1,
+  //   dimensions: '55x75',
+  //   media: 'Mixed media on paper',
+  //   description: 'Soft evening tones',
+  //   year: 2024,
+  // });
   
   // ===== GIFTS =====
   await createGift({
