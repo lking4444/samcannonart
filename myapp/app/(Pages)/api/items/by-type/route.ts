@@ -16,6 +16,7 @@ export async function GET(req: Request) {
     // Sorting and Search Params
     const keyword = searchParams.get("keyword") ?? "";
     const dimension = searchParams.get("dimension") ?? "";
+    const tag = searchParams.get("tag") ?? "Default";
     const sortOrder = (searchParams.get("sortOrder") ?? "Default") as
         | "High to Low"
         | "Low to High"
@@ -27,6 +28,7 @@ export async function GET(req: Request) {
         pageSize,
         keyword,
         dimension,
+        tag,
         sortOrder,
     });
 

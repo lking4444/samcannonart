@@ -210,19 +210,21 @@ export async function incrementStock(amount : number, id : number){
     });
 }
 
-export async function getItemsByPageFiltered(params: {page?: number; pageSize?: number; type: ItemType; keyword?: string; dimension?: string; sortOrder?: SortOrder;}) {
+export async function getItemsByPageFiltered(params: {page?: number; pageSize?: number; type: ItemType; keyword?: string; dimension?: string; tag?: string; sortOrder?: SortOrder;}) {
     const pageSize = params.pageSize ?? 20;
     const page = params.page ?? 1;
     const skip = (page - 1) * pageSize;
   
     const keyword = (params.keyword ?? "").trim();
     const dimension = (params.dimension ?? "").trim();
+    const tag = (params.tag ?? "Default");
     const sortOrder = (params.sortOrder ?? "Default") as SortOrder;
   
     const where = {
         type: params.type,
         ...({ stock: { gt: 0 } }),
         ...(dimension ? { dimensions: dimension } : {}),
+        ...(tag !== "Default" ? { tags: { has: tag } } : {}),
         ...(keyword ? {name: { contains: keyword, mode: "insensitive" as const },}: {}),
     };
   
@@ -239,6 +241,7 @@ export async function getItemsByPageFiltered(params: {page?: number; pageSize?: 
             skip,
             select: {
             id: true,
+            tags: true,
             name: true,
             type: true,
             price: true,

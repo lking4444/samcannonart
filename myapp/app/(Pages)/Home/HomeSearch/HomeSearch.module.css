@@ -61,6 +61,10 @@ transform: scale(1.06);
     text-overflow: ellipsis;
 }
 
+.loading{
+  align-self: center;
+}
+
 .itemType{
     color: rgb(154, 154, 154);
 }

@@ -18,6 +18,7 @@ export type ItemClient = {
     price: string;
     image: string;
     stock: number;
+    tags: string[];
     dimensions: string | null;
     media: string | null;
     description: string | null;

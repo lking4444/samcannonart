@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "prisma": {
-    "seed": "tsx prisma/createCards.ts"
+    "seed": "tsx prisma/createOriginals.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1004.0",

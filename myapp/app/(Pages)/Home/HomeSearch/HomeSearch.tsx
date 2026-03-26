@@ -85,7 +85,11 @@ export default function HomeSearch() {
           
         ))}
 
-       {loading && page > 1 && <Loading/>}
+      {loading && 
+        <div className={styles.loading}>
+          <Loading/>
+        </div>
+      }
 
         {!loading && hasMore && (keyword.length > 0) && (
           <button className={styles.button} onClick={() => setPage((p) => p + 1)}>

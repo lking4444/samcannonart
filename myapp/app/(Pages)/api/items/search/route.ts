@@ -6,11 +6,11 @@ export async function GET(req: Request) {
 
     const page = Number(searchParams.get("page") ?? "1");
     const pageSize = Number(searchParams.get("pageSize") ?? "10");
-
     const query = searchParams.get("q") ?? "";
+
     if (query.length === 0) {
-        return { items: [], total: 0, page, pageSize, hasMore: false };
-      }
+        return NextResponse.json({items: [], total: 0, page, pageSize, hasMore: false,});
+    }
 
     const result = await searchItems({
         query,

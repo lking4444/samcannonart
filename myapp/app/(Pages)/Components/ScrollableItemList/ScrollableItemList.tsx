@@ -27,6 +27,7 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
     const [dimension, setDimension] = useState<string | undefined>("");
     const [keyword, setKeyword] = useState<string>("");
     const [sortOrder, setSortOrder] = useState<string | undefined>("Default");
+    const [tag, setTag] = useState<string | undefined>("Default");
     const isInitialisingRef = useRef(true);
 
     // debounce keyword to fetch less frequently
@@ -51,9 +52,10 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
         sp.set("keyword", debouncedKeyword);
         sp.set("dimension", dimension ?? "");
         sp.set("sortOrder", sortOrder ?? "Default");
+        sp.set("tag", tag ?? "Default");
         return `/api/items/by-type?${sp.toString()}`;
         },
-        [type, pageSize, debouncedKeyword, dimension, sortOrder]
+        [type, pageSize, debouncedKeyword, dimension, sortOrder, tag]
     );
 
     // load page 1 on mount + when filters change
@@ -68,10 +70,12 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
         sp.set("pageSize", String(pageSize));
         sp.set("keyword", debouncedKeyword ?? "");
         sp.set("dimension", dimension ?? "");
+        console.log(tag);
+        sp.set("tag", tag ?? "Default");
         sp.set("sortOrder", sortOrder ?? "Default");
       
         fetchPage(`/api/items/by-type?${sp.toString()}`, 1, "replace");
-      }, [type, pageSize, debouncedKeyword, dimension, sortOrder]);
+      }, [type, pageSize, debouncedKeyword, dimension, sortOrder, tag]);
 
 
     // load next page when scrolling
@@ -115,6 +119,10 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
         ];
     }, [items]);
 
+    const tagOptions = useMemo(() => {
+        return [...new Set(items.flatMap((i) => i.tags ?? []))];
+      }, [items]);
+
     return (
         <>
         <SearchFilter
@@ -122,6 +130,8 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
             setKeyword={setKeyword}
             dimensionOptions={dimensionOptions}
             setDimension={setDimension}
+            tagOptions={tagOptions}
+            setTag={setTag}
             sortOrder={sortOrders}
             setSortOrder={setSortOrder}
         />

@@ -13,11 +13,13 @@ type SearchFilterProps = {
     setKeyword: Dispatch<SetStateAction<string>>;
     dimensionOptions: string[];
     setDimension: Dispatch<SetStateAction<string | undefined>>;
+    tagOptions: string[];
+    setTag: Dispatch<SetStateAction<string | undefined>>;
     sortOrder: string[]; 
     setSortOrder: Dispatch<SetStateAction<string | undefined>>;
 }
 
-export default function SearchFilter({keyword, setKeyword, dimensionOptions, setDimension, sortOrder, setSortOrder} : SearchFilterProps){
+export default function SearchFilter({keyword, setKeyword, dimensionOptions, setDimension, tagOptions, setTag, sortOrder, setSortOrder} : SearchFilterProps){
 
     return (
         <span className={styles.searchFilters}>
@@ -36,7 +38,7 @@ export default function SearchFilter({keyword, setKeyword, dimensionOptions, set
                 <MultiSelect multiSelectCategory="Sort by Price" multiSelectOptions={sortOrder} setOptions={setSortOrder}/> 
             </span>
             <span className={styles.selectable}>
-                <MultiSelect multiSelectCategory="Card Themes" multiSelectOptions={["Love", "Friendship", "Happiness"]} setOptions={setDimension}/>
+                <MultiSelect multiSelectCategory="Card Themes" multiSelectOptions={tagOptions} setOptions={setTag}/>
             </span>
         </span>
 
