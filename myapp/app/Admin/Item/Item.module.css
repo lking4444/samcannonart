@@ -1,0 +1,235 @@
+.row {
+    display: grid;
+    grid-template-columns:
+      minmax(180px, 1.4fr)
+      minmax(90px, 0.7fr)
+      minmax(240px, 1.8fr)
+      minmax(110px, 0.8fr)
+      minmax(140px, 1fr)
+      minmax(90px, 0.6fr)
+      minmax(160px, 1fr)
+      minmax(90px, 0.6fr)
+      auto
+      auto
+      auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 16px;
+    border: 1px solid #e7e7ec;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #fcfcfe 100%);
+    box-shadow: 0 4px 14px rgba(19, 24, 38, 0.05);
+    margin-bottom: 14px;
+  }
+  
+  .row > span {
+    min-width: 0;
+  }
+  
+  .keywordSearch {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid #d7dbe3;
+    border-radius: 12px;
+    background: #fff;
+    color: #1f2430;
+    font-size: 0.95rem;
+    transition:
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      background-color 0.18s ease;
+    box-sizing: border-box;
+  }
+  
+  .keywordSearch::placeholder {
+    color: #98a0af;
+  }
+  
+  .keywordSearch:hover {
+    border-color: #b9c1cf;
+    background: #fcfcff;
+  }
+  
+  .keywordSearch:focus {
+    outline: none;
+    border-color: #7c8bff;
+    box-shadow: 0 0 0 4px rgba(124, 139, 255, 0.14);
+    background: #fff;
+  }
+  
+  .tagsEditorWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .tagsEditorButton {
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid #d7dbe3;
+    border-radius: 12px;
+    background: #f7f8fc;
+    color: #2a3140;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      transform 0.12s ease,
+      box-shadow 0.18s ease;
+    white-space: nowrap;
+  }
+  
+  .tagsEditorButton:hover {
+    background: #eef1ff;
+    border-color: #b9c4ff;
+  }
+  
+  .tagsEditorButton:active {
+    transform: translateY(1px);
+  }
+  
+  .tagsEditorDropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    z-index: 30;
+    min-width: 320px;
+    max-width: 380px;
+    padding: 14px;
+    border: 1px solid #e3e7ef;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow:
+      0 18px 40px rgba(16, 24, 40, 0.14),
+      0 4px 14px rgba(16, 24, 40, 0.08);
+  }
+  
+  .tagsEditorList {
+    display: grid;
+    gap: 10px;
+  }
+  
+  .tagEditorRow {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .tagActionButton {
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid #d7dbe3;
+    border-radius: 10px;
+    background: #fff;
+    color: #2d3442;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      transform 0.12s ease;
+    white-space: nowrap;
+  }
+  
+  .tagActionButton:hover {
+    background: #f6f8fc;
+    border-color: #bcc6d6;
+  }
+  
+  .tagActionButton:active {
+    transform: translateY(1px);
+  }
+  
+  .row > button {
+    height: 42px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.18s ease,
+      opacity 0.18s ease;
+    white-space: nowrap;
+  }
+  
+  .row > button:first-of-type {
+    background: linear-gradient(135deg, #5d6bff 0%, #7d63ff 100%);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(93, 107, 255, 0.22);
+  }
+  
+  .row > button:first-of-type:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(93, 107, 255, 0.28);
+  }
+  
+  .row > button:last-of-type {
+    background: #eef1f6;
+    color: #273142;
+  }
+  
+  .row > button:last-of-type:hover {
+    background: #e3e8f0;
+    transform: translateY(-1px);
+  }
+  
+  @media (max-width: 1400px) {
+    .row {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  
+    .tagsEditorDropdown {
+      left: auto;
+      right: 0;
+    }
+  
+    .row > button {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 760px) {
+    .row {
+      grid-template-columns: 1fr;
+      padding: 12px;
+    }
+  
+    .tagsEditorDropdown {
+      position: static;
+      min-width: 100%;
+      max-width: 100%;
+      margin-top: 10px;
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  
+  .fieldLabel {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #667085;
+    padding-left: 2px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  
+  .actionField {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }

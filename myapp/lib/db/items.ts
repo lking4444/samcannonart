@@ -210,6 +210,23 @@ export async function incrementStock(amount : number, id : number){
     });
 }
 
+export async function getExistingUploadIds(uploadIds: number[]): Promise<number[]> {
+    if (uploadIds.length === 0) return [];
+  
+    const items = await prisma.item.findMany({
+        where: {
+            uploadId: {
+            in: uploadIds,
+            },
+        },
+        select: {
+            uploadId: true,
+        },
+    });
+  
+    return items.map((item) => item.uploadId).filter((id): id is number => id !== null);;
+}
+
 export async function getItemsByPageFiltered(params: {page?: number; pageSize?: number; type: ItemType; keyword?: string; dimension?: string; tag?: string; sortOrder?: SortOrder;}) {
     const pageSize = params.pageSize ?? 20;
     const page = params.page ?? 1;
@@ -261,6 +278,65 @@ export async function getItemsByPageFiltered(params: {page?: number; pageSize?: 
         page,
         pageSize,
         hasMore: skip + items.length < total,
+    };
+}
+
+export async function getItemsByPageFilteredAdmin(params: {
+    page?: number;
+    pageSize?: number;
+    type: ItemType;
+    keyword?: string;
+    tag?: string;
+  }) {
+    const pageSize = params.pageSize ?? 20;
+    const page = params.page ?? 1;
+    const skip = (page - 1) * pageSize;
+  
+    const keyword = (params.keyword ?? "").trim();
+    const tag = params.tag ?? "Default";
+  
+    const where = {
+      type: params.type,
+      stock: { gt: 0 },
+      ...(tag !== "Default" ? { tags: { has: tag } } : {}),
+      ...(keyword
+        ? {
+            name: {
+              contains: keyword,
+              mode: "insensitive" as const,
+            },
+          }
+        : {}),
+    };
+  
+    const [items, total] = await Promise.all([
+      prisma.item.findMany({
+        where,
+        orderBy: [{ year: "desc" as const }, { id: "desc" as const }],
+        take: pageSize,
+        skip,
+        select: {
+          id: true,
+          tags: true,
+          name: true,
+          type: true,
+          price: true,
+          image: true,
+          stock: true,
+          dimensions: true,
+          description: true,
+          year: true,
+        },
+      }),
+      prisma.item.count({ where }),
+    ]);
+  
+    return {
+      items,
+      total,
+      page,
+      pageSize,
+      hasMore: skip + items.length < total,
     };
   }
 

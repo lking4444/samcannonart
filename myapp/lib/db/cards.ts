@@ -4,6 +4,7 @@ import { ItemType } from '@/app/generated/prisma/enums';
 type CreateCardInput = {
     name: string;
     image: string;
+    uploadId: number;
     price: string;
     stock: number;
     tags: string[];
@@ -18,6 +19,7 @@ export async function createCard(data: CreateCardInput) {
     return prisma.item.create({
         data: {
         name: data.name,
+        uploadId: data.uploadId,
         type: ItemType.CARD,
         image: data.image,
         price: data.price,
@@ -37,6 +39,36 @@ export async function createCard(data: CreateCardInput) {
         card: true,
         },
     });
+}
+
+export async function createCards(data: CreateCardInput[]) {
+    return prisma.$transaction(
+      data.map((item) =>
+        prisma.item.create({
+          data: {
+            name: item.name,
+            uploadId: item.uploadId,
+            type: ItemType.CARD,
+            image: item.image,
+            price: item.price,
+            stock: item.stock,
+            tags: item.tags,
+            dimensions: item.dimensions,
+            media: item.media,
+            description: item.description,
+            year: item.year,
+            card: {
+              create: {
+                cardId: item.cardId,
+              },
+            },
+          },
+          include: {
+            card: true,
+          },
+        })
+      )
+    );
 }
 
 export async function deleteCardByItemId(itemId: number) {

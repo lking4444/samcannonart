@@ -34,6 +34,32 @@ export async function createCalendar(data: CreateCalendarInput) {
     });
 }
 
+export async function createCalendars(data: CreateCalendarInput[]) {
+    return prisma.$transaction(
+      data.map((item) =>
+        prisma.item.create({
+          data: {
+            name: item.name,
+            type: ItemType.CALENDAR,
+            image: item.image,
+            price: item.price,
+            stock: item.stock,
+            dimensions: item.dimensions,
+            media: item.media,
+            description: item.description,
+            year: item.year,
+            calendar: {
+              create: {},
+            },
+          },
+          include: {
+            calendar: true,
+          },
+        })
+      )
+    );
+  }
+
 export async function deleteCalendarByItemId(itemId: number) {
     return prisma.item.delete({
       where: { id: itemId },

@@ -1,0 +1,16 @@
+
+.headerContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 10px 20px 10px;
+    background-color: rgb(255, 255, 255);
+    position: sticky;
+    top: 0;           /* ✅ required */
+    z-index: 4;  
+}
+
+.pagesContainer{
+    display: flex;
+}
+

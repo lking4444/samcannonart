@@ -41,6 +41,7 @@ enum GiftType {
 
 model Item {
   id          Int      @id @default(autoincrement())
+  uploadId    Int?    @unique
   name        String
   type        ItemType
   price       Decimal  @db.Decimal(10, 2) 
@@ -95,7 +96,7 @@ model Original {
 model Gift {
   itemId Int   @id
   item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  giftNumber String 
+  giftNumber String
   giftType GiftType
 }
 

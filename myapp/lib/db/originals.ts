@@ -3,6 +3,7 @@ import { ItemType } from '@/app/generated/prisma/enums';
 
 type CreateOriginalsInput = {
     name: string;
+    uploadId: number;
     image: string;
     price: string;
     stock: number;
@@ -17,6 +18,7 @@ export async function createOriginal(data: CreateOriginalsInput) {
     return prisma.item.create({
         data: {
         name: data.name,
+        uploadId: data.uploadId,
         type: ItemType.ORIGINAL,
         image: data.image,
         price: data.price,
@@ -35,6 +37,34 @@ export async function createOriginal(data: CreateOriginalsInput) {
         },
     });
 }
+
+export async function createOriginals(data: CreateOriginalsInput[]) {
+    return prisma.$transaction(
+      data.map((item) =>
+        prisma.item.create({
+          data: {
+            name: item.name,
+            uploadId: item.uploadId,
+            type: ItemType.ORIGINAL,
+            image: item.image,
+            price: item.price,
+            stock: item.stock,
+            dimensions: item.dimensions,
+            media: item.media,
+            tags: item.tags,
+            description: item.description,
+            year: item.year,
+            original: {
+              create: {},
+            },
+          },
+          include: {
+            original: true,
+          },
+        })
+      )
+    );
+  }
 
 export async function deleteOriginalByItemId(itemId: number) {
     return prisma.item.delete({

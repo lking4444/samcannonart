@@ -37,6 +37,34 @@ export async function createNotepad(data: CreateNotepadsInput) {
     });
 }
 
+export async function createNotepads(data: CreateNotepadsInput[]) {
+    return prisma.$transaction(
+      data.map((item) =>
+        prisma.item.create({
+          data: {
+            name: item.name,
+            type: ItemType.NOTEPAD,
+            image: item.image,
+            price: item.price,
+            stock: item.stock,
+            dimensions: item.dimensions,
+            media: item.media,
+            description: item.description,
+            year: item.year,
+            notePad: {
+              create: {
+                notePadName: item.notePadName,
+              },
+            },
+          },
+          include: {
+            notePad: true,
+          },
+        })
+      )
+    );
+  }
+
 export async function deleteNotepadByItemId(itemId: number) {
     return prisma.item.delete({
       where: { id: itemId },

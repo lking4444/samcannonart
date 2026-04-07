@@ -37,6 +37,34 @@ export async function createPrint(data: CreatePrintInput) {
     });
 }
 
+export async function createPrints(data: CreatePrintInput[]) {
+    return prisma.$transaction(
+      data.map((item) =>
+        prisma.item.create({
+          data: {
+            name: item.name,
+            type: ItemType.PRINT,
+            image: item.image,
+            price: item.price,
+            stock: item.stock,
+            dimensions: item.dimensions,
+            media: item.media,
+            description: item.description,
+            year: item.year,
+            print: {
+              create: {
+                printId: item.printId,
+              },
+            },
+          },
+          include: {
+            print: true,
+          },
+        })
+      )
+    );
+  }
+
 export async function deletePrintByItemId(itemId: number) {
     return prisma.item.delete({
       where: { id: itemId },
