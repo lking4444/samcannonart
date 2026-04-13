@@ -7,7 +7,7 @@ import { CartItem, useCartStore } from "@/app/Store/cartStore"
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import CartItemUI from "./CartItem/CartItem"
-import type { Reservation } from "@/app/generated/prisma/client"
+import type { ItemType, Reservation } from "@/app/generated/prisma/client"
 import Loading from "@/app/(Pages)/Components/Loading"
 
 type CartDrawerProps = {
@@ -19,10 +19,15 @@ type DbItem = {
     id: number
     name: string
     image: string
+    type: ItemType
     price: any
 }
 
 async function goToCheckout(total : number, cartItems : CartItem[]) {
+
+    const itemids = cartItems.map((item => item.itemId))
+
+    console.log("Creating reservation for itemIds:", itemids);
 
     const response = await fetch("/api/reservations/create", {
         method: "POST",
@@ -131,6 +136,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                 <Link href={`/Item/${item.id}`} className={styles.link} key={item.id}>
                                      <CartItemUI
                                         key={item.id}
+                                        type={item.type}
                                         imgSrc={item.image}
                                         id={item.id}
                                         itemName={item.name}

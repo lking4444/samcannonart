@@ -43,20 +43,47 @@ color: rgb(200, 87, 34);
 }
 
 .text {
-font-family: var(--font-inter);
-padding: 0 0 10px 0;
-margin: 0;
+    font-family: var(--font-inter);
+    padding: 0 0 10px 0;
+    margin: 0;
+    transition:
+        transform 220ms cubic-bezier(.2,.9,.2,1),
+        background-color 220ms cubic-bezier(.2,.9,.2,1),
+        color 220ms cubic-bezier(.2,.9,.2,1),
+        border-color 220ms cubic-bezier(.2,.9,.2,1),
+        box-shadow 220ms cubic-bezier(.2,.9,.2,1);
+
+}
+
+.text:hover{
+    transform: scale(1.08);
 }
 
 
 .link {
-padding: 10px 15px;
-background-color: rgb(200, 87, 34);
-width: max-content;
-border-radius: 30px;
-text-decoration: none;
-color: inherit;
-color: white;
+    padding: 10px 15px;
+    background-color: var(--button-secondary);
+    width: max-content;
+    border-radius: 30px;
+    
+    text-decoration: none;
+    color: inherit;
+    color: white;
+    transition:
+    transform 220ms cubic-bezier(.2,.9,.2,1),
+    background-color 220ms cubic-bezier(.2,.9,.2,1),
+    color 220ms cubic-bezier(.2,.9,.2,1),
+    border-color 220ms cubic-bezier(.2,.9,.2,1),
+    box-shadow 220ms cubic-bezier(.2,.9,.2,1);
+    border: 2px solid var(--button-secondary);
+
+}
+
+.link:hover{
+    transform: scale(1.08);
+    background-color: white;
+    color:var(--button-secondary);
+    border-color: var(--button-secondary);
 }
 
 
@@ -78,7 +105,7 @@ max-width: 100%;
 
 
 .imageItem {
-flex: 0 0 300px;
+    flex: 0 0 300px;
 }
 
 

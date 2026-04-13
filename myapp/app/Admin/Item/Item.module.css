@@ -233,3 +233,74 @@
     flex-direction: column;
     gap: 6px;
   }
+
+  .popularButton {
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.15s ease,
+      box-shadow 0.2s ease;
+  }
+  
+  .popularButton:hover {
+    transform: translateY(-1px);
+  }
+  
+  .popularActive {
+    background-color: #facc15;
+    color: #1f2937;
+    box-shadow: 0 2px 8px rgba(250, 204, 21, 0.35);
+  }
+  
+  .popularInactive {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+  
+  .popularInactive:hover {
+    background-color: #d1d5db;
+  }
+
+  .saveButton {
+    background: linear-gradient(135deg, #5d6bff 0%, #7d63ff 100%);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(93, 107, 255, 0.22);
+  }
+  
+  .saveButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(93, 107, 255, 0.28);
+  }
+  
+  .saveButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+  }
+  
+  .saveButtonSaving {
+    animation: savePulse 0.45s ease;
+    transform: scale(0.97);
+  }
+  
+  .saveButtonSuccess {
+    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+    box-shadow: 0 8px 18px rgba(34, 197, 94, 0.24);
+  }
+  
+  @keyframes savePulse {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(0.96);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }

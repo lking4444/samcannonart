@@ -1,4 +1,5 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma"; 
+
 
 export async function createOrderFromCheckoutSession(params: {
   sessionId: string;
@@ -41,4 +42,43 @@ export async function createOrderFromCheckoutSession(params: {
     include: { items: true },
   });
 }
+
+export type OrderStatus =
+  | "PENDING"
+  | "PAID"
+  | "SHIPPED"
+  | "COMPLETED"
+  | "CANCELLED"
+  | "REFUNDED";
+
+export type DisplayOrderItem = {
+  itemId: number;
+  quantity: number;
+  unitPrice: string;
+  item?: {
+    name?: string;
+    imageUrl?: string | null;
+    description?: string | null;
+  };
+};
+
+export type DisplayOrder = {
+  value: string;
+  currency: string;
+  SessionId: string;
+
+  userEmail: string;
+  userPhoneNumber: string;
+  userAddress: string;
+
+  status: OrderStatus;
+  paidAt?: string | null;
+  cancelledAt?: string | null;
+  refundedAt?: string | null;
+
+  createdAt: string;
+  updatedAt: string;
+
+  items: DisplayOrderItem[];
+};
 

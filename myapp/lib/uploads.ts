@@ -1,12 +1,8 @@
-import { ItemType, UploadClientItem } from "@/lib/types";
+import { ItemType, GiftType, GIFT_TYPE,UploadClientItem } from "@/lib/types";
 import { RawExcelRow } from "./imports/types";
 import { Dispatch, SetStateAction } from "react";
 
-export function filterItemsNotInDatabase(uploadedItems: UploadClientItem[], existingUploadIds: number[]): UploadClientItem[] {
-  const existingIdsSet = new Set(existingUploadIds);
 
-  return uploadedItems.filter((item) => !existingIdsSet.has(item.uploadId));
-}
 
 export type ItemTypeValue = (typeof ItemType)[keyof typeof ItemType];
 
@@ -14,37 +10,43 @@ export type ParsedRow = Record<string, unknown>;
 
 type SelectedFilesMap = Record<number, File | null>;
 
+export function filterItemsNotInDatabase(uploadedItems: UploadClientItem[], existingUploadIds: number[]): UploadClientItem[] {
+    const existingIdsSet = new Set(existingUploadIds);
+  
+    return uploadedItems.filter((item) => !existingIdsSet.has(item.uploadId));
+}
+
 export async function saveAllImages(items: UploadClientItem[],selectedFiles: SelectedFilesMap) {
-  if (items.length === 0) return;
+    if (items.length === 0) return;
 
-  const formData = new FormData();
+    const formData = new FormData();
 
-  for (const item of items) {
-    const file = selectedFiles[item.uploadId];
+    for (const item of items) {
+        const file = selectedFiles[item.uploadId];
 
-    if (!file) {
-      throw new Error(`Missing image for uploadId ${item.uploadId}`);
-    }
+        if (!file) {
+            throw new Error(`Missing image for uploadId ${item.uploadId}`);
+        }
 
-    if (file.name !== item.image) {
-      throw new Error(
-        `Image filename mismatch for uploadId ${item.uploadId}. Expected "${item.image}", got "${file.name}".`
-      );
-    }
+        if (file.name !== item.image) {
+        throw new Error(
+            `Image filename mismatch for uploadId ${item.uploadId}. Expected "${item.image}", got "${file.name}".`
+        );
+        }
 
-    const imageId = item.image.replace(/\.[^.]+$/, "");
+        const imageId = item.image.replace(/\.[^.]+$/, "");
 
-    formData.append("files", file);
-    formData.append(
-      "metadata",
-      JSON.stringify({
-        uploadId: item.uploadId,
-        itemType: item.type,
-        imageId,
-        filename: file.name,
-      })
-    );
-  }
+        formData.append("files", file);
+        formData.append(
+        "metadata",
+        JSON.stringify({
+            uploadId: item.uploadId,
+            itemType: item.type,
+            imageId,
+            filename: file.name,
+        })
+        );
+}
 
   const response = await fetch("/api/images/upload/bulk", {
     method: "POST",
@@ -78,36 +80,49 @@ function toNullableNumberValue(value: unknown): number | null {
   
 function parseTags(value: unknown): string[] {
     if (!value) return [];
-    return String(value)
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter(Boolean);
+        return String(value)
+            .split(",")
+            .map((tag) => tag.trim())
+            .filter(Boolean);
   }
   
 function parseItemType(value: unknown): ItemTypeValue {
     const type = String(value).trim().toUpperCase();
   
-    console.log(`${type}`)
+    switch (type) {
+        case "CARD":
+            return ItemType.CARD;
+        case "PRINT":
+            return ItemType.PRINT;
+        case "NOTEPAD":
+            return ItemType.NOTEPAD;
+        case "GIFT":
+            return ItemType.GIFT;
+        case "CALENDAR":
+            return ItemType.CALENDAR;
+        case "ORIGINAL":
+            return ItemType.ORIGINAL;
+        case "SLATE":
+            return ItemType.SLATE;
+        default:
+            return ItemType.ORIGINAL;
+    }
+}
+
+function parseGiftType(value: unknown):  GIFT_TYPE{
+    const type = String(value).trim().toUpperCase();
   
     switch (type) {
-      case "CARD":
-        return ItemType.CARD;
-      case "PRINT":
-        return ItemType.PRINT;
-      case "NOTEPAD":
-        return ItemType.NOTEPAD;
-      case "GIFT":
-        return ItemType.GIFT;
-      case "CALENDAR":
-        return ItemType.CALENDAR;
-      case "ORIGINAL":
-        return ItemType.ORIGINAL;
-      case "SLATE":
-        return ItemType.SLATE;
-      default:
-        return ItemType.ORIGINAL;
-    }
-  }
+        case "MIXEDMEDIA":
+            return GiftType.MIXEDMEDIA;
+        case "PEBBLES":
+            return GiftType.PEBBLES;
+        case "TINYPEBBLES":
+            return GiftType.TINYPEBBLES;
+        default:
+            return GiftType.MIXEDMEDIA;
+    }   
+}
   
 export function mapRowToUploadItem(row: RawExcelRow): UploadClientItem {
     const type = parseItemType(row.Type);
@@ -128,7 +143,6 @@ export function mapRowToUploadItem(row: RawExcelRow): UploadClientItem {
 
     switch (type) {
         case 'CARD':
-            console.log('hello');
             return {
                 ...base,
                 cardId: toStringValue(row.CardId),
@@ -145,41 +159,37 @@ export function mapRowToUploadItem(row: RawExcelRow): UploadClientItem {
         
             };
         case 'GIFT':
+            const giftType = parseGiftType(row.GiftType)
+
             return {
                 ...base,
                 giftNumber: toNumberValue(row.CardId),
-                giftType: undefined,
-                // TODO : gift type 
+                giftType: giftType,
             };
     }
 
     return base;   
 }
 
-export async function saveAllUploadItems(
-    newItems: UploadClientItem[],
-    setNewItems: Dispatch<SetStateAction<UploadClientItem[]>>
-  ) {
-    if (newItems.length === 0) {
-      return;
-    }
+export async function saveAllUploadItems(newItems: UploadClientItem[], setNewItems: Dispatch<SetStateAction<UploadClientItem[]>>) {
+    if (newItems.length === 0) { return; }
   
     const type = newItems[0].type;
   
     const response = await fetch("/Admin/api/add-many", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type,
-        items: newItems,
-      }),
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            type,
+            items: newItems,
+        }),
     });
   
     if (!response.ok) {
-      const error = await response.json().catch(() => null);
-      throw new Error(error?.error || `Failed to save ${type} items`);
+        const error = await response.json().catch(() => null);
+        throw new Error(error?.error || `Failed to save ${type} items`);
     }
   
     setNewItems([]);

@@ -1,11 +1,12 @@
-import { ItemElement } from "@/app/(Pages)/Types"
+import { CarouselItem } from "@/app/(Pages)/Types"
 
 import styles from './SelectedSuggestion.module.css'
 import Image from "next/image";
 import Link from "next/link";
+import { getItemImageSrc } from "@/lib/imagepaths";
 
 type SelectedSuggestionProps = {
-    item : ItemElement
+    item : CarouselItem
 }
 
 export default function SelectedSuggestion({item} : SelectedSuggestionProps){
@@ -14,7 +15,14 @@ export default function SelectedSuggestion({item} : SelectedSuggestionProps){
         <div>
             <div className={styles.suggestedContentBackground}>
                 <Link href={`/Item/${item.id}`} >
-                    <Image  className={styles.selectedImage}src={item.imageSrc} key={item.imageSrc} width={100} height={200} alt={"image"}/>
+                <Image
+                    className={styles.selectedImage}
+                    src={getItemImageSrc(item.type, item.image)}
+                    key={item.id}
+                    width={250}
+                    height={300}
+                    alt={item.name}
+                />
                 </Link>
                 <div className={styles.overlayBackground}></div>
                 <div className={styles.overlayText}>

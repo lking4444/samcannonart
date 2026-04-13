@@ -28,7 +28,9 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
     const [keyword, setKeyword] = useState<string>("");
     const [sortOrder, setSortOrder] = useState<string | undefined>("Default");
     const [tag, setTag] = useState<string | undefined>("Default");
+    const [allTags, setAllTags] = useState<string[]>([]);
     const isInitialisingRef = useRef(true);
+
 
     // debounce keyword to fetch less frequently
     const debouncedKeyword = useDebouncedValue(keyword, 250);
@@ -57,6 +59,35 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
         },
         [type, pageSize, debouncedKeyword, dimension, sortOrder, tag]
     );
+
+    // load all tags on mount and item type change
+    useEffect(() => {
+        let cancelled = false;
+    
+        async function loadTags() {
+            try {
+                const res = await fetch(`/api/items/tags?type=${type}`);
+                if (!res.ok) throw new Error("Failed to fetch tags");
+    
+                const data: { tags: string[] } = await res.json();
+    
+                if (!cancelled) {
+                    setAllTags(data.tags ?? []);
+                }
+            } catch (err) {
+                console.error(err);
+                if (!cancelled) {
+                    setAllTags([]);
+                }
+            }
+        }
+    
+        loadTags();
+    
+        return () => {
+            cancelled = true;
+        };
+    }, [type]);
 
     // load page 1 on mount + when filters change
     useEffect(() => {
@@ -120,8 +151,8 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
     }, [items]);
 
     const tagOptions = useMemo(() => {
-        return [...new Set(items.flatMap((i) => i.tags ?? []))];
-      }, [items]);
+        return ["Default", ...allTags];
+    }, [allTags]);
 
     return (
         <>

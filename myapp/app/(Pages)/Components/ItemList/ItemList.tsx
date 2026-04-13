@@ -23,6 +23,7 @@ export default function ItemList({ items }: ItemListProps) {
     const [dimension, setDimension] = useState<string | undefined>("");
     const [keyword, setKeyword] = useState<string>("");
     const [sortOrder, setSortOrder] = useState<string | undefined>("");
+    
   
     const filteredAndSorted = items
       .filter((item) =>
@@ -39,14 +40,14 @@ export default function ItemList({ items }: ItemListProps) {
   
     return (
       <>
-        <SearchFilter
+        {/* <SearchFilter
           keyword={keyword}
           setKeyword={setKeyword}
           dimensionOptions={itemSizes}
           setDimension={setDimension}
           sortOrder={sortOrders}
           setSortOrder={setSortOrder}
-        />
+        /> */}
         <div className={styles.tileContainer}>
           {filteredAndSorted.map((item) => (
             <ItemTile key={item.id} item={item} />

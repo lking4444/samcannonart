@@ -13,6 +13,15 @@ export type ItemElement = {
     imageSrc: string;
 }
 
+export type CarouselItem = {
+    id: number;
+    name: string;
+    type: ItemType;
+    image: string;
+    price: string;
+    description?: string | null;
+  };
+
 export type ItemClient = {
     id: number;
     name: string;
@@ -25,6 +34,7 @@ export type ItemClient = {
     media: string | null;
     description: string | null;
     year: number | null;
+    popular: boolean;
   };
 
   export type ItemClientWithTypes = {
@@ -39,6 +49,7 @@ export type ItemClient = {
     media: string | null;
     description: string | null;
     year: number | null;
+    popular: boolean;
 
     card?: Card;
     calendar?: Calendar;
@@ -47,7 +58,7 @@ export type ItemClient = {
     slate?: Slate;
     gift?: Gift;
     notePad?: NotePad;
-  };
+};
 
 export const ItemExample: ItemElement[] = [
     {

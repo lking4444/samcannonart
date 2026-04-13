@@ -86,14 +86,14 @@ transform: scale(1.06);
 }
 
 .button{
-    background-color: rgb(206, 106, 0);
+    background-color: var(--button-secondary);
     padding: 10px 14px;
     color: white;
     font-family: var(--font-inter);
     border-radius: 10px;
     font-weight: 600;
   
-    border: 2px solid rgb(206, 106, 0);
+    border: 2px solid var(--button-secondary);
     cursor: pointer;
   
     transform: scale(1);

@@ -51,6 +51,7 @@ model Item {
   media       String?
   description String?
   year        Int?
+  popular  Boolean @default(false)
 
   tags        String[] @default([])
 
@@ -64,6 +65,7 @@ model Item {
   reservationItems  ReservationItem[]
   orderItems        OrderItem[] 
 }
+
 
 model Card {
   itemId Int   @id

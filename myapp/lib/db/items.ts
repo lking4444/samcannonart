@@ -3,6 +3,19 @@ import type { Item, ItemType } from '@/app/generated/prisma/client';
 
 type SortOrder = "High to Low" | "Low to High" | "Default";
 
+type UpdateItemInput = {
+    name: string;
+    price: string;
+    description?: string | null;
+    dimensions?: string | null;
+    media?: string | null;
+    stock: number;
+    image: string;
+    year?: number | null;
+    popular: boolean;
+    tags: string[];
+};
+
 function tokenize(text: string): string[] {
     return text
         .toLowerCase()
@@ -30,6 +43,73 @@ export async function getAllCardItems(){
         orderBy: {year: 'desc'},
     });
 }
+
+export async function getAllTagsByType(type: ItemType): Promise<string[]> {
+    const items = await prisma.item.findMany({
+        where: {
+            type,
+            stock: { gt: 0 },
+        },
+        select: {
+            tags: true,
+        },
+        });
+
+    const allTags = items.flatMap((item) => item.tags ?? []);
+
+    return [...new Set(allTags)]
+        .map((tag) => tag.trim())
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b));
+}
+
+export async function getRandomPopularItems(limit = 5) {
+    const safeLimit = Math.max(1, Math.min(limit, 20));
+  
+    return prisma.$queryRaw`
+      SELECT *
+      FROM "Item"
+      WHERE "popular" = true
+      ORDER BY RANDOM()
+      LIMIT ${safeLimit}
+    `;
+  }
+  
+export async function updateItem(id: number, data: UpdateItemInput) {
+    return prisma.item.update({
+        where: { id },
+        data: {
+            name: data.name,
+            price: data.price,
+            description: data.description,
+            dimensions: data.dimensions,
+            media: data.media,
+            stock: data.stock,
+            image: data.image,
+            year: data.year,
+            popular: data.popular,
+            tags: data.tags,
+        },
+    });
+}
+
+export async function togglePopular(id: number) {
+    const item = await prisma.item.findUnique({
+      where: { id },
+      select: { popular: true },
+    });
+  
+    if (!item) {
+      throw new Error("Item not found");
+    }
+  
+    return prisma.item.update({
+      where: { id },
+      data: {
+        popular: !item.popular,
+      },
+    });
+  }
 
 export async function getAllCalendarItems(){
     return prisma.item.findMany({

@@ -3,6 +3,7 @@ import Stripe from "stripe"
 import styles from './success.module.css'
 import Image from "next/image"
 import { createOrderFromCheckoutSession } from "@/lib/orders";
+import { getItemImageSrc } from "@/lib/imagepaths";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
@@ -67,7 +68,7 @@ export default async function Success({ searchParams }: Props){
 
     const items = await prisma.item.findMany({
         where: { id: { in: ids } },
-        select: { id: true, name: true, image: true, price: true, dimensions: true, description: true },
+        select: { id: true, name: true, image: true, price: true, dimensions: true, description: true, type: true },
     })
 
     return (
@@ -99,7 +100,7 @@ export default async function Success({ searchParams }: Props){
                     <h1 className={styles.header}>Summary</h1>
                     {items.map((item) => (
                         <div key={item.id} className={styles.summaryContainer}>
-                            <Image className={styles.image} src={item.image} width={100} height={100} alt={item.name}/>
+                            <Image className={styles.image} src={getItemImageSrc(item.type, item.image)} width={100} height={100} alt={item.name}/>
                             <div className={styles.summaryInfoContainer}>
                             <p>{item.name}</p>
                             <p className={styles.summaryInfoGray}>{item.dimensions}</p>

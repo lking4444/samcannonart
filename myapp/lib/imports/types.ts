@@ -1,3 +1,4 @@
+import { GiftType } from "@/app/generated/prisma/enums";
 import { ItemType, ITEM_TYPE } from "../types";
 
 export type ImportRowBase = {
@@ -44,6 +45,7 @@ export type NotePadImportRow = ImportRowBase & {
 export type GiftImportRow = ImportRowBase & {
     type: typeof ItemType.GIFT;
     giftNumber: string;
+    giftType: GiftType;
 };
 
 export type AnyImportRow =
@@ -71,4 +73,5 @@ export type RawExcelRow = {
     PrintId?: unknown;
     NotePadName?: unknown;
     GiftNumber?: unknown;
+    GiftType?: unknown;
 };

@@ -30,7 +30,8 @@
 }
 
 .cartTitle{
-    font-size:x-large;
+    font-size:xx-large;
+    font-weight: bolder;
     align-self: center;
     font-family: var(--font-inter);
 }
@@ -51,6 +52,8 @@
     padding: 20px 0px 0px 20px;
     display: flex;
     font-family: var(--font-inter);
+    color:  var(--button-secondary);
+    font-size: xx-large;
 }
 
 .circle {
@@ -92,7 +95,7 @@
     width: 100%;
     color: #a3a3a3; 
     font-size: 15px;
-    font-weight: bold;
+    font-weight: normal;
 
 }
 
@@ -104,7 +107,7 @@
     width: 100%;
     color: #a3a3a3; 
     font-size: 15px;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .checkoutInfoTotal{
@@ -113,12 +116,12 @@
     justify-content: space-between;
     padding: 15px 30px 5px 30px;
     width: 100%;
-    font-weight: bold;
+    font-weight: normal;
     font-size: large;
 }
 
 .checkoutButton{
-    background-color: #7f93d5;
+    background-color: var(--button-secondary);
     color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -135,8 +138,8 @@
 }
 
 .checkoutButton:hover{
-    color: rgb(98, 79, 173);
-    border: 1px solid rgb(98, 79, 173);
+    color:var(--button-secondary);
+    border: 1px solid var(--button-secondary);
     background-color: white;
 }
 

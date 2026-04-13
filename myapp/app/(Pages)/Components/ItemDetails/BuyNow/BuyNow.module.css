@@ -1,5 +1,5 @@
 .buyNow{
-    background-color: rgb(98, 79, 173);
+    background-color: var(--button-secondary);
     border-radius: 10px;
     width: 100%;
     align-self: center;
@@ -7,12 +7,11 @@
     margin-bottom: 10px;
     color: white;
     border: 1px solid white;
-
     transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
 .buyNow:hover{
-    color: rgb(98, 79, 173);
-    border: 1px solid rgb(98, 79, 173);
+    color: var(--button-secondary);
+    border: 1px solid var(--button-secondary);
     background-color: white;
 }

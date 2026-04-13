@@ -15,22 +15,16 @@ type ItemProps = {
   onSaved: (uploadId: number) => void;
 };
 
-async function save(
-  item: UploadClientItem,
-  selectedFile: File | null,
-  onSaved: (uploadId: number) => void
-) {
-  if (!selectedFile) {
-    throw new Error("Please select an image before saving.");
+async function save( item: UploadClientItem, selectedFile: File | null, onSaved: (uploadId: number) => void ) {
+  if (!selectedFile) { throw new Error("Please select an image before saving."); }
+
+  const selectedFileName = selectedFile.name.replace(/\.jpg$/i, "");
+
+  if (selectedFileName !== item.image) {
+    throw new Error( `Image filename mismatch. Expected "${item.image}", got "${selectedFileName}".` );
   }
 
-  if (selectedFile.name !== item.image) {
-    throw new Error(
-      `Image filename mismatch. Expected "${item.image}", got "${selectedFile.name}".`
-    );
-  }
-
-  const imageId = item.image.replace(/\.[^.]+$/, "");
+  const imageId = item.image;
 
   const formData = new FormData();
   formData.append("file", selectedFile);
@@ -42,9 +36,7 @@ async function save(
     body: formData,
   });
 
-  if (!uploadResponse.ok) {
-    throw new Error("Failed to upload image");
-  }
+  if (!uploadResponse.ok) { throw new Error("Failed to upload image"); }
 
   const response = await fetch("/Admin/api/add", {
     method: "POST",
@@ -54,21 +46,12 @@ async function save(
     body: JSON.stringify(item),
   });
 
-  if (!response.ok) {
-    throw new Error("Failed to save item");
-  }
+  if (!response.ok) { throw new Error("Failed to save item"); }
 
   onSaved(item.uploadId);
 }
 
-export default function UploadItem({
-  item,
-  selectedFile,
-  onItemChange,
-  onFileChange,
-  onReset,
-  onSaved,
-}: ItemProps) {
+export default function UploadItem({ item, selectedFile, onItemChange, onFileChange, onReset, onSaved, }: ItemProps) {
   const [showTagsEditor, setShowTagsEditor] = useState(false);
 
   const updateTag = (index: number, value: string) => {
@@ -103,7 +86,17 @@ export default function UploadItem({
   return (
     <div className={styles.row}>
       <ImageUpload
-        onFileSelect={(file) => onFileChange(item.uploadId, file)}
+        onFileSelect={(file) => {
+          onFileChange(item.uploadId, file);
+
+          if (file) {
+            const imageId = file.name.replace(/\.[^.]+$/, "");
+            onItemChange({
+              ...item,
+              image: imageId,
+            });
+          }
+        }}
         item={item}
       />
 

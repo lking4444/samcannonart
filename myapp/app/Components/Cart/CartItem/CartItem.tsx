@@ -1,17 +1,20 @@
 import Image from "next/image";
 import styles from "./CartItem.module.css"
 import { useCartStore } from "@/app/Store/cartStore"
+import { ItemType } from "@/app/generated/prisma/enums";
+import { getItemImageSrc } from "@/lib/imagepaths";
 
 
 type CartItemProps = {
     itemName: string;
     id: number;
+    type: ItemType;
     imgSrc: string; 
     price: string;
     quantity: number;
 }
 
-export default function CartItemUI({itemName, id, imgSrc, price, quantity} : CartItemProps){
+export default function CartItemUI({itemName, id, imgSrc, price, quantity, type} : CartItemProps){
     const addItem = useCartStore((s) => s.addItem)
     const setQuantity = useCartStore((s) => s.setQuantity)
     const removeItem = useCartStore((s) => s.removeItem)
@@ -20,7 +23,7 @@ export default function CartItemUI({itemName, id, imgSrc, price, quantity} : Car
     <div>
         <span className={styles.itemContainer}>
             <span className={styles.item}>
-                <Image  className={styles.image}src={`/${imgSrc}`} width={100} height={100} alt={"image"}/>
+                <Image  className={styles.image}src={getItemImageSrc(type, imgSrc)} width={100} height={100} alt={"image"}/>
                 <span className={styles.infoContainer}>
                     <p className={styles.name}>{itemName}</p>
                     <p><span className={styles.price}>£{price}</span><span className={styles.quantity}> x{quantity}</span></p>

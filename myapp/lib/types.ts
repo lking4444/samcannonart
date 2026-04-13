@@ -1,5 +1,3 @@
-import { GiftType } from "@/app/generated/prisma/enums";
-
 export const ItemType = {
     SLATE: "SLATE",
     CARD: "CARD",
@@ -9,8 +7,16 @@ export const ItemType = {
     NOTEPAD: "NOTEPAD",
     GIFT: "GIFT",
   } as const;
+
+export const GiftType = {
+    MIXEDMEDIA: 'MIXEDMEDIA',
+    PEBBLES: 'PEBBLES',
+    TINYPEBBLES: 'TINYPEBBLES'
+} as const;
   
   export type ITEM_TYPE = typeof ItemType[keyof typeof ItemType];
+  export type GIFT_TYPE = typeof GiftType[keyof typeof GiftType];
+
 
   export type UploadClientItem = {
     name: string;
@@ -28,5 +34,5 @@ export const ItemType = {
     printId?: string | undefined;
     notePadName?: string | undefined;
     giftNumber?: number | undefined;
-    giftType?: GiftType | undefined;
+    giftType?: GIFT_TYPE | undefined;
 };

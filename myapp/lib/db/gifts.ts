@@ -39,6 +39,35 @@ export async function createGift(data: CreateGiftInput) {
     });
 }
 
+export async function createGifts(data: CreateGiftInput[]) {
+    return prisma.$transaction(
+      data.map((item) =>
+        prisma.item.create({
+          data: {
+            name: item.name,
+            type: ItemType.GIFT,
+            image: item.image,
+            price: item.price,
+            stock: item.stock,
+            dimensions: item.dimensions,
+            media: item.media,
+            description: item.description,
+            year: item.year,
+            gift: {
+              create: {
+                giftNumber: item.giftNumber,
+                giftType: item.giftType
+              },
+            },
+          },
+          include: {
+            gift: true,
+          },
+        })
+      )
+    );
+  }
+
 export async function deleteGiftByItemId(itemId: number) {
     return prisma.item.delete({
       where: { id: itemId },

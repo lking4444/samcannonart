@@ -24,3 +24,8 @@ export const getBaseFolder = (itemType: ItemType): string => {
 export const getImageKey = (itemType: ItemType, imageId: string | null): string => {
     return `${getBaseFolder(itemType)}/${imageId}.jpg`;
 };
+
+export function getItemImageSrc(type: ItemType, image: string) {
+  const imagePath = getImageKey(type, image);
+  return `/api/images/${imagePath}`;
+}

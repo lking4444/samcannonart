@@ -4,31 +4,93 @@ import styles from "./Item.module.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ItemClientWithTypes } from "../../(Pages)/Types";
 import TypeDetails from "./TypeDetails";
-
+import EditImage from "../EditImage";
 
 type ItemProps = {
   item: ItemClientWithTypes;
 };
 
-function save(
+async function save(
   setOriginalItem: Dispatch<SetStateAction<ItemClientWithTypes>>,
-  newItem: ItemClientWithTypes
+  setModifiedItem: Dispatch<SetStateAction<ItemClientWithTypes>>,
+  setSelectedFile: Dispatch<SetStateAction<File | null>>,
+  newItem: ItemClientWithTypes,
+  selectedFile: File | null
 ) {
-  setOriginalItem(newItem);
-  // call update item api
+  if (selectedFile) {
+    const expectedFileName = newItem.image?.split("/").pop() ?? newItem.image;
+
+    const selectedFileName = selectedFile.name.replace(/\.jpg$/i, "");
+
+    if (expectedFileName && selectedFileName !== expectedFileName) {
+    throw new Error(
+        `Image filename mismatch. Expected "${expectedFileName}", got "${selectedFileName}".`
+    );
+    }
+
+    const imageId = expectedFileName.replace(/\.[^.]+$/, "");
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("itemType", newItem.type);
+    formData.append("imageId", imageId);
+
+    const uploadResponse = await fetch("/api/images/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!uploadResponse.ok) {
+      throw new Error("Failed to upload image");
+    }
+  }
+
+  const response = await fetch(`/Admin/api/admin/items/${newItem.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: newItem.name,
+      price: newItem.price,
+      description: newItem.description,
+      dimensions: newItem.dimensions,
+      media: newItem.media,
+      stock: newItem.stock,
+      image: newItem.image,
+      year: newItem.year,
+      popular: newItem.popular,
+      tags: newItem.tags,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save item");
+  }
+
+  const updatedItem = await response.json();
+
+  setOriginalItem(updatedItem);
+  setModifiedItem(updatedItem);
+  setSelectedFile(null);
 }
 
 function reset(
   setModifiedItem: Dispatch<SetStateAction<ItemClientWithTypes>>,
+  setSelectedFile: Dispatch<SetStateAction<File | null>>,
   originalItem: ItemClientWithTypes
 ) {
   setModifiedItem(originalItem);
+  setSelectedFile(null);
 }
 
 export default function Item({ item }: ItemProps) {
   const [modifiedItem, setModifiedItem] = useState<ItemClientWithTypes>(item);
   const [originalItem, setOriginalItem] = useState<ItemClientWithTypes>(item);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showTagsEditor, setShowTagsEditor] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const updateTag = (index: number, value: string) => {
     setModifiedItem((current) => ({
@@ -56,10 +118,35 @@ export default function Item({ item }: ItemProps) {
       ...current,
       tags: current.tags.map((t) => t.trim()).filter(Boolean),
     }));
+
+    setShowTagsEditor(false);
+  };
+
+  const togglePopular = () => {
+    setModifiedItem((current) => ({
+      ...current,
+      popular: !current.popular,
+    }));
   };
 
   return (
     <div className={styles.row}>
+      <EditImage
+        item={modifiedItem}
+        onFileSelect={(file) => {
+            setSelectedFile(file);
+
+            if (file) {
+            const imageId = file.name.replace(/\.[^.]+$/, "");
+
+            setModifiedItem((current) => ({
+                ...current,
+                image: imageId,
+            }));
+            }
+        }}
+        />
+
       <span className={styles.field}>
         <label className={styles.fieldLabel}>Name</label>
         <input
@@ -188,6 +275,19 @@ export default function Item({ item }: ItemProps) {
         />
       </span>
 
+      <span className={styles.field}>
+        <label className={styles.fieldLabel}>Popular</label>
+        <button
+          type="button"
+          onClick={togglePopular}
+          className={`${styles.popularButton} ${
+            modifiedItem.popular ? styles.popularActive : styles.popularInactive
+          }`}
+        >
+          {modifiedItem.popular ? "★ Popular" : "☆ Not popular"}
+        </button>
+      </span>
+
       <span className={`${styles.field} ${styles.tagsEditorWrapper}`}>
         <label className={styles.fieldLabel}>Tags</label>
         <button
@@ -237,14 +337,46 @@ export default function Item({ item }: ItemProps) {
             </div>
           </div>
         )}
-    </span>
-    <TypeDetails item={modifiedItem}/>
-    <button className={styles.saveButton} onClick={() => save(setOriginalItem, modifiedItem)}>
-        Save
-    </button>
-    <button className={styles.resetButton} onClick={() => reset(setModifiedItem, originalItem)}>
+      </span>
+
+      <TypeDetails item={modifiedItem} />
+
+      <button
+        className={`${styles.saveButton} ${
+          isSaving ? styles.saveButtonSaving : ""
+        } ${saveSuccess ? styles.saveButtonSuccess : ""}`}
+        onClick={async () => {
+          try {
+            setIsSaving(true);
+            setSaveSuccess(false);
+
+            await save(
+              setOriginalItem,
+              setModifiedItem,
+              setSelectedFile,
+              modifiedItem,
+              selectedFile
+            );
+
+            setSaveSuccess(true);
+            setTimeout(() => setSaveSuccess(false), 1200);
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setIsSaving(false);
+          }
+        }}
+        disabled={isSaving}
+      >
+        {isSaving ? "Saving..." : saveSuccess ? "Saved!" : "Save"}
+      </button>
+
+      <button
+        className={styles.resetButton}
+        onClick={() => reset(setModifiedItem, setSelectedFile, originalItem)}
+      >
         Reset
-    </button>
+      </button>
     </div>
   );
 }
