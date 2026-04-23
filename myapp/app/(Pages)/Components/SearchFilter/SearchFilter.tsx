@@ -1,12 +1,11 @@
 "use client";
-
-import styles from './SearchFilter.module.css'
-
 import { Dispatch, SetStateAction } from "react";
+
 import KeyWordSearch from "../KeyWordSearch";
 import MultiSelect from "./MultiSelect";
 import FilterDropDown from './FilterDropDown';
 
+import styles from './SearchFilter.module.css'
 
 type SearchFilterProps = {
     keyword: string; 
@@ -28,17 +27,17 @@ export default function SearchFilter({keyword, setKeyword, dimensionOptions, set
                     <KeyWordSearch keyword={keyword} setKeyword={setKeyword}/>
                 </span>
                 <span className={styles.FilterDropDown}>
-                    <FilterDropDown dimensionOptions={dimensionOptions} setDimension={setDimension} sortOrder={sortOrder} setSortOrder={setSortOrder}/>
+                    <FilterDropDown dimensionOptions={dimensionOptions} setDimension={setDimension} sortOrder={sortOrder} setSortOrder={setSortOrder} tagOptions={tagOptions} setTag={setTag}/>
                 </span>
             </span>
             <span className={styles.selectable}>
-                <MultiSelect multiSelectCategory="Card Sizes" multiSelectOptions={dimensionOptions} setOptions={setDimension}/> 
+                <MultiSelect multiSelectCategory="Filter Sizes" multiSelectOptions={dimensionOptions} setOptions={setDimension}/> 
             </span>
             <span className={styles.selectable}>
                 <MultiSelect multiSelectCategory="Sort by Price" multiSelectOptions={sortOrder} setOptions={setSortOrder}/> 
             </span>
             <span className={styles.selectable}>
-                <MultiSelect multiSelectCategory="Card Themes" multiSelectOptions={tagOptions} setOptions={setTag}/>
+                <MultiSelect multiSelectCategory="Filter Themes" multiSelectOptions={tagOptions} setOptions={setTag}/>
             </span>
         </span>
 

@@ -1,6 +1,7 @@
 import { useCartStore } from '@/app/Store/cartStore'
-import styles from './AddToBasket.module.css'
 import { useUiStore } from '@/app/Store/uiStore'
+
+import styles from './AddToBasket.module.css'
 
 type AddToBasketProps = {
     itemId: number

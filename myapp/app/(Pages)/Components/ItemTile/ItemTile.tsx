@@ -1,9 +1,9 @@
-import { ItemClient, ItemElement} from "../../Types"
-import type { Item } from '@/app/generated/prisma/client';
 import Link from 'next/link';
 
-import styles from './ItemTile.module.css'
 import { getImageKey } from "@/lib/imagepaths";
+import { ItemClient} from "../../Types"
+
+import styles from './ItemTile.module.css'
 
 
 type ItemTileProps = {
@@ -11,14 +11,10 @@ type ItemTileProps = {
 }
 
 export default function ItemTile({item} : ItemTileProps){
-
+    
     const stringPrice: string = "£" + String(item.price);
-
     const imagePath = getImageKey(item.type, item.image);
-
-    console.log(imagePath)
-
-
+    
     return (
         <Link href={`/Item/${item.id}`} className={styles.link}>
             <span className={styles.itemContainer}>

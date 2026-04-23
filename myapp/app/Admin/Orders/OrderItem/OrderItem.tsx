@@ -1,5 +1,6 @@
 "use client";
 
+import { getItemImageSrc } from "@/lib/imagepaths";
 import { DisplayOrder, OrderStatus } from "@/lib/orders";
 import { useEffect, useMemo, useState } from "react";
 
@@ -72,11 +73,8 @@ function formatDate(value?: string | null) {
   return `${day} ${month} ${year}, ${hours}:${minutes} UTC`;
 }
 
-export default function OrderItem({
-    order,
-    className = "",
-    onOrderUpdated,
-  }: OrderItemProps) {
+export default function OrderItem({ order, className = "", onOrderUpdated, }: OrderItemProps) {
+
   const [originalStatus, setOriginalStatus] = useState<OrderStatus>(order.status);
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus>(order.status);
   const [localUpdatedAt, setLocalUpdatedAt] = useState<string>(order.updatedAt);
@@ -356,9 +354,9 @@ export default function OrderItem({
                   <tr key={`${item.itemId}-${index}`}>
                     <td className="px-4 py-4 text-sm text-gray-900">
                       <div className="flex items-center gap-3">
-                        {item.item?.imageUrl ? (
+                        {item.item?.imageUrl && item.item?.type ? (
                           <img
-                            src={item.item.imageUrl}
+                            src={getItemImageSrc(item.item.type, item.item.imageUrl)}
                             alt={item.item?.name || "Order item"}
                             className="h-12 w-12 rounded-lg object-cover"
                           />

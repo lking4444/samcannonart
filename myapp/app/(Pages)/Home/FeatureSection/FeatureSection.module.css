@@ -75,7 +75,7 @@ color: rgb(200, 87, 34);
     color 220ms cubic-bezier(.2,.9,.2,1),
     border-color 220ms cubic-bezier(.2,.9,.2,1),
     box-shadow 220ms cubic-bezier(.2,.9,.2,1);
-    border: 2px solid var(--button-secondary);
+    border: 1px solid var(--button-secondary);
 
 }
 
@@ -95,18 +95,21 @@ justify-content: center;
 }
 
 .imagesContainer {
-display: flex;
-flex-wrap: nowrap;
-gap: 30px;
-overflow: hidden;
-width: fit-content;
-max-width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 30px;
+    overflow: hidden;
+    width: fit-content;
+    max-width: 100%;
 }
 
 
 .imageItem {
     flex: 0 0 300px;
 }
+
+
+
 
 
 @media (max-width: 1650px) {

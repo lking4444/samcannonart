@@ -1,10 +1,9 @@
-import { ItemElement } from "@/app/(Pages)/Types"
-
-import styles from './SelectedSuggestion.module.css'
 import Image from "next/image";
+
 import { ItemClient } from "../../../../Types";
 import { getItemImageSrc } from "@/lib/imagepaths";
 
+import styles from './SelectedSuggestion.module.css'
 
 type SelectedSuggestionProps = {
     item : ItemClient

@@ -20,7 +20,7 @@ export const GiftType = {
 
   export type UploadClientItem = {
     name: string;
-    uploadId: number;
+    uploadId: string;
     type: ITEM_TYPE;
     price: string;
     image: string;

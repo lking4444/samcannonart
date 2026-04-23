@@ -73,7 +73,7 @@ async function main() {
   console.log(`Found ${rows.length} rows`);
 
   for (const [index, row] of rows.entries()) {
-    const uploadId = getInt(row.UploadId);
+    const uploadId = getString(row.UploadId);
     const name = getString(row.Name);
     const code = getString(row.CardId);
     const media = getString(row.Media);

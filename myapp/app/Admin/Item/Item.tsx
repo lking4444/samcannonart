@@ -60,6 +60,7 @@ async function save(
       image: newItem.image,
       year: newItem.year,
       popular: newItem.popular,
+      hidden: newItem.hidden,
       tags: newItem.tags,
     }),
   });
@@ -75,11 +76,7 @@ async function save(
   setSelectedFile(null);
 }
 
-function reset(
-  setModifiedItem: Dispatch<SetStateAction<ItemClientWithTypes>>,
-  setSelectedFile: Dispatch<SetStateAction<File | null>>,
-  originalItem: ItemClientWithTypes
-) {
+function reset( setModifiedItem: Dispatch<SetStateAction<ItemClientWithTypes>>, setSelectedFile: Dispatch<SetStateAction<File | null>>, originalItem: ItemClientWithTypes ) {
   setModifiedItem(originalItem);
   setSelectedFile(null);
 }
@@ -126,6 +123,13 @@ export default function Item({ item }: ItemProps) {
     setModifiedItem((current) => ({
       ...current,
       popular: !current.popular,
+    }));
+  };
+
+  const toggleHidden = () => {
+    setModifiedItem((current) => ({
+      ...current,
+      hidden: !current.hidden,
     }));
   };
 
@@ -285,6 +289,19 @@ export default function Item({ item }: ItemProps) {
           }`}
         >
           {modifiedItem.popular ? "★ Popular" : "☆ Not popular"}
+        </button>
+      </span>
+
+      <span className={styles.field}>
+        <label className={styles.fieldLabel}>Hidden</label>
+        <button
+          type="button"
+          onClick={toggleHidden}
+          className={`${styles.popularButton} ${
+            modifiedItem.hidden ? styles.popularActive : styles.popularInactive
+          }`}
+        >
+          {modifiedItem.hidden ? "★ Hidden" : "☆ Not Hidden"}
         </button>
       </span>
 

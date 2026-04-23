@@ -1,0 +1,10 @@
+.showcaseContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 30px
+}
+
+.groupedImages{
+    display: flex;
+    flex-direction: column;
+}

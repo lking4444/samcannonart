@@ -10,14 +10,14 @@ type ItemProps = {
   item: UploadClientItem;
   selectedFile: File | null;
   onItemChange: (item: UploadClientItem) => void;
-  onFileChange: (uploadId: number, file: File | null) => void;
-  onReset: (uploadId: number) => void;
-  onSaved: (uploadId: number) => void;
+  onFileChange: (uploadId: string, file: File | null) => void;
+  onReset: (uploadId: string) => void;
+  onSaved: (uploadId: string) => void;
 };
 
-async function save( item: UploadClientItem, selectedFile: File | null, onSaved: (uploadId: number) => void ) {
+async function save( item: UploadClientItem, selectedFile: File | null, onSaved: (uploadId: string) => void ) {
   if (!selectedFile) { throw new Error("Please select an image before saving."); }
-
+ 
   const selectedFileName = selectedFile.name.replace(/\.jpg$/i, "");
 
   if (selectedFileName !== item.image) {

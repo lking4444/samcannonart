@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import type { Item, ItemType } from '@/app/generated/prisma/client';
+import { normaliseTag } from '../tags';
 
 type SortOrder = "High to Low" | "Low to High" | "Default";
 
@@ -13,6 +14,7 @@ type UpdateItemInput = {
     image: string;
     year?: number | null;
     popular: boolean;
+    hidden: boolean;
     tags: string[];
 };
 
@@ -88,6 +90,7 @@ export async function updateItem(id: number, data: UpdateItemInput) {
             image: data.image,
             year: data.year,
             popular: data.popular,
+            hidden: data.hidden,
             tags: data.tags,
         },
     });
@@ -109,7 +112,7 @@ export async function togglePopular(id: number) {
         popular: !item.popular,
       },
     });
-  }
+}
 
 export async function getAllCalendarItems(){
     return prisma.item.findMany({
@@ -290,7 +293,7 @@ export async function incrementStock(amount : number, id : number){
     });
 }
 
-export async function getExistingUploadIds(uploadIds: number[]): Promise<number[]> {
+export async function getExistingUploadIds(uploadIds: string[]): Promise<string[]> {
     if (uploadIds.length === 0) return [];
   
     const items = await prisma.item.findMany({
@@ -304,81 +307,26 @@ export async function getExistingUploadIds(uploadIds: number[]): Promise<number[
         },
     });
   
-    return items.map((item) => item.uploadId).filter((id): id is number => id !== null);;
+    return items.map((item) => item.uploadId).filter((id): id is string => id !== null);;
 }
 
-export async function getItemsByPageFiltered(params: {page?: number; pageSize?: number; type: ItemType; keyword?: string; dimension?: string; tag?: string; sortOrder?: SortOrder;}) {
+export async function getItemsByPageFiltered(params: { page?: number; pageSize?: number; type: ItemType; keyword?: string; dimension?: string; tag?: string; sortOrder?: SortOrder; }) {
     const pageSize = params.pageSize ?? 20;
     const page = params.page ?? 1;
-    const skip = (page - 1) * pageSize;
   
     const keyword = (params.keyword ?? "").trim();
     const dimension = (params.dimension ?? "").trim();
-    const tag = (params.tag ?? "Default");
+    const tag = (params.tag ?? "Default").trim();
     const sortOrder = (params.sortOrder ?? "Default") as SortOrder;
   
-    const where = {
-        type: params.type,
-        ...({ stock: { gt: 0 } }),
-        ...(dimension ? { dimensions: dimension } : {}),
-        ...(tag !== "Default" ? { tags: { has: tag } } : {}),
-        ...(keyword ? {name: { contains: keyword, mode: "insensitive" as const },}: {}),
-    };
-  
-    const orderBy =
-        sortOrder === "High to Low" ? [{ price: "desc" as const }, { id: "desc" as const }] : 
-        sortOrder === "Low to High" ? [{ price: "asc" as const }, { id: "desc" as const }] : 
-        [{ year: "desc" as const }, { id: "desc" as const }];
-  
-    const [items, total] = await Promise.all([
-        prisma.item.findMany({
-            where,
-            orderBy,
-            take: pageSize,
-            skip,
-            select: {
-            id: true,
-            tags: true,
-            name: true,
-            type: true,
-            price: true,
-            image: true,
-            stock: true,
-            dimensions: true,
-            description: true,
-            year: true,
-            },
-        }),
-        prisma.item.count({ where }),
-    ]);
-  
-    return {
-        items,
-        total,
-        page,
-        pageSize,
-        hasMore: skip + items.length < total,
-    };
-}
-
-export async function getItemsByPageFilteredAdmin(params: {
-    page?: number;
-    pageSize?: number;
-    type: ItemType;
-    keyword?: string;
-    tag?: string;
-  }) {
-    const pageSize = params.pageSize ?? 20;
-    const page = params.page ?? 1;
-    const skip = (page - 1) * pageSize;
-  
-    const keyword = (params.keyword ?? "").trim();
-    const tag = params.tag ?? "Default";
+    const normalizedSelectedTag =
+      tag !== "Default" ? normaliseTag(tag) : null;
   
     const where = {
       type: params.type,
+      hidden: false,
       stock: { gt: 0 },
-      ...(tag !== "Default" ? { tags: { has: tag } } : {}),
+      ...(dimension ? { dimensions: dimension } : {}),
       ...(keyword
         ? {
             name: {
@@ -389,27 +337,42 @@ export async function getItemsByPageFilteredAdmin(params: {
         : {}),
     };
   
-    const [items, total] = await Promise.all([
-      prisma.item.findMany({
-        where,
-        orderBy: [{ year: "desc" as const }, { id: "desc" as const }],
-        take: pageSize,
-        skip,
-        select: {
-          id: true,
-          tags: true,
-          name: true,
-          type: true,
-          price: true,
-          image: true,
-          stock: true,
-          dimensions: true,
-          description: true,
-          year: true,
-        },
-      }),
-      prisma.item.count({ where }),
-    ]);
+    const orderBy =
+      sortOrder === "High to Low"
+        ? [{ price: "desc" as const }, { id: "desc" as const }]
+        : sortOrder === "Low to High"
+        ? [{ price: "asc" as const }, { id: "desc" as const }]
+        : [{ year: "desc" as const }, { id: "desc" as const }];
+  
+    const candidates = await prisma.item.findMany({
+      where,
+      orderBy,
+      select: {
+        id: true,
+        tags: true,
+        name: true,
+        type: true,
+        price: true,
+        image: true,
+        stock: true,
+        dimensions: true,
+        description: true,
+        year: true,
+      },
+    });
+  
+    const filtered =
+      normalizedSelectedTag === null
+        ? candidates
+        : candidates.filter((item) =>
+            item.tags.some(
+              (itemTag) => normaliseTag(itemTag) === normalizedSelectedTag
+            )
+          );
+  
+    const total = filtered.length;
+    const skip = (page - 1) * pageSize;
+    const items = filtered.slice(skip, skip + pageSize);
   
     return {
       items,

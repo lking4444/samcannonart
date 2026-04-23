@@ -2,7 +2,7 @@ import { getAllOrders } from "@/lib/db/order";
 import { NextResponse } from "next/server";
 
 function fromMinorUnits(value: string) {
-    return (Number(value) / 100).toFixed(2);
+    return (Number(value) / 100);
   }
   
 export async function GET() {
@@ -30,12 +30,13 @@ export async function GET() {
       items: order.items.map((orderItem) => ({
         itemId: orderItem.itemId,
         quantity: orderItem.quantity,
-        unitPrice: fromMinorUnits(orderItem.unitPrice.toString()),
+        unitPrice: orderItem.unitPrice,
         item: orderItem.item
           ? {
               name: orderItem.item.name,
               imageUrl: orderItem.item.image ?? null,
               description: orderItem.item.description ?? null,
+              type: orderItem.item.type ?? null
             }
           : undefined,
       })),

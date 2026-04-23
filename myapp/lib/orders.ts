@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"; 
+import { ItemType } from "@/app/generated/prisma/enums";
 
 
 export async function createOrderFromCheckoutSession(params: {
@@ -10,7 +11,7 @@ export async function createOrderFromCheckoutSession(params: {
   userAddress: string;
   paidAt: Date;
   status: "PAID"; 
-  items: { itemId: number; quantity: number; price: string }[];
+  items: { itemId: number; quantity: number; price: string, type: ItemType }[];
 }) {
 
   const existing = await prisma.order.findUnique({
@@ -33,6 +34,7 @@ export async function createOrderFromCheckoutSession(params: {
         create: params.items.map((item) => ({
           quantity: item.quantity,
           unitPrice: item.price,
+          type: item.type,
           item: {
             connect: { id: item.itemId },
           },
@@ -59,6 +61,7 @@ export type DisplayOrderItem = {
     name?: string;
     imageUrl?: string | null;
     description?: string | null;
+    type?: ItemType;
   };
 };
 

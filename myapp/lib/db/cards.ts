@@ -4,7 +4,7 @@ import { ItemType } from '@/app/generated/prisma/enums';
 type CreateCardInput = {
     name: string;
     image: string;
-    uploadId: number;
+    uploadId: string;
     price: string;
     stock: number;
     tags: string[];

@@ -1,15 +1,16 @@
-import { prisma } from "@/lib/prisma"
 import Stripe from "stripe"
-import styles from './success.module.css'
 import Image from "next/image"
+
 import { createOrderFromCheckoutSession } from "@/lib/orders";
 import { getItemImageSrc } from "@/lib/imagepaths";
+import { prisma } from "@/lib/prisma"
+
+import styles from './success.module.css'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 type Props = {
     searchParams: Promise<{ session_id?: string }>
-
 }
 
 export default async function Success({ searchParams }: Props){
@@ -45,22 +46,23 @@ export default async function Success({ searchParams }: Props){
         userEmail: customer?.email ?? "",
         userPhoneNumber: customer?.phone ?? "",
         userAddress: [
-          customer?.name,
-          customer?.address?.line1,
-          customer?.address?.line2,
-          customer?.address?.city,
-          customer?.address?.state,
-          customer?.address?.postal_code,
-          customer?.address?.country,
+            customer?.name,
+            customer?.address?.line1,
+            customer?.address?.line2,
+            customer?.address?.city,
+            customer?.address?.state,
+            customer?.address?.postal_code,
+            customer?.address?.country,
         ]
-          .filter(Boolean)
-          .join(", "),
+        .filter(Boolean)
+        .join(", "),
         paidAt: new Date(),
         status: "PAID",
         items: reservation.items.map((ri) => ({
-          itemId: ri.item.id,         
-          quantity: ri.quantity ?? 1,  
-          price: String(ri.item.price),
+            itemId: ri.item.id,         
+            quantity: ri.quantity ?? 1,  
+            price: String(ri.item.price),
+            type: ri.item.type
         })),
       });
     

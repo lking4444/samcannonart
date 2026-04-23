@@ -4,6 +4,7 @@ import { ItemType } from '@/app/generated/prisma/enums';
 type CreatePrintInput = {
     name: string;
     image: string;
+    uploadId: string;
     price: string;
     stock: number;
     dimensions?: string;
@@ -20,6 +21,7 @@ export async function createPrint(data: CreatePrintInput) {
         type: ItemType.PRINT,
         image: data.image,
         price: data.price,
+        uploadId: data.uploadId,
         stock: data.stock,
         dimensions: data.dimensions,
         media: data.media,

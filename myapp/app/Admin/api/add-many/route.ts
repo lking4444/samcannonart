@@ -35,16 +35,16 @@ export async function POST(req: NextRequest) {
         }
 
         const baseItems = items.map((item) => ({
-        uploadId: item.uploadId,
-        name: item.name,
-        price: item.price.trim(),
-        image: item.image,
-        stock: item.stock,
-        tags: item.tags,
-        dimensions: item.dimensions ?? undefined,
-        media: item.media ?? undefined,
-        description: item.description ?? undefined,
-        year: item.year ?? undefined,
+            uploadId: item.uploadId,
+            name: item.name,
+            price: item.price.trim(),
+            image: item.image,
+            stock: item.stock,
+            tags: item.tags,
+            dimensions: item.dimensions ?? undefined,
+            media: item.media ?? undefined,
+            description: item.description ?? undefined,
+            year: item.year ?? undefined,
         }));
 
         let created;

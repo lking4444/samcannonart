@@ -41,7 +41,8 @@ enum GiftType {
 
 model Item {
   id          Int      @id @default(autoincrement())
-  uploadId    Int?    @unique
+  uploadId    String?    @unique
+  hidden      Boolean @default(false)
   name        String
   type        ItemType
   price       Decimal  @db.Decimal(10, 2) 
@@ -158,6 +159,7 @@ model OrderItem {
   id       String @id @default(cuid())
   orderId  String
   itemId   Int
+  type     ItemType
 
   quantity  Int
   unitPrice Decimal @db.Decimal(10, 2)

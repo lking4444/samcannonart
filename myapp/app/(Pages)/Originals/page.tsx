@@ -1,4 +1,4 @@
-import styles from '../pages.module.css'
+import styles from '../Cards/Cards.module.css'
 import { ItemType} from '@/app/generated/prisma/client';
 import ScrollableItemList from '../Components/ScrollableItemList';
 

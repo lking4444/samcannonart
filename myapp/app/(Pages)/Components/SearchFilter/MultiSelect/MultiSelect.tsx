@@ -1,7 +1,7 @@
 "use client";
-
-import Select from 'react-select'
 import {useState, Dispatch, SetStateAction, useMemo } from "react";
+import Select from 'react-select'
+
 
 import styles from './MultiSelect.module.css'
 
@@ -14,7 +14,7 @@ type MultiSelectProps = {
 type Option = {
     value: string;
     label: string;
-  };
+};
 
 export default function MultiSelect({multiSelectCategory, multiSelectOptions, setOptions} : MultiSelectProps){
 
@@ -26,15 +26,12 @@ export default function MultiSelect({multiSelectCategory, multiSelectOptions, se
 
     const [selectedValues, setSelectedValues] = useState<Option | null>(null);
 
-    const selectId = useMemo(
-        () => multiSelectCategory.toLowerCase().replace(/\s+/g, "-"),
-        [multiSelectCategory]
-      );
+    const selectId = useMemo( () => multiSelectCategory.toLowerCase().replace(/\s+/g, "-"), [multiSelectCategory] );
 
     const handleChange = (selected: Option | null) => {
         setSelectedValues(selected);
         setOptions(selected?.label)
-      };
+    };
     
     return (
         <div className={styles.selectContainer}>

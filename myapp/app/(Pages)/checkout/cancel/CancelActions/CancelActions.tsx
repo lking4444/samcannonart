@@ -1,8 +1,9 @@
 "use client"
+import Link from "next/link"
 
 import { useUiStore } from "@/app/Store/uiStore"
+
 import styles from "./CancelActions.module.css"
-import Link from "next/link"
 
 export default function CancelActions() {
     const openCart = useUiStore((s) => s.openCart)

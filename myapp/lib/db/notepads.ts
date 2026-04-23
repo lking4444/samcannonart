@@ -5,6 +5,7 @@ type CreateNotepadsInput = {
     name: string;
     image: string;
     price: string;
+    uploadId: string;
     stock: number;
     dimensions?: string;
     media?: string;
@@ -19,6 +20,7 @@ export async function createNotepad(data: CreateNotepadsInput) {
         name: data.name,
         type: ItemType.NOTEPAD,
         image: data.image,
+        uploadId: data.uploadId,
         price: data.price,
         stock: data.stock,
         dimensions: data.dimensions,

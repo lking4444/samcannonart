@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "prisma": {
-    "seed": "tsx prisma/createOriginals.ts"
+    "seed": "tsx prisma/deleteOrders.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1004.0",

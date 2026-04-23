@@ -1,11 +1,12 @@
 
 import { prisma } from '@/lib/prisma';
-import { OrderStatus } from '@/app/generated/prisma/enums';
+import { ItemType, OrderStatus } from '@/app/generated/prisma/enums';
 
 type OrderItems = {
     itemId: number, 
     price: string,
-    quantity: number
+    quantity: number,
+    type: ItemType
 }
 
 type CreateOrderInput = {
@@ -45,6 +46,7 @@ export async function createOrder(data : CreateOrderInput){
                     itemId: item.itemId, 
                     quantity: item.quantity,
                     unitPrice: item.price,
+                    type: item.type
                 })),
           },
         },
@@ -77,6 +79,7 @@ export async function getAllOrders() {
                 image: true,
                 name: true,
                 description: true,
+                type: true,
             }
           }
         },

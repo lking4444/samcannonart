@@ -8,9 +8,9 @@ export type ItemTypeValue = (typeof ItemType)[keyof typeof ItemType];
 
 export type ParsedRow = Record<string, unknown>;
 
-type SelectedFilesMap = Record<number, File | null>;
+type SelectedFilesMap = Record<string, File | null>;
 
-export function filterItemsNotInDatabase(uploadedItems: UploadClientItem[], existingUploadIds: number[]): UploadClientItem[] {
+export function filterItemsNotInDatabase(uploadedItems: UploadClientItem[], existingUploadIds: string[]): UploadClientItem[] {
     const existingIdsSet = new Set(existingUploadIds);
   
     return uploadedItems.filter((item) => !existingIdsSet.has(item.uploadId));
@@ -128,7 +128,7 @@ export function mapRowToUploadItem(row: RawExcelRow): UploadClientItem {
     const type = parseItemType(row.Type);
 
     const base = {
-        uploadId: toNumberValue(row.UploadId),
+        uploadId: toStringValue(row.UploadId),
         name: toStringValue(row.Name),
         type,
         price: toStringValue(row.Price),

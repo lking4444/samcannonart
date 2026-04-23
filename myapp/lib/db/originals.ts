@@ -3,7 +3,7 @@ import { ItemType } from '@/app/generated/prisma/enums';
 
 type CreateOriginalsInput = {
     name: string;
-    uploadId: number;
+    uploadId: string;
     image: string;
     price: string;
     stock: number;

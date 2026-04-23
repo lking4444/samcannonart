@@ -35,6 +35,7 @@ export type ItemClient = {
     description: string | null;
     year: number | null;
     popular: boolean;
+    hidden: boolean;
   };
 
   export type ItemClientWithTypes = {
@@ -50,6 +51,7 @@ export type ItemClient = {
     description: string | null;
     year: number | null;
     popular: boolean;
+    hidden: boolean;
 
     card?: Card;
     calendar?: Calendar;

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import styles from "./FeatureSection.module.css";
 
 type Side = "left" | "right";
@@ -12,13 +13,7 @@ type FeatureSectionProps = {
   side?: Side;
 };
 
-export default function FeatureSection({
-  title,
-  description,
-  images,
-  href,
-  side = "left",
-}: FeatureSectionProps) {
+export default function FeatureSection({ title, description, images, href, side = "left", }: FeatureSectionProps) {
   const isRight = side === "right";
 
   return (
@@ -46,7 +41,7 @@ export default function FeatureSection({
               <Image src={images[0]} width={300} height={100} alt="image" />
             </div>
             <div className={styles.imageItem}>
-              <Image src={`/api/images/longtailedtits.png`} width={300} height={100} alt="image" />
+              <Image className={styles.picture} src={images[1]} width={300} height={100} alt="image" />
             </div>
             <div className={styles.imageItem}>
               <Image src={images[2]} width={300} height={100} alt="image" />

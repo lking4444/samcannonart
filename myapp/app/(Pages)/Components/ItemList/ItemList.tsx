@@ -1,13 +1,10 @@
 "use client"
+import { useState } from "react";
 
 import ItemTile from "../../Components/ItemTile";
-
-import styles from './ItemList.module.css'
-
-import SearchFilter from "../SearchFilter";
-import { useState } from "react";
 import { ItemClient } from '../../Types';
 
+import styles from './ItemList.module.css'
 
 type ItemListProps = {
     items: ItemClient[]
@@ -17,8 +14,6 @@ export default function ItemList({ items }: ItemListProps) {
     const itemSizes: string[] = [
       ...new Set(items.map((item) => item.dimensions).filter((d): d is string => d != null)),
     ];
-
-    const sortOrders = ["High to Low", "Low to High", "Default"]
   
     const [dimension, setDimension] = useState<string | undefined>("");
     const [keyword, setKeyword] = useState<string>("");

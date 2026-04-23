@@ -25,47 +25,52 @@
     margin: 0px 10px 10px 10px;
 }
 
-.itemComponentContainer{
-    display: flex; 
+.pageContentContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.itemComponentWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.itemComponentContainer {
+    display: flex;
     flex-direction: row;
     justify-content: center;
     padding: 10px;
 }
 
-.alternateImageContainer{
-    display: flex; 
+.alternateImageContainer {
+    display: flex;
     flex-direction: column;
 }
 
-.descriptionContainer{
+.descriptionContainer {
     padding: 0px 10px 0px 10px;
 }
 
-.purchaseButtons{
+.purchaseButtons {
     display: flex;
     flex-direction: column;
 }
 
-.pageContentContainer{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.itemName{
+.itemName {
     font-weight: 600;
 }
 
-.itemPrice{
+.itemPrice {
     font-size: small;
 }
 
-.itemDescription{
+.itemDescription {
     font-weight: 600;
     font-size: small;
 }
 
-.itemSize{
+.itemSize {
     font-weight: 600;
     font-size: small;
 }
@@ -73,32 +78,38 @@
 .divider {
     border: none;
     height: 1px;
-    background: #ccc;  
-    margin: 0.5rem 0;  
+    background: #ccc;
+    margin: 0.5rem 0;
 }
 
-.sideImage{
+.sideImage {
     margin: 0px 10px 10px 10px;
 }
 
 .backButton {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 44px;
-    height: 44px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
     border: none;
-    background: transparent;
-    color: #000;
-    font-size: 2rem;
+    background: #e5e5e5;
+    border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    z-index: 1000;
+    z-index: 2;
 }
 
 .backButton:hover {
-    opacity: 0.7;
+    background: #d4d4d4;
+    transform: scale(1.05);
+}
+
+.backIcon {
+    width: 20px !important;
+    height: 20px !important;
+    flex-shrink: 0;
 }

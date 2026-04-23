@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import styles from "./HomeSearch.module.css";
-import KeyWordSearch from "../../Components/KeyWordSearch";
 import Image from "next/image";
-import Loading from "../../Components/Loading";
 import Link from "next/link";
+
+import KeyWordSearch from "../../Components/KeyWordSearch";
+import Loading from "../../Components/Loading";
 import { getItemImageSrc } from "@/lib/imagepaths";
 import { ItemType } from "@/app/generated/prisma/enums";
+
+import styles from "./HomeSearch.module.css";
+
 
 type SearchItem = {
   id: number;

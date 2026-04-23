@@ -31,7 +31,7 @@ export async function GET(
       status: 200,
       headers: {
         "Content-Type": result.ContentType || "image/png",
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "public, max-age=0, must-revalidate",
       },
     });
   } catch (error) {

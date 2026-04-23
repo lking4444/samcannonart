@@ -1,24 +1,15 @@
 "use client";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import type { ItemType } from "@/app/generated/prisma/client";
-import SearchFilter from "../SearchFilter";
-import ItemTile from "../ItemTile";
-import styles from "./ScollableItemList.module.css";
-import { SortOrder, usePagedItems } from "../../Hooks/usePagedItems";
+
 import Loading from "../Loading";
+import ItemTile from "../ItemTile";
+import SearchFilter from "../SearchFilter";
+import { useDebouncedValue } from "./Hooks/useDebouncedValue";
+import { SortOrder, usePagedItems } from "../../Hooks/usePagedItems";
 
-
-function useDebouncedValue<T>(value: T, ms = 250) {
-    const [debounced, setDebounced] = useState(value);
-
-    useEffect(() => {
-        const t = setTimeout(() => setDebounced(value), ms);
-        return () => clearTimeout(t);
-    }, [value, ms]);
-
-    return debounced;
-}
+import styles from "./ScollableItemList.module.css";
 
 export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {type: ItemType; pageSize?: number;}) {
     const sortOrders: SortOrder[] = ["High to Low", "Low to High", "Default"];
@@ -29,33 +20,29 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
     const [sortOrder, setSortOrder] = useState<string | undefined>("Default");
     const [tag, setTag] = useState<string | undefined>("Default");
     const [allTags, setAllTags] = useState<string[]>([]);
+
     const isInitialisingRef = useRef(true);
-
-
-    // debounce keyword to fetch less frequently
     const debouncedKeyword = useDebouncedValue(keyword, 250);
+    const sentinelRef = useRef<HTMLDivElement | null>(null);
 
     // hook state (items/pagination)
-    const { items, page,pageRef, hasMore, loading, error, fetchPage, reset } = usePagedItems({
+    const { items, page ,pageRef, hasMore, loading, error, fetchPage, reset } = usePagedItems({
         type,
         pageSize,
     });
 
-    // sentinel for scrollable pagination
-    const sentinelRef = useRef<HTMLDivElement | null>(null);
-
     // build URL for the API using filters
     const buildUrl = useCallback(
         (p: number) => {
-        const sp = new URLSearchParams();
-        sp.set("type", String(type));
-        sp.set("page", String(p));
-        sp.set("pageSize", String(pageSize));
-        sp.set("keyword", debouncedKeyword);
-        sp.set("dimension", dimension ?? "");
-        sp.set("sortOrder", sortOrder ?? "Default");
-        sp.set("tag", tag ?? "Default");
-        return `/api/items/by-type?${sp.toString()}`;
+            const sp = new URLSearchParams();
+            sp.set("type", String(type));
+            sp.set("page", String(p));
+            sp.set("pageSize", String(pageSize));
+            sp.set("keyword", debouncedKeyword);
+            sp.set("dimension", dimension ?? "");
+            sp.set("sortOrder", sortOrder ?? "Default");
+            sp.set("tag", tag ?? "Default");
+            return `/api/items/by-type?${sp.toString()}`;
         },
         [type, pageSize, debouncedKeyword, dimension, sortOrder, tag]
     );
@@ -71,22 +58,14 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
     
                 const data: { tags: string[] } = await res.json();
     
-                if (!cancelled) {
-                    setAllTags(data.tags ?? []);
-                }
+                if (!cancelled) { setAllTags(data.tags ?? []); }
             } catch (err) {
                 console.error(err);
-                if (!cancelled) {
-                    setAllTags([]);
-                }
+                if (!cancelled) { setAllTags([]); }
             }
         }
-    
         loadTags();
-    
-        return () => {
-            cancelled = true;
-        };
+        return () => { cancelled = true; };
     }, [type]);
 
     // load page 1 on mount + when filters change
@@ -122,9 +101,7 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
 
     // prevents second page load until the first page has loaded
     useEffect(() => {
-        if (items.length > 0) {
-            isInitialisingRef.current = false;
-        }
+        if (items.length > 0) { isInitialisingRef.current = false; }
     }, [items]);
 
     // IntersectionObserver to trigger infinite scroll
@@ -145,9 +122,7 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
 
     // dimension options based on the currently loaded items
     const dimensionOptions = useMemo(() => {
-        return [
-        ...new Set(items.map((i) => i.dimensions).filter((d): d is string => d != null)),
-        ];
+        return [ ...new Set(items.map((i) => i.dimensions).filter((d): d is string => d != null)), ];
     }, [items]);
 
     const tagOptions = useMemo(() => {
@@ -156,28 +131,27 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
 
     return (
         <>
-        <SearchFilter
-            keyword={keyword}
-            setKeyword={setKeyword}
-            dimensionOptions={dimensionOptions}
-            setDimension={setDimension}
-            tagOptions={tagOptions}
-            setTag={setTag}
-            sortOrder={sortOrders}
-            setSortOrder={setSortOrder}
-        />
-
-        <div className={styles.tileContainer}>
-            {items.map((item) => (
-            <ItemTile key={item.id} item={item} />
-            ))}
-        </div>
-        {error && <p style={{ marginTop: 12 }}>Error: {error}</p>}
-        {loading && <Loading/>}
-        {!hasMore && !loading && items.length > 0 && (
-            <p style={{ marginTop: 12 }}>You’ve reached the end.</p>
-        )}
-        <div ref={sentinelRef} style={{ height: 1 }} />
+            <SearchFilter
+                keyword={keyword}
+                setKeyword={setKeyword}
+                dimensionOptions={dimensionOptions}
+                setDimension={setDimension}
+                tagOptions={tagOptions}
+                setTag={setTag}
+                sortOrder={sortOrders}
+                setSortOrder={setSortOrder}
+            />
+            <div className={styles.tileContainer}>
+                {items.map((item) => (
+                    <ItemTile key={item.id} item={item} />
+                ))}
+            </div>
+            {error && <p style={{ marginTop: 12 }}>Error: {error}</p>}
+            {loading && <Loading/>}
+            {!hasMore && !loading && items.length > 0 && (
+                <p style={{ marginTop: 12 }}>You’ve reached the end.</p>
+            )}
+            <div ref={sentinelRef} style={{ height: 1 }} />
         </>
     );
 }

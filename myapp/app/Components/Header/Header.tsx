@@ -23,7 +23,6 @@ export default function Header({ onCartClick, onNavClick }: HeaderProps)  {
                 <PageButton buttonName='Prints'></PageButton>
                 <PageButton buttonName='Gifts'></PageButton>
                 <PageButton buttonName='NotePads'></PageButton>
-                <PageButton buttonName='Slates'></PageButton>
             </span>
             <span className={styles.container}>
                 <span className={styles.logoContainer}>

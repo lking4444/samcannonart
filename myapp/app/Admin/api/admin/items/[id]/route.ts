@@ -16,16 +16,17 @@ export async function PATCH(
     const body = await request.json();
 
     const updatedItem = await updateItem(itemId, {
-      name: body.name,
-      price: body.price,
-      description: body.description ?? null,
-      dimensions: body.dimensions ?? null,
-      media: body.media ?? null,
-      stock: Number(body.stock),
-      image: body.image,
-      year: body.year ?? null,
-      popular: Boolean(body.popular),
-      tags: Array.isArray(body.tags) ? body.tags : [],
+        name: body.name,
+        price: body.price,
+        description: body.description ?? null,
+        dimensions: body.dimensions ?? null,
+        media: body.media ?? null,
+        stock: Number(body.stock),
+        image: body.image,
+        year: body.year ?? null,
+        popular: Boolean(body.popular),
+        hidden: Boolean(body.hidden),
+        tags: Array.isArray(body.tags) ? body.tags : [],
     });
 
     return NextResponse.json(updatedItem, { status: 200 });

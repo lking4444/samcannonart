@@ -6,14 +6,14 @@ import styles from "./ExcelUpload.module.css";
 import { UploadClientItem } from "@/lib/types";
 import UploadItem from "../UploadItem";
 import {
-  filterItemsNotInDatabase,
-  ParsedRow,
-  mapRowToUploadItem,
-  saveAllUploadItems,
-  saveAllImages,
+    filterItemsNotInDatabase,
+    ParsedRow,
+    mapRowToUploadItem,
+    saveAllUploadItems,
+    saveAllImages,
 } from "@/lib/uploads";
 
-type SelectedFilesMap = Record<number, File | null>;
+type SelectedFilesMap = Record<string, File | null>;
 
 export default function ExcelUpload() {
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -36,14 +36,14 @@ export default function ExcelUpload() {
         );
     };
 
-    const handleFileChange = (uploadId: number, file: File | null) => {
+    const handleFileChange = (uploadId: string, file: File | null) => {
         setSelectedFiles((current) => ({
             ...current,
             [uploadId]: file,
         }));
     };
 
-    const handleResetItem = (uploadId: number) => {
+    const handleResetItem = (uploadId: string) => {
         const originalItem = originalNewItems.find((item) => item.uploadId === uploadId);
         if (!originalItem) return;
 
@@ -57,7 +57,7 @@ export default function ExcelUpload() {
         }));
     };
 
-    const handleItemSaved = (uploadId: number) => {
+    const handleItemSaved = (uploadId: string) => {
         setNewItems((current) => current.filter((item) => item.uploadId !== uploadId));
         setOriginalNewItems((current) => current.filter((item) => item.uploadId !== uploadId) );
         setSelectedFiles((current) => {

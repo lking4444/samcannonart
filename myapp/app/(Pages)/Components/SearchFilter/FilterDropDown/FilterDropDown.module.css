@@ -36,7 +36,7 @@
     transform-origin: top center;
     display: flex;
     flex-direction: column;
-    background-color: rgb(221, 221, 221);
+    background-color: transparent;
     padding: 10px;
     gap: 10px;
     border-radius: 20px;
