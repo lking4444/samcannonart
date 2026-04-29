@@ -33,7 +33,9 @@ export default function ImageUpload({
 
     const nextPreviewUrl = URL.createObjectURL(file);
 
-    setSelectedFileName(file.name);
+    const filename = file.name.replace(/\.jpg$/i, "");
+
+    setSelectedFileName(filename);
     setPreviewUrl(nextPreviewUrl);
     onFileSelect(file);
   };

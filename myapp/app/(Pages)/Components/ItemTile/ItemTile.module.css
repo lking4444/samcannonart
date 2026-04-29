@@ -28,6 +28,7 @@
 .namePriceContainer {
     display: flex;
     flex-direction: column;
+    max-width: 300px;
 }
 
 .priceText {
@@ -41,4 +42,38 @@
 
 .image{
     width: 300px;
+}
+.imageWrapper {
+    position: relative;
+    width: 300px;
+    display: block;
+    overflow: hidden;
+}
+
+.image {
+    width: 300px;
+    height: auto;
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.imageLoading {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    min-height: 300px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+.loadingInner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -151,16 +151,16 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                             <span className={styles.priceInfo}>
                                 <span className={styles.checkoutInfo}>
                                     <p>Subtotal</p>
-                                    <p>£{subtotal}</p>
+                                    <p>£{Number(subtotal).toFixed(2)}</p>
                                 </span>
                                 <span className={styles.checkoutDeliveryInfo}>
                                     <p>Delivery</p>
-                                    <p>£{delivery}</p>
+                                    <p>£{Number(delivery).toFixed(2)}</p>
                                 </span>
                                 <hr className={styles.break}></hr>
                                 <span className={styles.checkoutInfoTotal}>
                                     <p>Total</p>
-                                    <p>£{total}</p>
+                                    <p>£{Number(total).toFixed(2)}</p>
                                 </span>
                             </span>
                             <button className={styles.checkoutButton} onClick={() => {setLoading(true); goToCheckout(total, cartItems);}}>

@@ -28,7 +28,7 @@ export default function SelectedSuggestion({item} : SelectedSuggestionProps){
                 <div className={styles.overlayBackground}></div>
                 <div className={styles.overlayText}>
                     <p className={styles.itemName}>{item.name}</p>
-                    <p>£{item.price}</p>
+                    <p>£{Number(item.price).toFixed(2)}</p>
                 </div>
             </div>
         </div>

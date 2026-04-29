@@ -1,34 +1,28 @@
 'use client'
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
+
 import AddToBasket from './AddToBasket';
 import BuyNow from './BuyNow';
-import styles from './ItemDetails.module.css'
 import SuggestedContent from './SuggestedContent';
-import Image from "next/image";
-import type { ItemType } from '@/app/generated/prisma/client';
-import { getImageKey } from '@/lib/imagepaths';
 
-export type clientItem = {
-    name: string;
-    id: number;
-    type: ItemType;
-    price: number;
-    image: string;
-    stock: number;
-    dimensions: string | null;
-    media: string | null;
-    description: string | null;
-    year: number | null;
-}
+import { getImageKey } from '@/lib/imagepaths';
+import { ClientItem } from './types';
+
+import styles from './ItemDetails.module.css'
+import Loading from '../Loading';
 
 type ItemDetailsProps = {
-    item: clientItem
+    item: ClientItem
 }
 
 export default function ItemDetails({ item }: ItemDetailsProps) {
     const router = useRouter();
     const imagePath = getImageKey(item.type, item.image);
+
+    const [imageLoaded, setImageLoaded] = useState(false);
 
     return (
         <div className={styles.pageContentContainer}>
@@ -48,25 +42,48 @@ export default function ItemDetails({ item }: ItemDetailsProps) {
                     />
                 </button>
 
-                <div className={styles.itemComponentContainer}>
-                    <Image
-                        src={`/api/images/${imagePath}`}
-                        width={400}
-                        height={400}
-                        alt={item.name}
-                    />
+                <div className={styles.detailContainer}>
+                    <div className={styles.itemComponentContainer}>
 
-                    <div className={styles.descriptionContainer}>
-                        <h1 className={styles.itemName}>{item.name}</h1>
-                        <p className={styles.itemPrice}>£{String(item.price)}</p>
-                        <hr className={styles.divider} />
-                        <p className={styles.itemDescription}>{item.description}</p>
-                        <p className={styles.itemSize}>{item.dimensions}cm</p>
-                        <hr className={styles.divider} />
-                        <div className={styles.purchaseButtons}>
-                            <BuyNow item={item} />
-                            <AddToBasket itemId={item.id} />
+                    <div className={`${styles.imageWrapper} ${!imageLoaded ? styles.imageWrapperLoading : ''}`} >
+                        {!imageLoaded && (
+                            <div className={styles.imageLoading}>
+                                <div className={styles.loadingInner}>
+                                    <Loading />
+                                </div>
+                            </div>
+                        )}
+
+                        <Image
+                            src={`/api/images/${imagePath}`}
+                            width={400}
+                            height={400}
+                            alt={item.name}
+                            className={styles.itemImage}
+                            onLoad={() => setImageLoaded(true)}
+                            style={{
+                                opacity: imageLoaded ? 1 : 0,
+                            }}
+                        />
+                    </div>
+
+                        <div className={styles.descriptionContainerMobile}>
+                            <div className={styles.descriptionContainer}>
+                                <h1 className={styles.itemName}>{item.name}</h1>
+                                <p className={styles.itemPrice}>
+                                    £{Number(item.price).toFixed(2)}
+                                </p>
+                                <hr className={styles.divider} />
+                                <p className={styles.itemDescription}>{item.description}</p>
+                                <p className={styles.itemSize}>{item.dimensions}</p>
+                                <hr className={styles.divider} />
+                                <div className={styles.purchaseButtons}>
+                                    <BuyNow item={item} />
+                                    <AddToBasket itemId={item.id} />
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -50,6 +50,7 @@
 
 .descriptionContainer {
     padding: 0px 10px 0px 10px;
+    min-width: 250px;
 }
 
 .purchaseButtons {
@@ -59,19 +60,23 @@
 
 .itemName {
     font-weight: 600;
+    font-family: var(--font-inter);
 }
 
 .itemPrice {
     font-size: small;
+    font-family: var(--font-inter);
 }
 
 .itemDescription {
     font-weight: 600;
+    font-family: var(--font-inter);
     font-size: small;
 }
 
 .itemSize {
     font-weight: 600;
+    font-family: var(--font-inter);
     font-size: small;
 }
 
@@ -112,4 +117,69 @@
     width: 20px !important;
     height: 20px !important;
     flex-shrink: 0;
+}
+
+.detailContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+@media (max-width: 900px) {
+    .itemComponentContainer {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .descriptionContainer {
+        padding: 0px 10px 0px 10px;
+        min-width: 250px;
+        max-width: 250px;
+        justify-self: center;
+    }
+
+    .descriptionContainerMobile{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+.imageWrapper {
+    position: relative;
+    width: 400px;
+    display: block;
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+.imageWrapperLoading {
+    height: 400px;
+}
+
+.itemImage {
+    width: 400px;
+    height: auto;
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.imageLoading {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+.loadingInner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

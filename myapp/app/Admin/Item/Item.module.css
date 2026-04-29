@@ -6,12 +6,7 @@
       minmax(240px, 1.8fr)
       minmax(110px, 0.8fr)
       minmax(140px, 1fr)
-      minmax(90px, 0.6fr)
-      minmax(160px, 1fr)
-      minmax(90px, 0.6fr)
-      auto
-      auto
-      auto;
+      minmax(90px, 0.6fr);
     gap: 12px;
     align-items: center;
     padding: 14px 16px;
@@ -95,7 +90,8 @@
   .tagsEditorDropdown {
     position: absolute;
     top: calc(100% + 10px);
-    left: 0;
+    right: 0;
+    left: auto;
     z-index: 30;
     min-width: 320px;
     max-width: 380px;
@@ -182,7 +178,7 @@
     transform: translateY(-1px);
   }
   
-  @media (max-width: 1400px) {
+  @media (max-width: 1000px) {
     .row {
       grid-template-columns: 1fr 1fr;
       align-items: start;
@@ -198,7 +194,7 @@
     }
   }
   
-  @media (max-width: 760px) {
+  @media (max-width: 600px) {
     .row {
       grid-template-columns: 1fr;
       padding: 12px;

@@ -8,6 +8,7 @@
     color: white;
     border: 1px solid white;
     transition: background-color 0.2s ease, transform 0.15s ease;
+    font-family: var(--font-inter);
 }
 
 .buyNow:hover{

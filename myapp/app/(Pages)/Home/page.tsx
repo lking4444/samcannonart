@@ -45,8 +45,8 @@ export default function HomePage() {
             description="My illustrated calendars combine original artwork with practical, thoughtful design. Each month features a unique illustration inspired by seasonal changes, colour, and everyday beauty. Printed on high-quality paper, they’re made to be both useful and enjoyable to live with — whether on your wall, desk, or given as a meaningful gift."
             images={[
                 "/api/images/HomePage/Calendars/image1.jpg",
-                "/api/images/HomePage/Calendars/Image2.jpg",
-                "/api/images/HomePage/Calendars/Image3.jpg",
+                "/api/images/HomePage/Calendars/image2.jpg",
+                "/api/images/HomePage/Calendars/image3.jpg",
             ]}
             href="/Calendars"
             side="right"
@@ -94,17 +94,6 @@ export default function HomePage() {
             ]}
             href="/Notepads"
             side="right"
-        />
-        <FeatureSection
-            title="Slates"
-            description="These hand-painted slate pieces are created using natural slate as a base, allowing the texture and character of the material to remain visible. Each slate is finished to be durable and long-lasting, making them suitable for display indoors or outdoors as distinctive decorative pieces."
-            images={[
-                "/api/images/HomePage/Slates/image1.jpg",
-                "/api/images/HomePage/Slates/image2.jpg",
-                "/api/images/HomePage/Slates/image3.jpg",
-            ]}
-            href="/Slates"
-            side="left"
         />
     </div>
   )

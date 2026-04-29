@@ -1,9 +1,12 @@
+'use client'
 import Link from 'next/link';
 
 import { getImageKey } from "@/lib/imagepaths";
 import { ItemClient} from "../../Types"
 
 import styles from './ItemTile.module.css'
+import { useState } from 'react';
+import Loading from '../Loading';
 
 
 type ItemTileProps = {
@@ -12,16 +15,35 @@ type ItemTileProps = {
 
 export default function ItemTile({item} : ItemTileProps){
     
-    const stringPrice: string = "£" + String(item.price);
+    const [imageLoaded, setImageLoaded] = useState(false);
     const imagePath = getImageKey(item.type, item.image);
     
     return (
         <Link href={`/Item/${item.id}`} className={styles.link}>
             <span className={styles.itemContainer}>
-                <img className={styles.image} src={`/api/images/${imagePath}`} width={300} height={300} alt={"image"}></img>
+            <span className={styles.imageWrapper}>
+                {!imageLoaded && (
+                    <span className={styles.imageLoading}>
+                        <span className={styles.loadingInner}>
+                            <Loading />
+                        </span>
+                    </span>
+                )}
+
+                <img
+                    className={styles.image}
+                    src={`/api/images/${imagePath}`}
+                    width={300}
+                    alt={item.name}
+                    onLoad={() => setImageLoaded(true)}
+                    style={{
+                        opacity: imageLoaded ? 1 : 0,
+                    }}
+                />
+            </span>
                 <span className={styles.namePriceContainer}>
                     <p className={styles.nameContainer}>{item.name} {item.dimensions}</p>
-                    <p className={styles.priceText}>{stringPrice}</p>
+                    <p className={styles.itemPrice}>£{Number(item.price).toFixed(2)}</p>
                 </span>
             </span>
         </Link>
