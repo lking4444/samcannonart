@@ -4,9 +4,6 @@ import { useState } from "react";
 import { ItemClient } from "../(Pages)/Types";
 import Filter from "./Filter";
 import Item from "./Item";
-import ExcelUpload from "./ExcelUpload";
-import Header from "../Components/Header";
-import AdminHeader from "./AdminHeader";
 
 export default function Admin() {
 
@@ -15,12 +12,18 @@ export default function Admin() {
 
     const [items, setItems] = useState<ItemClient[]>([]);
 
+    const removeItemFromList = (id: number) => {
+        setItems((currentItems) =>
+          currentItems.filter((item) => item.id !== id)
+        );
+    };
+      
 
     return (
         <div>
             <Filter items={items} setItems={setItems}/>
             {items.map((item) => (
-                <Item key={item.id} item={item} />
+                <Item key={item.id} item={item} removeItem={removeItemFromList}/>
             ))}
         </div>
     )

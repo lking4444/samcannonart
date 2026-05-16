@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 
-import { getImageKey } from "@/lib/imagepaths";
+import { getImageKey } from "@/lib/images/imagepaths";
 import { ItemClient} from "../../Types"
 
 import styles from './ItemTile.module.css'

@@ -9,6 +9,7 @@ type CreateGiftInput = {
     stock: number;
     dimensions?: string;
     media?: string;
+    tags?: string[];
     description?: string;
     year?: number;
     giftNumber: string;
@@ -25,6 +26,7 @@ export async function createGift(data: CreateGiftInput) {
         uploadId: data.uploadId,
         stock: data.stock,
         dimensions: data.dimensions,
+        tags: data.tags,
         media: data.media,
         description: data.description,
         year: data.year,
@@ -50,6 +52,7 @@ export async function createGifts(data: CreateGiftInput[]) {
             type: ItemType.GIFT,
             image: item.image,
             price: item.price,
+            uploadId: item.uploadId,
             stock: item.stock,
             dimensions: item.dimensions,
             media: item.media,

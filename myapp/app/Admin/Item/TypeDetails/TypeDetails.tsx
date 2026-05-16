@@ -1,6 +1,4 @@
-// components/ItemTypeDetails.tsx
-import { ItemClientWithTypes } from "../../../(Pages)/Types";
-import { ItemType } from "@/lib/types";
+import { ItemClientWithTypes, ItemType } from "@/app/Types/items";
 
 type Props = {
   item: ItemClientWithTypes;

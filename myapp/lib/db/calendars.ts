@@ -8,6 +8,7 @@ type CreateCalendarInput = {
     uploadId: string;
     stock: number;
     dimensions?: string;
+    tags?: string[];
     media?: string;
     description?: string;
     year?: number;
@@ -22,6 +23,7 @@ export async function createCalendar(data: CreateCalendarInput) {
         price: data.price,
         uploadId: data.uploadId,
         stock: data.stock,
+        tags: data.tags,
         dimensions: data.dimensions,
         media: data.media,
         description: data.description,
@@ -43,6 +45,7 @@ export async function createCalendars(data: CreateCalendarInput[]) {
           data: {
             name: item.name,
             type: ItemType.CALENDAR,
+            uploadId: item.uploadId,
             image: item.image,
             price: item.price,
             stock: item.stock,

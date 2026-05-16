@@ -1,54 +1,64 @@
 import { getAllOrders } from "@/lib/db/order";
+import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { NextResponse } from "next/server";
 
 function fromMinorUnits(value: string) {
     return (Number(value) / 100);
-  }
+}
   
 export async function GET() {
-  try {
-    const orders = await getAllOrders();
+    const session = await requireAdmin();
 
-    const serialisedOrders = orders.map((order) => ({
-    value: fromMinorUnits(order.value.toString()),
-      currency: order.currency,
-      SessionId: order.SessionId,
+    if (!session) {
+        return NextResponse.json(
+            { error: "Unauthorized" },
+            { status: 401 }
+        );
+    }
+        
+    try {
+        const orders = await getAllOrders();
 
-      userEmail: order.userEmail,
-      userPhoneNumber: order.userPhoneNumber,
-      userAddress: order.userAddress,
+        const serialisedOrders = orders.map((order) => ({
+        value: fromMinorUnits(order.value.toString()),
+        currency: order.currency,
+        SessionId: order.SessionId,
 
-      status: order.status,
+        userEmail: order.userEmail,
+        userPhoneNumber: order.userPhoneNumber,
+        userAddress: order.userAddress,
 
-      paidAt: order.paidAt?.toISOString() ?? null,
-      cancelledAt: order.cancelledAt?.toISOString() ?? null,
-      refundedAt: order.refundedAt?.toISOString() ?? null,
+        status: order.status,
 
-      createdAt: order.createdAt.toISOString(),
-      updatedAt: order.updatedAt.toISOString(),
+        paidAt: order.paidAt?.toISOString() ?? null,
+        cancelledAt: order.cancelledAt?.toISOString() ?? null,
+        refundedAt: order.refundedAt?.toISOString() ?? null,
 
-      items: order.items.map((orderItem) => ({
-        itemId: orderItem.itemId,
-        quantity: orderItem.quantity,
-        unitPrice: orderItem.unitPrice,
-        item: orderItem.item
-          ? {
-              name: orderItem.item.name,
-              imageUrl: orderItem.item.image ?? null,
-              description: orderItem.item.description ?? null,
-              type: orderItem.item.type ?? null
-            }
-          : undefined,
-      })),
-    }));
+        createdAt: order.createdAt.toISOString(),
+        updatedAt: order.updatedAt.toISOString(),
 
-    return NextResponse.json(serialisedOrders, { status: 200 });
-  } catch (error) {
-    console.error("GET /api/order/get-all failed:", error);
+        items: order.items.map((orderItem) => ({
+            itemId: orderItem.itemId,
+            quantity: orderItem.quantity,
+            unitPrice: orderItem.unitPrice,
+            item: orderItem.item
+            ? {
+                name: orderItem.item.name,
+                imageUrl: orderItem.item.image ?? null,
+                description: orderItem.item.description ?? null,
+                type: orderItem.item.type ?? null
+                }
+            : undefined,
+        })),
+        }));
 
-    return NextResponse.json(
-      { message: "Failed to fetch orders." },
-      { status: 500 }
-    );
-  }
+        return NextResponse.json(serialisedOrders, { status: 200 });
+    } catch (error) {
+        console.error("GET /api/order/get-all failed:", error);
+
+        return NextResponse.json(
+            { message: "Failed to fetch orders." },
+            { status: 500 }
+        );
+    }
 }

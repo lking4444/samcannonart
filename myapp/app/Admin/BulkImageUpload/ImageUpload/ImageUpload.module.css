@@ -1,0 +1,262 @@
+.wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .hiddenInput {
+    display: none;
+  }
+  
+  .dropZone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 18px;
+    padding: 44px 24px;
+    text-align: center;
+    cursor: pointer;
+    background: #f8fafc;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+  
+  .dropZone:hover {
+    border-color: #64748b;
+    background: #f1f5f9;
+  }
+  
+  .dragging {
+    border-color: #2563eb;
+    background: #eff6ff;
+    transform: scale(1.01);
+  }
+  
+  .icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  
+  .text {
+    margin: 10px 0 0;
+    color: #475569;
+    font-size: 15px;
+  }
+  
+  .subtext {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 14px;
+  }
+  
+  .field {
+    margin-top: 22px;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  
+  .select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: white;
+    color: #0f172a;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+  
+  .previewSection {
+    margin-top: 28px;
+  }
+  
+  .previewHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  
+  .previewTitle {
+    margin: 0;
+    color: #0f172a;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  
+  .previewCount {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 14px;
+  }
+  
+  .clearButton {
+    border: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .clearButton:hover:not(:disabled) {
+    background: #e2e8f0;
+  }
+  
+  .imageGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  
+  .imageCard {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  }
+  
+  .imagePreviewWrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #f8fafc;
+    overflow: hidden;
+  }
+  
+  .imagePreview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .imageInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+  }
+  
+  .imageName {
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .imageId {
+    color: #475569;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .imageType {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .removeButton {
+    margin: 0 12px 12px;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 10px;
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .removeButton:hover:not(:disabled) {
+    background: #fecaca;
+  }
+  
+  .saveButton {
+    width: 100%;
+    margin-top: 24px;
+    border: none;
+    border-radius: 14px;
+    padding: 13px 16px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      opacity 0.2s ease;
+  }
+  
+  .saveButton:hover:not(:disabled) {
+    background: #1d4ed8;
+  }
+  
+  .saveButton:disabled,
+  .clearButton:disabled,
+  .removeButton:disabled,
+  .select:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  .error {
+    margin: 18px 0 0;
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .success {
+    margin: 18px 0 0;
+    color: #16a34a;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  @media (max-width: 640px) {
+    .dropZone {
+      padding: 32px 18px;
+    }
+  
+    .previewHeader {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  
+    .clearButton {
+      width: 100%;
+    }
+  
+    .imageGrid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+  }

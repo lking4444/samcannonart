@@ -1,4 +1,4 @@
-import { DisplayOrder } from "@/lib/orders";
+import { DisplayOrder } from "@/lib/orders/orders";
 import OrderView from "./OrderView";
 
 const mockOrder: DisplayOrder = {

@@ -1,6 +1,6 @@
 "use client";
 
-import type { DisplayOrder } from "@/lib/orders";
+import type { DisplayOrder } from "@/lib/orders/orders";
 
 type OrderRowProps = {
   order: DisplayOrder;

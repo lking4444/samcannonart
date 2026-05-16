@@ -13,7 +13,7 @@ export const getBaseFolder = (itemType: ItemType): string => {
         case ItemType.SLATE:
             return "Slates/SlatesWithIdLowRes";
         case ItemType.GIFT:
-            return "Gifts/GiftsWithIdLowRes";
+            return "Gifts";
         case ItemType.NOTEPAD:
             return "Notepads/NotepadsWithIdLowRes";
         default:

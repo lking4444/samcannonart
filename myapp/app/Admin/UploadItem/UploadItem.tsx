@@ -1,10 +1,11 @@
 "use client";
-
-import styles from "./UploadItem.module.css";
 import { useState } from "react";
-import { UploadClientItem } from "@/lib/types";
+
 import TypeDetails from "./TypeDetails";
 import ImageUpload from "../ImageUpload";
+import { UploadClientItem } from "@/app/Types/upload";
+
+import styles from "./UploadItem.module.css";
 
 type ItemProps = {
   item: UploadClientItem;
@@ -31,7 +32,7 @@ async function save( item: UploadClientItem, selectedFile: File | null, onSaved:
   formData.append("itemType", item.type);
   formData.append("imageId", imageId);
 
-  const uploadResponse = await fetch("/api/images/upload", {
+  const uploadResponse = await fetch("/Admin/api/images/single", {
     method: "POST",
     body: formData,
   });

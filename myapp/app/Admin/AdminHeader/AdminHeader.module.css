@@ -6,7 +6,7 @@
     padding: 20px 10px 20px 10px;
     background-color: rgb(255, 255, 255);
     position: sticky;
-    top: 0;           /* ✅ required */
+    top: 0; 
     z-index: 4;  
 }
 

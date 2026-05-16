@@ -3,7 +3,7 @@
     justify-content: center;
     position: relative;
     background-color: rgb(246, 246, 246);
-    height: 70%;
+    height: 200px;
 }
 
 .carouselItemContainer{
@@ -14,27 +14,38 @@
 
 .container{
     padding-top: 75px;
+    padding-bottom: 100px;
 }
 
 .selectedWrapper {
-    position: relative; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
 
 .carouselButtonLeft,
 .carouselButtonRight {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;                  
+  top: 100%;
+  z-index: 2;
   background: rgba(0, 0, 0, 0.7);
   color: white;
   border: none;
   border-radius: 999px;
   padding: 0.5rem 0.9rem;
   cursor: pointer;
+}
+
+.carouselButtonLeft {
+  left: 50%;
+  transform: translateX(-110%);
+}
+
+.carouselButtonRight {
+  left: 50%;
+  transform: translateX(10%);
 }
 
 .carouselButtonLeft:hover,
@@ -48,27 +59,22 @@
 }
 
 
-.carouselButtonLeft {
-    left: -2.5rem;     /* adjust as needed */
-  }
-  
-  /* Right button sits on the right side */
-  .carouselButtonRight {
-    right: -2.5rem;    /* adjust as needed */
+/*  */
+
+.carouselItemContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
 }
 
-.outerImage{
-    height: 150px;
-    width: 150px;
-    object-fit: cover;
-    margin: 0px 20px 0px 20px;
-}
-
-.innerImage{
+.outerImage,
+.innerImage {
   height: 150px;
   width: 150px;
   object-fit: cover;
-  margin: 0px 20px 0px 20px;
+  flex: 0 0 150px;
 }
 
 .sideImage{

@@ -39,7 +39,6 @@ export default function MobileNav({open, onClose, onCartClick} : MobileNavProps)
                             <NavButton buttonName='Prints' displayName=''/>
                             <NavButton buttonName='Gifts' displayName=''/>
                             <NavButton buttonName='NotePads' displayName=''/>
-                            <NavButton buttonName='Slates' displayName=''/>
                         </span>  
                     </div>
                 </Dialog.Content>

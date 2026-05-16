@@ -1,7 +1,7 @@
 "use client";
 
-import { ItemClientWithTypes } from "@/app/(Pages)/Types";
-import { getItemImageSrc } from "@/lib/imagepaths";
+import { ItemClientWithTypes } from "@/app/Types/items";
+import { getItemImageSrc } from "@/lib/images/imagepaths";
 import { useEffect, useRef, useState } from "react";
 
 type ImageUploadSquareProps = {

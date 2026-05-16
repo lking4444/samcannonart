@@ -1,20 +1,27 @@
-.row {
-    display: grid;
-    grid-template-columns:
-      minmax(180px, 1.4fr)
-      minmax(90px, 0.7fr)
-      minmax(240px, 1.8fr)
-      minmax(110px, 0.8fr)
-      minmax(140px, 1fr)
-      minmax(90px, 0.6fr);
-    gap: 12px;
-    align-items: center;
+
+.rowWrapper{
     padding: 14px 16px;
     border: 1px solid #e7e7ec;
     border-radius: 16px;
     background: linear-gradient(180deg, #ffffff 0%, #fcfcfe 100%);
     box-shadow: 0 4px 14px rgba(19, 24, 38, 0.05);
     margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: grid;
+    grid-template-columns:
+      minmax(180px, 1.4fr)
+      minmax(90px, 1.6fr)
+      minmax(90px, 0.8fr)
+      minmax(110px, 1.8fr)
+      minmax(140px, 1fr)
+      minmax(90px, 1.6fr);
+    gap: 12px;
+    align-items: center;
+
   }
   
   .row > span {
@@ -157,7 +164,7 @@
     white-space: nowrap;
   }
   
-  .row > button:first-of-type {
+  /* .row > button:first-of-type {
     background: linear-gradient(135deg, #5d6bff 0%, #7d63ff 100%);
     color: #fff;
     box-shadow: 0 8px 18px rgba(93, 107, 255, 0.22);
@@ -176,61 +183,61 @@
   .row > button:last-of-type:hover {
     background: #e3e8f0;
     transform: translateY(-1px);
-  }
+  } */
   
-  @media (max-width: 1000px) {
+@media (max-width: 1000px) {
     .row {
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
     }
-  
-    .tagsEditorDropdown {
-      left: auto;
-      right: 0;
-    }
-  
-    .row > button {
-      width: 100%;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .row {
-      grid-template-columns: 1fr;
-      padding: 12px;
-    }
-  
-    .tagsEditorDropdown {
-      position: static;
-      min-width: 100%;
-      max-width: 100%;
-      margin-top: 10px;
-    }
-  }
 
-  .field {
+    .tagsEditorDropdown {
+        left: auto;
+        right: 0;
+    }
+
+    .row > button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .row {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+
+    .tagsEditorDropdown {
+        position: static;
+        min-width: 100%;
+        max-width: 100%;
+        margin-top: 10px;
+    }
+}
+
+.field {
     display: flex;
     flex-direction: column;
     gap: 6px;
     min-width: 0;
-  }
-  
-  .fieldLabel {
+}
+
+.fieldLabel {
     font-size: 0.78rem;
     font-weight: 700;
     color: #667085;
     padding-left: 2px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-  }
-  
-  .actionField {
+}
+
+.actionField {
     display: flex;
     flex-direction: column;
     gap: 6px;
-  }
+}
 
-  .popularButton {
+.popularButton {
     border: none;
     border-radius: 8px;
     padding: 0.65rem 0.9rem;
@@ -238,65 +245,170 @@
     font-weight: 600;
     cursor: pointer;
     transition:
-      background-color 0.2s ease,
-      color 0.2s ease,
-      transform 0.15s ease,
-      box-shadow 0.2s ease;
-  }
-  
-  .popularButton:hover {
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.popularButton:hover {
     transform: translateY(-1px);
-  }
-  
-  .popularActive {
+}
+
+.popularActive {
     background-color: #facc15;
     color: #1f2937;
     box-shadow: 0 2px 8px rgba(250, 204, 21, 0.35);
-  }
-  
-  .popularInactive {
+}
+
+.popularInactive {
     background-color: #e5e7eb;
     color: #374151;
-  }
-  
-  .popularInactive:hover {
-    background-color: #d1d5db;
-  }
+}
 
-  .saveButton {
+.popularInactive:hover {
+    background-color: #d1d5db;
+}
+
+.saveButton {
+    border: 1px solid #5d6bff;
     background: linear-gradient(135deg, #5d6bff 0%, #7d63ff 100%);
+    width: 100px;
     color: #fff;
-    box-shadow: 0 8px 18px rgba(93, 107, 255, 0.22);
-  }
-  
-  .saveButton:hover {
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
+}
+
+.saveButton:hover:not(:disabled) {
     transform: translateY(-1px);
     box-shadow: 0 10px 22px rgba(93, 107, 255, 0.28);
-  }
-  
-  .saveButton:disabled {
+}
+
+.saveButton:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.saveButton:disabled {
     cursor: not-allowed;
-    opacity: 0.9;
-  }
-  
-  .saveButtonSaving {
+    opacity: 0.65;
+}
+
+.saveButtonSaving {
     animation: savePulse 0.45s ease;
     transform: scale(0.97);
-  }
-  
-  .saveButtonSuccess {
-    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
-    box-shadow: 0 8px 18px rgba(34, 197, 94, 0.24);
-  }
-  
-  @keyframes savePulse {
+}
+
+.saveButtonSuccess {
+    border-color: #16a34a;
+    background: #16a34a;
+    color: #fff;
+}
+
+.resetButton {
+    border: 1px solid #d1d5db;
+    background: #eef1f6;
+    width: 100px;
+    color: #273142;
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
+}
+
+.resetButton:hover:not(:disabled) {
+    background: #e3e8f0;
+    border-color: #bcc6d6;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(124, 124, 124, 0.28);
+}
+
+.resetButton:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.resetButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.deleteButton {
+    border: 1px solid #dc2626;
+    width: 100px;
+    background: #fff;
+    color: #dc2626;
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.1s ease;
+}
+
+.deleteButton:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(124, 124, 124, 0.28);
+}
+
+.deleteButton:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.deleteButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.deleteButtonDeleting {
+    animation: savePulse 0.45s ease;
+    transform: scale(0.97);
+}
+
+.deleteButtonSuccess {
+    border-color: #16a34a;
+    background: #16a34a;
+    color: #fff;
+}
+
+.actionWrapper{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    gap: 20px;
+    padding-top:20px;
+}
+
+
+@keyframes savePulse {
     0% {
-      transform: scale(1);
+        transform: scale(1);
     }
     40% {
-      transform: scale(0.96);
+        transform: scale(0.96);
     }
     100% {
-      transform: scale(1);
+        transform: scale(1);
     }
-  }
+}

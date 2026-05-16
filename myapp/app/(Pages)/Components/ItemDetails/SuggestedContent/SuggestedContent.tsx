@@ -7,52 +7,52 @@ import Link from "next/link";
 import SelectedSuggestion from "./SelectedSuggestion";
 import Loading from "../../Loading";
 import { ItemClient } from "../../../Types";
+import { getItemImageSrc } from "@/lib/images/imagepaths";
+import { getSuggestedContent } from "@/lib/contentRecommendation/items";
 
 import styles from './SuggestedContent.module.css'
-import { getItemImageSrc } from "@/lib/imagepaths";
-import { getSuggestedContent } from "@/lib/items";
 
 type SuggestedContentProps = {
   id: string;
 };
 
 export default function SuggestedContent({ id }: SuggestedContentProps) {
-  const [order, setOrder] = useState<number[]>([0, 1, 2, 3, 4]);
-  const [items, setItems] = useState<ItemClient[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+    const [order, setOrder] = useState<number[]>([0, 1, 2, 3, 4]);
+    const [items, setItems] = useState<ItemClient[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
+    useEffect(() => {
+        let cancelled = false;
 
-    async function loadSuggestions() {
-      try {
-        setLoading(true);
-        setError(null);
+        async function loadSuggestions() {
+            try {
+                setLoading(true);
+                setError(null);
 
-        const next = await getSuggestedContent(id);
+                const next = await getSuggestedContent(id);
 
-        if (!cancelled) {
-          setItems(next);
-          setOrder([0, 1, 2, 3, 4]);
+                if (!cancelled) {
+                setItems(next);
+                setOrder([0, 1, 2, 3, 4]);
+                }
+            } catch (e) {
+                if (!cancelled) {
+                setError(e instanceof Error ? e.message : "Failed to load suggestions");
+                }
+            } finally {
+                if (!cancelled) {
+                setLoading(false);
+                }
+            }
         }
-      } catch (e) {
-        if (!cancelled) {
-          setError(e instanceof Error ? e.message : "Failed to load suggestions");
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    }
 
-    loadSuggestions();
+        loadSuggestions();
 
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
+        return () => {
+            cancelled = true;
+            };
+        }, [id]);
 
   const imageSrcs = useMemo(() => {
     return items.map((item) => getItemImageSrc(item.type, item.image));
@@ -99,65 +99,69 @@ export default function SuggestedContent({ id }: SuggestedContentProps) {
 
       <div className={styles.suggestContentContainer}>
         <span className={styles.carouselItemContainer}>
-          <img
+            <img
+            key={`left-outer-${leftOuter.id}`}
             src={imageSrcs[order[0]]}
             width={75}
             height={75}
             className={styles.outerImage}
             alt={leftOuter.name}
-          />
+            />
 
-          <img
+            <img
+            key={`left-inner-${leftInner.id}`}
             src={imageSrcs[order[1]]}
             width={75}
             height={75}
             className={styles.innerImage}
             alt={leftInner.name}
-          />
+            />
 
-          <div className={styles.selectedWrapper}>
-            <button onClick={shiftLeft} className={styles.carouselButtonLeft}>
-              <Image
-                src="/icons/chevron-left.svg"
-                alt="Previous suggestion"
-                width={24}
-                height={24}
-                className={styles.carouselChevron}
-              />
-            </button>
+            <div className={styles.selectedWrapper}>
+                <button onClick={shiftLeft} className={styles.carouselButtonLeft}>
+                <Image
+                    src="/icons/chevron-left.svg"
+                    alt="Previous suggestion"
+                    width={24}
+                    height={24}
+                    className={styles.carouselChevron}
+                />
+                </button>
 
-            <Link href={`/Item/${center.id}`}>
-              <SelectedSuggestion item={center} />
-            </Link>
+                <Link href={`/Item/${center.id}`} prefetch={false}>
+                <SelectedSuggestion item={center} />
+                </Link>
 
-            <button onClick={shiftRight} className={styles.carouselButtonRight}>
-              <Image
-                src="/icons/chevron-right.svg"
-                alt="Next suggestion"
-                width={24}
-                height={24}
-                className={styles.carouselChevron}
-              />
-            </button>
-          </div>
+                <button onClick={shiftRight} className={styles.carouselButtonRight}>
+                <Image
+                    src="/icons/chevron-right.svg"
+                    alt="Next suggestion"
+                    width={24}
+                    height={24}
+                    className={styles.carouselChevron}
+                />
+                </button>
+            </div>
 
-          <img
+            <img
+            key={`right-inner-${rightInner.id}`}
             src={imageSrcs[order[3]]}
             width={75}
             height={75}
             className={styles.innerImage}
             alt={rightInner.name}
-          />
+            />
 
-          <img
+            <img
+            key={`right-outer-${rightOuter.id}`}
             src={imageSrcs[order[4]]}
             width={75}
             height={75}
             className={styles.outerImage}
             alt={rightOuter.name}
-          />
-        </span>
-      </div>
+            />
+            </span>
+        </div>
     </div>
   );
 }

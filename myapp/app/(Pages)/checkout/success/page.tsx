@@ -1,8 +1,8 @@
 import Stripe from "stripe"
 import Image from "next/image"
 
-import { createOrderFromCheckoutSession } from "@/lib/orders";
-import { getItemImageSrc } from "@/lib/imagepaths";
+import { createOrderFromCheckoutSession } from "@/lib/orders/orders";
+import { getItemImageSrc } from "@/lib/images/imagepaths";
 import { prisma } from "@/lib/prisma"
 
 import styles from './success.module.css'

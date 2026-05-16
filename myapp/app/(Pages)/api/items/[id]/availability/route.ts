@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server"
 
 import { prisma } from "@/lib/prisma"
-import { ItemAvailability } from "@/app/Types/ItemAvailability"
+
+import { ItemAvailability } from "@/app/Types/items"
 
 export async function GET( request: Request, { params }: { params: Promise<{ id: string }> } ) {
     const { id } = await params

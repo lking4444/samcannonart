@@ -8,6 +8,7 @@ type CreatePrintInput = {
     price: string;
     stock: number;
     dimensions?: string;
+    tags?: string[];
     media?: string;
     description?: string;
     year?: number;
@@ -23,6 +24,7 @@ export async function createPrint(data: CreatePrintInput) {
         price: data.price,
         uploadId: data.uploadId,
         stock: data.stock,
+        tags: data.tags,
         dimensions: data.dimensions,
         media: data.media,
         description: data.description,
@@ -46,6 +48,7 @@ export async function createPrints(data: CreatePrintInput[]) {
           data: {
             name: item.name,
             type: ItemType.PRINT,
+            uploadId: item.uploadId,
             image: item.image,
             price: item.price,
             stock: item.stock,

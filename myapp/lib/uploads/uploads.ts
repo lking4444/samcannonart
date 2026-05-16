@@ -1,65 +1,7 @@
-import { ItemType, GiftType, GIFT_TYPE,UploadClientItem } from "@/lib/types";
-import { RawExcelRow } from "./imports/types";
+import { RawExcelRow } from "../imports/types";
 import { Dispatch, SetStateAction } from "react";
-
-
-
-export type ItemTypeValue = (typeof ItemType)[keyof typeof ItemType];
-
-export type ParsedRow = Record<string, unknown>;
-
-type SelectedFilesMap = Record<string, File | null>;
-
-export function filterItemsNotInDatabase(uploadedItems: UploadClientItem[], existingUploadIds: string[]): UploadClientItem[] {
-    const existingIdsSet = new Set(existingUploadIds);
-  
-    return uploadedItems.filter((item) => !existingIdsSet.has(item.uploadId));
-}
-
-export async function saveAllImages(items: UploadClientItem[],selectedFiles: SelectedFilesMap) {
-    if (items.length === 0) return;
-
-    const formData = new FormData();
-
-    for (const item of items) {
-        const file = selectedFiles[item.uploadId];
-
-        if (!file) {
-            throw new Error(`Missing image for uploadId ${item.uploadId}`);
-        }
-
-        if (file.name !== item.image) {
-        throw new Error(
-            `Image filename mismatch for uploadId ${item.uploadId}. Expected "${item.image}", got "${file.name}".`
-        );
-        }
-
-        const imageId = item.image.replace(/\.[^.]+$/, "");
-
-        formData.append("files", file);
-        formData.append(
-        "metadata",
-        JSON.stringify({
-            uploadId: item.uploadId,
-            itemType: item.type,
-            imageId,
-            filename: file.name,
-        })
-        );
-}
-
-  const response = await fetch("/api/images/upload/bulk", {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || "Failed to upload all images");
-  }
-
-  return response.json();
-}
+import { ItemTypeValue, SelectedFilesMap, UploadClientItem, UploadImageInput, UploadImagesResponse } from "@/app/Types/upload";
+import { GIFT_TYPE, GiftType, ItemType } from "@/app/Types/items";
 
 function toStringValue(value: unknown): string {
     return value == null ? "" : String(value).trim();
@@ -84,7 +26,7 @@ function parseTags(value: unknown): string[] {
             .split(",")
             .map((tag) => tag.trim())
             .filter(Boolean);
-  }
+}
   
 function parseItemType(value: unknown): ItemTypeValue {
     const type = String(value).trim().toUpperCase();
@@ -122,6 +64,12 @@ function parseGiftType(value: unknown):  GIFT_TYPE{
         default:
             return GiftType.MIXEDMEDIA;
     }   
+}
+
+export function filterItemsNotInDatabase(uploadedItems: UploadClientItem[], existingUploadIds: string[]): UploadClientItem[] {
+    const existingIdsSet = new Set(existingUploadIds);
+  
+    return uploadedItems.filter((item) => !existingIdsSet.has(item.uploadId));
 }
   
 export function mapRowToUploadItem(row: RawExcelRow): UploadClientItem {
@@ -163,7 +111,7 @@ export function mapRowToUploadItem(row: RawExcelRow): UploadClientItem {
 
             return {
                 ...base,
-                giftNumber: toNumberValue(row.CardId),
+                giftNumber: toNumberValue(row.GiftNumber),
                 giftType: giftType,
             };
     }
@@ -193,4 +141,4 @@ export async function saveAllUploadItems(newItems: UploadClientItem[], setNewIte
     }
   
     setNewItems([]);
-  }
+}

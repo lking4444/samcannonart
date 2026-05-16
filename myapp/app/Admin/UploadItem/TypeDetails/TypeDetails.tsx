@@ -1,13 +1,12 @@
-// components/ItemTypeDetails.tsx
-import { ItemType, UploadClientItem } from "@/lib/types";
+import { ItemType } from "@/app/Types/items";
+import { UploadClientItem } from "@/app/Types/upload";
 
 type Props = {
-  item: UploadClientItem;
+    item: UploadClientItem;
 };
 
 export default function TypeDetails({ item }: Props) {
     console.log(`${item.cardId}`)
-
 
     switch (item.type) {
             case ItemType.CARD:

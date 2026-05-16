@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ItemType, UploadClientItem } from "@/lib/types";
+
 import { createCards } from "@/lib/db/cards";
 import { createCalendars } from "@/lib/db/calendars";
 import { createPrints } from "@/lib/db/prints";
@@ -7,6 +7,10 @@ import { createOriginals } from "@/lib/db/originals";
 import { createSlates } from "@/lib/db/slates";
 import { createNotepads } from "@/lib/db/notepads";
 import { createGifts } from "@/lib/db/gifts";
+import { requireAdmin } from "@/lib/auth/requireAdmin";
+import { UploadClientItem } from "@/app/Types/upload";
+
+import { ItemType } from "@/app/Types/items";
 
 type BulkUploadBody = {
     type: keyof typeof ItemType;
@@ -14,6 +18,15 @@ type BulkUploadBody = {
 };
 
 export async function POST(req: NextRequest) {
+    const session = await requireAdmin();
+
+    if (!session) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     try {
         const body: BulkUploadBody = await req.json();
         const { type, items } = body;
@@ -32,6 +45,17 @@ export async function POST(req: NextRequest) {
             { error: "All items must match the requested bulk type" },
             { status: 400 }
         );
+        }
+
+        const missingPriceItem = items.find((item) => !item.price?.trim());
+
+        if (missingPriceItem) {
+            return NextResponse.json(
+                {
+                    error: `Price is required for item ${missingPriceItem.uploadId}`,
+                },
+                { status: 400 }
+            );
         }
 
         const baseItems = items.map((item) => ({
@@ -91,7 +115,6 @@ export async function POST(req: NextRequest) {
 
             case "NOTEPAD":
                 const notePadItems = items.map((item, index) =>{
-                    if (!item.notePadName ){ throw new Error(`notePadName is required for NOTEPAD item ${item.uploadId}`); }
 
                     return {
                         ...baseItems[index],

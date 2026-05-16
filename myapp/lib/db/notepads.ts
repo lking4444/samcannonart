@@ -8,13 +8,15 @@ type CreateNotepadsInput = {
     uploadId: string;
     stock: number;
     dimensions?: string;
+    tags: string[];
     media?: string;
     description?: string;
     year?: number;
-    notePadName: string;
+    notePadName?: string;
   };
 
 export async function createNotepad(data: CreateNotepadsInput) {
+    console.log(data.notePadName);
     return prisma.item.create({
         data: {
         name: data.name,
@@ -25,6 +27,7 @@ export async function createNotepad(data: CreateNotepadsInput) {
         stock: data.stock,
         dimensions: data.dimensions,
         media: data.media,
+        tags: data.tags,
         description: data.description,
         year: data.year,
         notePad: {
@@ -46,6 +49,7 @@ export async function createNotepads(data: CreateNotepadsInput[]) {
           data: {
             name: item.name,
             type: ItemType.NOTEPAD,
+            uploadId: item.uploadId,
             image: item.image,
             price: item.price,
             stock: item.stock,

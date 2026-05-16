@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAllTagsByType } from "@/lib/db/items";
 import type { ItemType } from "@/app/generated/prisma/client";
-import { formatTagForDisplay, normaliseTag } from "@/lib/tags";
+import { formatTagForDisplay, normaliseTag } from "@/lib/filtering/tags";
 
 export async function GET(req: NextRequest) {
     try {

@@ -11,28 +11,30 @@
     font-weight: 500;
 }
 
-.suggestedContentBackground{
+  .suggestedContentBackground {
     position: relative;
-    margin: -1rem 0rem -1rem 0rem; 
+    display: inline-block;
+    overflow: hidden;
+    min-height: 300px;
+    min-width: 220px;
     transform: scale(1);
     transition: transform 500ms cubic-bezier(.2,.9,.2,1);
     will-change: transform;
-}
-
-.suggestedContentBackground:hover {
-    transform: scale(1.1);
   }
-
-.selectedImage {
-    border-radius: 0px;
-    object-fit: cover;
-    height: 300px;
-    width: 250px;
-    min-width: 250px;
   
+  .selectedImage {
+    display: block;
+    height: 300px;
+    width: auto;
+    min-width: 220px;
+    object-fit: cover;
     animation: fadeIn 200ms ease;
   }
 
+
+  .suggestedContentBackground:hover {
+    transform: scale(1.1);
+  }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.98); }

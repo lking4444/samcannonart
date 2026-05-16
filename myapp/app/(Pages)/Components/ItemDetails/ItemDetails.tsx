@@ -8,7 +8,7 @@ import AddToBasket from './AddToBasket';
 import BuyNow from './BuyNow';
 import SuggestedContent from './SuggestedContent';
 
-import { getImageKey } from '@/lib/imagepaths';
+import { getImageKey } from '@/lib/images/imagepaths';
 import { ClientItem } from './types';
 
 import styles from './ItemDetails.module.css'

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import OrderRow from "../OrderRow";
 import OrderItem from "../OrderItem/OrderItem";
-import type { DisplayOrder } from "@/lib/orders";
+import type { DisplayOrder } from "@/lib/orders/orders";
 
 export default function OrderView() {
   const [orders, setOrders] = useState<DisplayOrder[]>([]);

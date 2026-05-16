@@ -2,10 +2,10 @@
 import { useState } from "react"
 import { ClientItem } from "../types"
 
-import { goToCheckout } from "@/lib/checkout"
 import { checkItemAvailability } from "@/lib/cart/checkItemAvailability"
 
 import styles from "./BuyNow.module.css"
+import { goToCheckout } from "@/lib/cart/checkout"
 
 type BuyNowProps = {
   item: ClientItem

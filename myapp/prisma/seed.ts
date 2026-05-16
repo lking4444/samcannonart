@@ -252,112 +252,112 @@ async function main() {
     //   });   
       // ===== CARDS =====
   // ===== PRINTS =====
-  await createPrint({
-    name: 'Golden Valley',
-    image: '/Images/Art/image2.png',
-    price: '18.00',
-    stock: 10,
-    dimensions: '30x40',
-    media: 'Giclée print',
-    description: 'A warm valley landscape',
-    year: 2023,
-    printId: 'PR-001',
-  });
+  // await createPrint({
+  //   name: 'Golden Valley',
+  //   image: '/Images/Art/image2.png',
+  //   price: '18.00',
+  //   stock: 10,
+  //   dimensions: '30x40',
+  //   media: 'Giclée print',
+  //   description: 'A warm valley landscape',
+  //   year: 2023,
+  //   printId: 'PR-001',
+  // });
   
-  await createPrint({
-    name: 'Still Water',
-    image: '/Images/Art/image4.png',
-    price: '22.50',
-    stock: 6,
-    dimensions: '40x50',
-    media: 'Archival ink print',
-    description: 'Reflections on calm water',
-    year: 2022,
-    printId: 'PR-002',
-  });
+  // await createPrint({
+  //   name: 'Still Water',
+  //   image: '/Images/Art/image4.png',
+  //   price: '22.50',
+  //   stock: 6,
+  //   dimensions: '40x50',
+  //   media: 'Archival ink print',
+  //   description: 'Reflections on calm water',
+  //   year: 2022,
+  //   printId: 'PR-002',
+  // });
   
-  await createPrint({
-    name: 'Evening Sky',
-    image: '/Images/Art/image7.png',
-    price: '20.00',
-    stock: 8,
-    dimensions: '35x45',
-    media: 'Fine art print',
-    description: 'Soft colours at dusk',
-    year: 2024,
-    printId: 'PR-003',
-  });
+  // await createPrint({
+  //   name: 'Evening Sky',
+  //   image: '/Images/Art/image7.png',
+  //   price: '20.00',
+  //   stock: 8,
+  //   dimensions: '35x45',
+  //   media: 'Fine art print',
+  //   description: 'Soft colours at dusk',
+  //   year: 2024,
+  //   printId: 'PR-003',
+  // });
   
-  // ===== CALENDARS =====
-  await createCalendar({
-    name: 'Seasons 2025',
-    image: '/Images/Art/image1.png',
-    price: '12.00',
-    stock: 40,
-    dimensions: 'A4',
-    media: 'Printed calendar',
-    description: 'Twelve seasonal illustrations',
-    year: 2025,
-  });
+  // // ===== CALENDARS =====
+  // await createCalendar({
+  //   name: 'Seasons 2025',
+  //   image: '/Images/Art/image1.png',
+  //   price: '12.00',
+  //   stock: 40,
+  //   dimensions: 'A4',
+  //   media: 'Printed calendar',
+  //   description: 'Twelve seasonal illustrations',
+  //   year: 2025,
+  // });
   
-  await createCalendar({
-    name: 'Coastal Year',
-    image: '/Images/Art/image6.png',
-    price: '14.00',
-    stock: 25,
-    dimensions: 'A3',
-    media: 'Printed calendar',
-    description: 'Coastal scenes through the year',
-    year: 2025,
-  });
+  // await createCalendar({
+  //   name: 'Coastal Year',
+  //   image: '/Images/Art/image6.png',
+  //   price: '14.00',
+  //   stock: 25,
+  //   dimensions: 'A3',
+  //   media: 'Printed calendar',
+  //   description: 'Coastal scenes through the year',
+  //   year: 2025,
+  // });
   
-  await createCalendar({
-    name: 'Quiet Landscapes',
-    image: '/Images/Art/image3.png',
-    price: '11.50',
-    stock: 30,
-    dimensions: 'A4',
-    media: 'Printed calendar',
-    description: 'Soft and minimal landscapes',
-    year: 2024,
-  });
+  // await createCalendar({
+  //   name: 'Quiet Landscapes',
+  //   image: '/Images/Art/image3.png',
+  //   price: '11.50',
+  //   stock: 30,
+  //   dimensions: 'A4',
+  //   media: 'Printed calendar',
+  //   description: 'Soft and minimal landscapes',
+  //   year: 2024,
+  // });
   
-  // ===== NOTEPADS =====
-  await createNotepad({
-    name: 'Field Notes',
-    image: '/Images/Art/image4.png',
-    price: '6.50',
-    stock: 50,
-    dimensions: 'A5',
-    media: 'Printed paper',
-    description: 'Lined notebook with artwork cover',
-    year: 2024,
-    notePadName: 'FIELD-NOTES',
-  });
+  // // ===== NOTEPADS =====
+  // await createNotepad({
+  //   name: 'Field Notes',
+  //   image: '/Images/Art/image4.png',
+  //   price: '6.50',
+  //   stock: 50,
+  //   dimensions: 'A5',
+  //   media: 'Printed paper',
+  //   description: 'Lined notebook with artwork cover',
+  //   year: 2024,
+  //   notePadName: 'FIELD-NOTES',
+  // });
   
-  await createNotepad({
-    name: 'Studio Sketches',
-    image: '/Images/Art/image2.png',
-    price: '7.00',
-    stock: 40,
-    dimensions: 'A5',
-    media: 'Recycled paper',
-    description: 'Blank pages for sketching',
-    year: 2023,
-    notePadName: 'STUDIO-SKETCH',
-  });
+  // await createNotepad({
+  //   name: 'Studio Sketches',
+  //   image: '/Images/Art/image2.png',
+  //   price: '7.00',
+  //   stock: 40,
+  //   dimensions: 'A5',
+  //   media: 'Recycled paper',
+  //   description: 'Blank pages for sketching',
+  //   year: 2023,
+  //   notePadName: 'STUDIO-SKETCH',
+  // });
   
-  await createNotepad({
-    name: 'Daily Thoughts',
-    image: '/Images/Art/image7.png',
-    price: '6.00',
-    stock: 60,
-    dimensions: 'A6',
-    media: 'Printed paper',
-    description: 'Compact everyday notebook',
-    year: 2024,
-    notePadName: 'DAILY-THOUGHTS',
-  });
+  // await createNotepad({
+  //   name: 'Daily Thoughts',
+  //   image: '/Images/Art/image7.png',
+  //   price: '6.00',
+  //   stock: 60,
+  //   dimensions: 'A6',
+  //   media: 'Printed paper',
+  //   description: 'Compact everyday notebook',
+  //   year: 2024,
+  //   notePadName: 'DAILY-THOUGHTS',
+  // });
   
   // ===== ORIGINALS =====
   // await createOriginal({
@@ -394,44 +394,44 @@ async function main() {
   // });
   
   // ===== GIFTS =====
-  await createGift({
-    name: 'Pebble Set',
-    image: '/Images/Art/image3.png',
-    price: '15.00',
-    stock: 20,
-    dimensions: '',
-    media: 'Painted stone',
-    description: 'Hand-painted pebble gift set',
-    year: 2023,
-    giftNumber: 'G-001',
-    giftType: 'PEBBLES',
-  });
+  // await createGift({
+  //   name: 'Pebble Set',
+  //   image: '/Images/Art/image3.png',
+  //   price: '15.00',
+  //   stock: 20,
+  //   dimensions: '',
+  //   media: 'Painted stone',
+  //   description: 'Hand-painted pebble gift set',
+  //   year: 2023,
+  //   giftNumber: 'G-001',
+  //   giftType: 'PEBBLES',
+  // });
   
-  await createGift({
-    name: 'Tiny Pebble Trio',
-    image: '/Images/Art/image2.png',
-    price: '10.00',
-    stock: 35,
-    dimensions: "",
-    media: 'Painted stone',
-    description: 'Small decorative pebble trio',
-    year: 2024,
-    giftNumber: 'G-002',
-    giftType: 'TINYPEBBLES',
-  });
+  // await createGift({
+  //   name: 'Tiny Pebble Trio',
+  //   image: '/Images/Art/image2.png',
+  //   price: '10.00',
+  //   stock: 35,
+  //   dimensions: "",
+  //   media: 'Painted stone',
+  //   description: 'Small decorative pebble trio',
+  //   year: 2024,
+  //   giftNumber: 'G-002',
+  //   giftType: 'TINYPEBBLES',
+  // });
   
-  await createGift({
-    name: 'Mixed Media Keepsake',
-    image: '/Images/Art/image7.png',
-    price: '22.00',
-    stock: 12,
-    dimensions: "",
-    media: 'Mixed media',
-    description: 'Unique handcrafted keepsake',
-    year: 2022,
-    giftNumber: 'G-003',
-    giftType: 'MIXEDMEDIA',
-  });
+  // await createGift({
+  //   name: 'Mixed Media Keepsake',
+  //   image: '/Images/Art/image7.png',
+  //   price: '22.00',
+  //   stock: 12,
+  //   dimensions: "",
+  //   media: 'Mixed media',
+  //   description: 'Unique handcrafted keepsake',
+  //   year: 2022,
+  //   giftNumber: 'G-003',
+  //   giftType: 'MIXEDMEDIA',
+  // });
   
   // ===== SLATES =====
   await createSlate({

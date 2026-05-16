@@ -1,6 +1,6 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { ItemType } from "@/app/generated/prisma/enums";
-import { getImageKey } from "@/lib/imagepaths";
+import { getImageKey } from "@/lib/images/imagepaths";
 
 
 const s3 = new S3Client({

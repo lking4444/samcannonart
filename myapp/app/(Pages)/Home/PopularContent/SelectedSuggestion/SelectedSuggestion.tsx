@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { CarouselItem } from "@/app/(Pages)/Types"
-import { getItemImageSrc } from "@/lib/imagepaths";
+import { getItemImageSrc } from "@/lib/images/imagepaths";
 
 import styles from './SelectedSuggestion.module.css'
 

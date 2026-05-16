@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { UploadClientItem } from '@/lib/types';
+
 import { createCard } from '@/lib/db/cards';
 import { createCalendar } from '@/lib/db/calendars';
 import { createPrint } from '@/lib/db/prints';
@@ -7,10 +7,20 @@ import { createGift } from '@/lib/db/gifts';
 import { createSlate } from '@/lib/db/slates';
 import { createOriginal } from '@/lib/db/originals';
 import { createNotepad } from '@/lib/db/notepads';
+import { requireAdmin } from '@/lib/auth/requireAdmin';
 
-
+import { UploadClientItem } from '@/app/Types/upload';
 
 export async function POST(req: NextRequest) {
+    const session = await requireAdmin();
+
+    if (!session) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     try {
         const item: UploadClientItem = await req.json();
 

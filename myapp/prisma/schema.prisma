@@ -88,7 +88,7 @@ model Calendar {
 model NotePad {
   itemId Int   @id
   item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  notePadName String @unique
+  notePadName String?
 }
 
 model Original {

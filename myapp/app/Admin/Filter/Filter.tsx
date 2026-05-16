@@ -1,8 +1,9 @@
 "use client";
-
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
 import type { ItemClient } from "../../(Pages)/Types";
-import { ItemType } from "@/lib/types";
+import { ItemType } from "@/app/Types/items";
+
 import styles from "./Filter.module.css";
 
 type AdminItemsResponse = {
@@ -44,7 +45,7 @@ type FilterProps = {
     async function loadTags() {
       setLoadingTags(true);
 
-      const res = await fetch("/Admin/api/admin/items/tags", {
+      const res = await fetch("/Admin/api/items/tags", {
         cache: "no-store",
       });
 
@@ -84,7 +85,7 @@ type FilterProps = {
       if (type !== "Default") sp.set("type", type);
       if (tag !== "Default") sp.set("tag", tag);
 
-      const res = await fetch(`/Admin/api/admin/items?${sp.toString()}`, {
+      const res = await fetch(`/Admin/api/items?${sp.toString()}`, {
         cache: "no-store",
       });
 
@@ -206,20 +207,6 @@ type FilterProps = {
       {!loading && !error && items.length === 0 && (
         <p className={styles.status}>No items found.</p>
       )}
-
-      {/* <div className={styles.results}>
-        {items.map((item) => (
-          <div key={item.id} className={styles.resultRow}>
-            <div className={styles.nameCell}>{item.name}</div>
-            <div className={styles.typeCell}>{item.type}</div>
-            <div className={styles.priceCell}>£{item.price}</div>
-            <div className={styles.stockCell}>Stock: {item.stock}</div>
-            <div className={styles.tagsCell}>
-              {item.tags.length > 0 ? item.tags.join(", ") : "No tags"}
-            </div>
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 }

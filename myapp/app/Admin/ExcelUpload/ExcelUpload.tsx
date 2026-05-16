@@ -2,16 +2,14 @@
 
 import { useRef, useState, DragEvent, ChangeEvent } from "react";
 import * as XLSX from "xlsx";
-import styles from "./ExcelUpload.module.css";
-import { UploadClientItem } from "@/lib/types";
+
 import UploadItem from "../UploadItem";
-import {
-    filterItemsNotInDatabase,
-    ParsedRow,
-    mapRowToUploadItem,
-    saveAllUploadItems,
-    saveAllImages,
-} from "@/lib/uploads";
+import { filterItemsNotInDatabase, mapRowToUploadItem, saveAllUploadItems, } from "@/lib/uploads/uploads";
+import { saveAllImages } from "@/lib/images/uploads";
+
+import { ParsedRow, UploadClientItem } from "@/app/Types/upload";
+
+import styles from "./ExcelUpload.module.css";
 
 type SelectedFilesMap = Record<string, File | null>;
 
@@ -121,7 +119,7 @@ export default function ExcelUpload() {
             const mappedItems = jsonData.map(mapRowToUploadItem);
             setItems(mappedItems);
 
-            const response = await fetch("/Admin/api/admin/items/existing-upload-ids", {
+            const response = await fetch("/Admin/api/items/existing-upload-ids", {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json",

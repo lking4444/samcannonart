@@ -7,6 +7,7 @@ type CreateSlatesInput = {
     price: string;
     stock: number;
     dimensions?: string;
+    tags?: string[];
     media?: string;
     description?: string;
     year?: number;
@@ -22,6 +23,7 @@ export async function createSlate(data: CreateSlatesInput) {
         stock: data.stock,
         dimensions: data.dimensions,
         media: data.media,
+        tags: data.tags,
         description: data.description,
         year: data.year,
         slate: {

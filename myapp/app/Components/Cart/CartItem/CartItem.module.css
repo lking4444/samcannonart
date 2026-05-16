@@ -9,13 +9,13 @@
 }
 
 .price{
-    font-weight: bold;
+    font-weight: normal;
     font-size: medium;
     font-family: var(--font-inter);
 }
 
 .quantity{
-    font-weight: bold;
+    font-weight: normal;
     color: rgb(116, 116, 116);
     font-size: medium;
     font-family: var(--font-inter);

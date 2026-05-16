@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import type { Item, ItemType } from '@/app/generated/prisma/client';
-import { normaliseTag } from '../tags';
+import { normaliseTag } from '../filtering/tags';
 
 type SortOrder = "High to Low" | "Low to High" | "Default";
 
@@ -75,8 +75,16 @@ export async function getRandomPopularItems(limit = 5) {
       ORDER BY RANDOM()
       LIMIT ${safeLimit}
     `;
-  }
+}
   
+export async function deleteItem(itemId: number) {
+    return prisma.item.delete({
+      where: {
+        id: itemId,
+      },
+    });
+}
+
 export async function updateItem(id: number, data: UpdateItemInput) {
     return prisma.item.update({
         where: { id },

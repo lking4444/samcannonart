@@ -3,7 +3,7 @@
 import Image from "next/image"
 import styles from "./CartItem.module.css"
 import { ItemType } from "@/app/generated/prisma/enums"
-import { getItemImageSrc } from "@/lib/imagepaths"
+import { getItemImageSrc } from "@/lib/images/imagepaths"
 import { useCartActions } from "@/app/Hooks/useCartActions"
 
 type CartItemProps = {
@@ -48,7 +48,7 @@ export default function CartItemUI({ itemName, id, imgSrc, price, quantity, type
                 <span className={styles.price}>
                     £{Number(price).toFixed(2)}
                 </span>
-                <span className={styles.quantity}> x{quantity}</span>
+                <span className={styles.quantity}> x {quantity}</span>
                 </p>
             </span>
             </span>

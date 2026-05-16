@@ -1,4 +1,4 @@
-import { ItemAvailability } from "@/app/Types/ItemAvailability"
+import { ItemAvailability } from "@/app/Types/items"
 
 export async function checkItemAvailability( itemId: number ): Promise<ItemAvailability> {
     const res = await fetch(`/api/items/${itemId}/availability`)

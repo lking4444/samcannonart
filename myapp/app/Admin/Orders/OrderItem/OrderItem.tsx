@@ -1,7 +1,7 @@
 "use client";
 
-import { getItemImageSrc } from "@/lib/imagepaths";
-import { DisplayOrder, OrderStatus } from "@/lib/orders";
+import { getItemImageSrc } from "@/lib/images/imagepaths";
+import { DisplayOrder, OrderStatus } from "@/lib/orders/orders";
 import { useEffect, useMemo, useState } from "react";
 
 type OrderItemProps = {
