@@ -1,14 +1,12 @@
 'use client'
 
 import { useState } from "react";
-import { ItemClient } from "../(Pages)/Types";
+
 import Filter from "./Filter";
 import Item from "./Item";
+import { ItemClient } from "../Types/items";
 
 export default function Admin() {
-
-    // create ui for header, so type of item filtering + search + paged 
-    // type, tags
 
     const [items, setItems] = useState<ItemClient[]>([]);
 

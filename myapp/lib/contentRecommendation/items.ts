@@ -1,4 +1,4 @@
-import { ItemClient } from "@/app/(Pages)/Types";
+import { ItemClient } from "@/app/Types/items";
 
 type ApiResponse = {
     items: any[];

@@ -1,0 +1,127 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.imageWrapper {
+    position: relative;
+    width: fit-content;
+}
+
+.uploadButton {
+    position: relative;
+    display: flex;
+    height: 8rem;
+    width: 8rem;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0.375rem;
+    border: 2px dashed;
+    transition: background-color 150ms ease, border-color 150ms ease, opacity 150ms ease;
+}
+
+.uploadButtonEnabled {
+    cursor: pointer;
+}
+
+.uploadButtonDisabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.uploadButtonDragging {
+    border-color: #000;
+    background-color: #f3f4f6;
+}
+
+.uploadButtonIdle {
+    border-color: #9ca3af;
+    background-color: #fff;
+}
+
+.uploadButtonIdle:hover {
+    background-color: #f9fafb;
+}
+
+.previewImage {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.previewOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0 0 0 / 0);
+    color: #fff;
+    opacity: 0;
+    transition: background-color 150ms ease, opacity 150ms ease;
+}
+
+.previewOverlay:hover {
+    background-color: rgb(0 0 0 / 0.3);
+    opacity: 1;
+}
+
+.previewOverlayText {
+    border-radius: 0.25rem;
+    background-color: rgb(0 0 0 / 0.5);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+.plusIcon {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    color: #4b5563;
+}
+
+.removeButton {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    display: flex;
+    height: 1.5rem;
+    width: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: #000;
+    color: #fff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1), 0 1px 2px rgb(0 0 0 / 0.06);
+}
+
+.hiddenInput {
+    display: none;
+}
+
+.details {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.detailRow {
+    margin-top: 0.25rem;
+}
+
+.label {
+    font-weight: 500;
+}
+
+.errorMessage {
+    margin-top: 0.25rem;
+    color: #dc2626;
+}
+
+.successMessage {
+    margin-top: 0.25rem;
+    color: #16a34a;
+}

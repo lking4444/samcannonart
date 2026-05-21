@@ -1,13 +1,12 @@
 'use client'
 import Link from 'next/link';
+import { useState } from 'react';
 
 import { getImageKey } from "@/lib/images/imagepaths";
-import { ItemClient} from "../../Types"
+import Loading from '../Loading';
+import { ItemClient } from '@/app/Types/items';
 
 import styles from './ItemTile.module.css'
-import { useState } from 'react';
-import Loading from '../Loading';
-
 
 type ItemTileProps = {
     item: ItemClient

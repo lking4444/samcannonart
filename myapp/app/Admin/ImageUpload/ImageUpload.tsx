@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { UploadClientItem } from "@/app/Types/upload";
 
+import styles from "./ImageUpload.module.css";
+
 type ImageUploadSquareProps = {
     item: UploadClientItem;
     onFileSelect: (file: File | null) => void;
@@ -18,17 +20,11 @@ export default function ImageUpload({ item, onFileSelect, disabled = false, }: I
     const handleFile = (file: File | null) => {
         if (!file) return;
 
-        if (!file.type.startsWith("image/")) {
-            alert("Please select an image file.");
-            return;
-        }
+        if (!file.type.startsWith("image/")) { alert("Please select an image file."); return; }
 
-        if (previewUrl) {
-            URL.revokeObjectURL(previewUrl);
-        }
+        if (previewUrl) { URL.revokeObjectURL(previewUrl); }
 
         const nextPreviewUrl = URL.createObjectURL(file);
-
         const filename = file.name.replace(/\.jpg$/i, "");
 
         setSelectedFileName(filename);
@@ -59,7 +55,7 @@ export default function ImageUpload({ item, onFileSelect, disabled = false, }: I
         e.stopPropagation();
 
         if (!disabled) {
-        setIsDragging(true);
+            setIsDragging(true);
         }
     };
 
@@ -77,17 +73,13 @@ export default function ImageUpload({ item, onFileSelect, disabled = false, }: I
     const clearSelectedImage = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
 
-        if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-        }
+        if (previewUrl) { URL.revokeObjectURL(previewUrl); }
 
         setPreviewUrl(null);
         setSelectedFileName(null);
         onFileSelect(null);
 
-        if (inputRef.current) {
-        inputRef.current.value = "";
-        }
+        if (inputRef.current) { inputRef.current.value = ""; }
     };
 
     useEffect(() => {
@@ -98,89 +90,79 @@ export default function ImageUpload({ item, onFileSelect, disabled = false, }: I
         };
     }, [previewUrl]);
 
-  const isMatch = selectedFileName ? selectedFileName === item.image : null;
+    const isMatch = selectedFileName ? selectedFileName === item.image : null;
 
-  return (
-    <div className="flex flex-col gap-3">
-        <div className="relative w-fit">
-            <button
-                type="button"
-                onClick={openFilePicker}
-                onDrop={handleDrop}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
+    return (
+        <div className={styles.container}>
+            <div className={styles.imageWrapper}>
+                <button
+                    type="button"
+                    onClick={openFilePicker}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    disabled={disabled}
+                    className={[
+                        styles.uploadButton,
+                        disabled ? styles.uploadButtonDisabled : styles.uploadButtonEnabled,
+                        isDragging ? styles.uploadButtonDragging : styles.uploadButtonIdle,
+                    ].join(" ")}
+                    aria-label="Upload image"
+                >
+                    {previewUrl ? (
+                        <>
+                            <img
+                                src={previewUrl}
+                                alt={selectedFileName ?? "Selected image preview"}
+                                className={styles.previewImage}
+                            />
+                            <div className={styles.previewOverlay}>
+                                <span className={styles.previewOverlayText}>Change image</span>
+                            </div>
+                        </>
+                    ) : ( <span className={styles.plusIcon}>+</span> )}
+                </button>
+                {previewUrl && !disabled && (
+                    <button
+                        type="button"
+                        onClick={clearSelectedImage}
+                        className={styles.removeButton}
+                        aria-label="Remove selected image"
+                    >
+                        ×
+                    </button>
+                )}
+            </div>
+
+            <input
+                ref={inputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleInputChange}
+                className={styles.hiddenInput}
                 disabled={disabled}
-                className={`relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-md border-2 border-dashed transition ${
-                    disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-                } ${
-                    isDragging
-                    ? "border-black bg-gray-100"
-                    : "border-gray-400 bg-white hover:bg-gray-50"
-                }`}
-                aria-label="Upload image"
-            >
-            {previewUrl ? (
-                <>
-                <img
-                    src={previewUrl}
-                    alt={selectedFileName ?? "Selected image preview"}
-                    className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/0 text-white opacity-0 transition hover:bg-black/30 hover:opacity-100">
-                    <span className="rounded bg-black/50 px-2 py-1 text-xs">
-                    Change image
-                    </span>
+            />
+
+            <div className={styles.details}>
+                <div>
+                    <span className={styles.label}>Expected file name:</span>{" "}
+                    <span>{item.image || "No expected file name"}</span>
                 </div>
-                </>
-            ) : (
-                <span className="text-4xl text-gray-600">+</span>
-            )}
-            </button>
-
-            {previewUrl && !disabled && (
-            <button
-                type="button"
-                onClick={clearSelectedImage}
-                className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-black text-sm text-white shadow"
-                aria-label="Remove selected image"
-            >
-                ×
-            </button>
-            )}
+                {selectedFileName && (
+                    <div className={styles.detailRow}>
+                        <span className={styles.label}>Selected file:</span>{" "}
+                        <span>{selectedFileName}</span>
+                    </div>
+                )}
+                {isMatch === false && (
+                    <div className={styles.errorMessage}>
+                        Selected file does not match the expected file name.
+                    </div>
+                )}
+                {isMatch === true && (
+                    <div className={styles.successMessage}>File name matches.</div>
+                )}
+            </div>
         </div>
-
-        <input
-            ref={inputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleInputChange}
-            className="hidden"
-            disabled={disabled}
-        />
-
-        <div className="text-sm">
-            <div>
-            <span className="font-medium">Expected file name:</span>{" "}
-            <span>{item.image || "No expected file name"}</span>
-            </div>
-
-            {selectedFileName && (
-            <div className="mt-1">
-                <span className="font-medium">Selected file:</span>{" "}
-                <span>{selectedFileName}</span>
-            </div>
-            )}
-
-            {isMatch === false && (
-            <div className="mt-1 text-red-600">
-                Selected file does not match the expected file name.
-            </div>
-            )}
-
-            {isMatch === true && (
-            <div className="mt-1 text-green-600">File name matches.</div>
-            )}
-        </div>
-    </div>
-  );
+    );
 }

@@ -1,6 +1,8 @@
-import { RawExcelRow } from "../imports/types";
 import { Dispatch, SetStateAction } from "react";
-import { ItemTypeValue, SelectedFilesMap, UploadClientItem, UploadImageInput, UploadImagesResponse } from "@/app/Types/upload";
+import * as XLSX from "xlsx";
+
+import { RawExcelRow } from "../imports/types";
+import { ItemTypeValue, UploadClientItem, ParsedRow } from "@/app/Types/upload";
 import { GIFT_TYPE, GiftType, ItemType } from "@/app/Types/items";
 
 function toStringValue(value: unknown): string {
@@ -66,12 +68,35 @@ function parseGiftType(value: unknown):  GIFT_TYPE{
     }   
 }
 
+export function isExcelFile(file: File) {
+    return (
+        file.name.toLowerCase().endsWith(".xlsx") ||
+        file.name.toLowerCase().endsWith(".xls") ||
+        file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        file.type === "application/vnd.ms-excel"
+    );
+  }
+
 export function filterItemsNotInDatabase(uploadedItems: UploadClientItem[], existingUploadIds: string[]): UploadClientItem[] {
     const existingIdsSet = new Set(existingUploadIds);
   
     return uploadedItems.filter((item) => !existingIdsSet.has(item.uploadId));
 }
   
+export async function parseUploadSpreadsheet(file: File): Promise<UploadClientItem[]> {
+    const arrayBuffer = await file.arrayBuffer();
+    const workbook = XLSX.read(arrayBuffer, { type: "array" });
+  
+    const firstSheetName = workbook.SheetNames[0];
+    const firstSheet = workbook.Sheets[firstSheetName];
+  
+    const rows = XLSX.utils.sheet_to_json<ParsedRow>(firstSheet, {
+        defval: "",
+    });
+  
+    return rows.map(mapRowToUploadItem);
+}
+
 export function mapRowToUploadItem(row: RawExcelRow): UploadClientItem {
     const type = parseItemType(row.Type);
 
@@ -117,6 +142,23 @@ export function mapRowToUploadItem(row: RawExcelRow): UploadClientItem {
     }
 
     return base;   
+}
+
+export async function fetchExistingUploadIds(uploadIds: string[]) {
+    const response = await fetch("/Admin/api/items/existing-upload-ids", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uploadIds }),
+    });
+  
+    if (!response.ok) {
+        throw new Error("Failed to check existing upload IDs");
+    }
+  
+    const data = await response.json();
+    return data.existingUploadIds as string[];
 }
 
 export async function saveAllUploadItems(newItems: UploadClientItem[], setNewItems: Dispatch<SetStateAction<UploadClientItem[]>>) {

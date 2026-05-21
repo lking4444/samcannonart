@@ -18,8 +18,8 @@ export default function TypeDetails({ item }: Props) {
         case ItemType.GIFT:
             return item.gift ? (
                 <>
-                <p>Gift Number: {item.gift.giftNumber}</p>
-                {item.gift.giftType && <p>Gift Type: {item.gift.giftType}</p>}
+                    <p>Gift Number: {item.gift.giftNumber}</p>
+                    {item.gift.giftType && <p>Gift Type: {item.gift.giftType}</p>}
                 </>
             ) : null;
 

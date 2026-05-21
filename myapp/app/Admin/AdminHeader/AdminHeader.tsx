@@ -1,6 +1,7 @@
 import PageButton from "@/app/Components/PageButton";
-import styles from './AdminHeader.module.css'
 import LogoutButton from "./LogoutButton";
+
+import styles from './AdminHeader.module.css'
 
 export default function AdminHeader()  {
     return (

@@ -1,4 +1,4 @@
-import { SelectedFilesMap, UploadClientItem, UploadImageInput, UploadImagesResponse } from "@/app/Types/upload";
+import { SelectedFilesMap, SelectedImage, UploadClientItem, UploadImageInput, UploadImagesResponse } from "@/app/Types/upload";
 
 export function getImageIdFromFileName(fileName: string) {
     return fileName.replace(/\.[^/.]+$/, "");
@@ -89,4 +89,16 @@ export async function bulkImageUpload( images: UploadImageInput[] ): Promise<Upl
     }
   
     return response.json();
+}
+
+export function getFileKey(file: File) {
+    return `${file.name}-${file.size}-${file.lastModified}`;
+}
+  
+export function createSelectedImage(file: File): SelectedImage {
+    return {
+        file,
+        previewUrl: URL.createObjectURL(file),
+        imageId: getImageIdFromFileName(file.name),
+    };
 }

@@ -1,44 +1,34 @@
 "use client";
 
 import { useRef, useState, DragEvent, ChangeEvent } from "react";
-import * as XLSX from "xlsx";
 
 import UploadItem from "../UploadItem";
-import { filterItemsNotInDatabase, mapRowToUploadItem, saveAllUploadItems, } from "@/lib/uploads/uploads";
+import { fetchExistingUploadIds, filterItemsNotInDatabase, isExcelFile, parseUploadSpreadsheet, saveAllUploadItems, } from "@/lib/uploads/uploads";
 import { saveAllImages } from "@/lib/images/uploads";
-
-import { ParsedRow, UploadClientItem } from "@/app/Types/upload";
+import {SelectedFilesMap, UploadClientItem } from "@/app/Types/upload";
 
 import styles from "./ExcelUpload.module.css";
-
-type SelectedFilesMap = Record<string, File | null>;
 
 export default function ExcelUpload() {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const [isDragging, setIsDragging] = useState(false);
     const [fileName, setFileName] = useState("");
-    const [rows, setRows] = useState<ParsedRow[]>([]);
-    const [items, setItems] = useState<UploadClientItem[]>([]);
     const [newItems, setNewItems] = useState<UploadClientItem[]>([]);
     const [originalNewItems, setOriginalNewItems] = useState<UploadClientItem[]>([]);
     const [selectedFiles, setSelectedFiles] = useState<SelectedFilesMap>({});
+
+    const [isDragging, setIsDragging] = useState(false);
     const [isSavingAll, setIsSavingAll] = useState(false);
     const [error, setError] = useState("");
 
     const handleItemChange = (updatedItem: UploadClientItem) => {
         setNewItems((current) =>
-            current.map((item) =>
-                item.uploadId === updatedItem.uploadId ? updatedItem : item
-            )
+            current.map((item) => item.uploadId === updatedItem.uploadId ? updatedItem : item )
         );
     };
 
     const handleFileChange = (uploadId: string, file: File | null) => {
-        setSelectedFiles((current) => ({
-            ...current,
-            [uploadId]: file,
-        }));
+        setSelectedFiles((current) => ({ ...current, [uploadId]: file, }));
     };
 
     const handleResetItem = (uploadId: string) => {
@@ -49,20 +39,13 @@ export default function ExcelUpload() {
             current.map((item) => (item.uploadId === uploadId ? originalItem : item))
         );
 
-        setSelectedFiles((current) => ({
-            ...current,
-            [uploadId]: null,
-        }));
+        setSelectedFiles((current) => ({ ...current, [uploadId]: null, }));
     };
 
     const handleItemSaved = (uploadId: string) => {
         setNewItems((current) => current.filter((item) => item.uploadId !== uploadId));
         setOriginalNewItems((current) => current.filter((item) => item.uploadId !== uploadId) );
-        setSelectedFiles((current) => {
-            const next = { ...current };
-            delete next[uploadId];
-            return next;
-        });
+        setSelectedFiles((current) => { const next = { ...current }; delete next[uploadId]; return next; });
     };
 
     const handleSaveAll = async () => {
@@ -75,9 +58,7 @@ export default function ExcelUpload() {
         
         } catch (error) {
             console.error(error);
-            setError(
-                error instanceof Error ? error.message : "Failed to save all items"
-            );
+            setError( error instanceof Error ? error.message : "Failed to save all items" );
         } finally {
             setIsSavingAll(false);
         }
@@ -85,62 +66,25 @@ export default function ExcelUpload() {
 
     const handleFile = async (file: File) => {
         setError("");
-        setRows([]);
-        setItems([]);
         setNewItems([]);
         setOriginalNewItems([]);
         setSelectedFiles({});
         setFileName("");
 
-        const isExcel =
-        file.name.toLowerCase().endsWith(".xlsx") ||
-        file.name.toLowerCase().endsWith(".xls") ||
-        file.type ===
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-        file.type === "application/vnd.ms-excel";
-
-        if (!isExcel) { setError("Please upload an Excel file (.xlsx or .xls)."); return; }
+        if (!isExcelFile(file)) { setError("Please upload an Excel file (.xlsx or .xls)."); return; }
 
         try {
             setFileName(file.name);
 
-            const arrayBuffer = await file.arrayBuffer();
-            const workbook = XLSX.read(arrayBuffer, { type: "array" });
-
-            const firstSheetName = workbook.SheetNames[0];
-            const firstSheet = workbook.Sheets[firstSheetName];
-
-            const jsonData = XLSX.utils.sheet_to_json<ParsedRow>(firstSheet, {
-                defval: "",
-            });
-
-            setRows(jsonData);
-
-            const mappedItems = jsonData.map(mapRowToUploadItem);
-            setItems(mappedItems);
-
-            const response = await fetch("/Admin/api/items/existing-upload-ids", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                uploadIds: mappedItems.map((item) => item.uploadId),
-                }),
-            });
-
-            const data = await response.json();
-
-            const filteredItems = filterItemsNotInDatabase(
-                mappedItems,
-                data.existingUploadIds
-            );
+            const mappedItems = await parseUploadSpreadsheet(file);
+            const existingUploadIds = await fetchExistingUploadIds( mappedItems.map((item) => item.uploadId) );
+            const filteredItems = filterItemsNotInDatabase( mappedItems, existingUploadIds );
 
             setNewItems(filteredItems);
             setOriginalNewItems(filteredItems);
         } catch (err) {
             console.error(err);
-            setError("Failed to read the spreadsheet.");
+            setError( err instanceof Error ? err.message : "Failed to process the spreadsheet." );
         }
     };
 
@@ -169,65 +113,63 @@ export default function ExcelUpload() {
     };
 
   return (
-    <div className={styles.wrapper}>
-      <input
-        ref={inputRef}
-        type="file"
-        accept=".xlsx,.xls"
-        onChange={handleInputChange}
-        className={styles.hiddenInput}
-      />
-
-      <div
-        className={`${styles.dropZone} ${isDragging ? styles.dragging : ""}`}
-        onClick={() => inputRef.current?.click()}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        <div className={styles.icon}>📊</div>
-        <h2 className={styles.title}>Upload Spreadsheet</h2>
-        <p className={styles.text}>Drag and drop your Excel file here</p>
-        <p className={styles.subtext}>or click to browse</p>
-      </div>
-
-      {fileName && (
-        <div className={styles.fileCard}>
-          <span className={styles.fileLabel}>Selected file</span>
-          <span className={styles.fileName}>{fileName}</span>
-        </div>
-      )}
-
-      {error && <div className={styles.error}>{error}</div>}
-
-      {newItems.length > 0 && (
-        <>
-          <div className={styles.actions}>
-            <button
-              type="button"
-              className={styles.saveAllButton}
-              onClick={handleSaveAll}
-              disabled={isSavingAll}
+        <div className={styles.wrapper}>
+            <input
+                ref={inputRef}
+                type="file"
+                accept=".xlsx,.xls"
+                onChange={handleInputChange}
+                className={styles.hiddenInput}
+            />
+            <div
+                className={`${styles.dropZone} ${isDragging ? styles.dragging : ""}`}
+                onClick={() => inputRef.current?.click()}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
             >
-              {isSavingAll ? "Saving..." : `Save All (${newItems.length})`}
-            </button>
-          </div>
+                <div className={styles.icon}>📊</div>
+                <h2 className={styles.title}>Upload Spreadsheet</h2>
+                <p className={styles.text}>Drag and drop your Excel file here</p>
+                <p className={styles.subtext}>or click to browse</p>
+            </div>
 
-          <div className={styles.itemContainer}>
-            {newItems.map((item) => (
-              <UploadItem
-                key={item.uploadId}
-                item={item}
-                selectedFile={selectedFiles[item.uploadId] ?? null}
-                onItemChange={handleItemChange}
-                onFileChange={handleFileChange}
-                onReset={handleResetItem}
-                onSaved={handleItemSaved}
-              />
-            ))}
-          </div>
-        </>
-      )}
-    </div>
+            {fileName && (
+                <div className={styles.fileCard}>
+                    <span className={styles.fileLabel}>Selected file</span>
+                    <span className={styles.fileName}>{fileName}</span>
+                </div>
+            )}
+
+            {error && <div className={styles.error}>{error}</div>}
+
+            {newItems.length > 0 && (
+                <>
+                    <div className={styles.actions}>
+                        <button
+                            type="button"
+                            className={styles.saveAllButton}
+                            onClick={handleSaveAll}
+                            disabled={isSavingAll}
+                        >
+                            {isSavingAll ? "Saving..." : `Save All (${newItems.length})`}
+                        </button>
+                    </div>
+                    <div className={styles.itemContainer}>
+                        {newItems.map((item) => (
+                            <UploadItem
+                                key={item.uploadId}
+                                item={item}
+                                selectedFile={selectedFiles[item.uploadId] ?? null}
+                                onItemChange={handleItemChange}
+                                onFileChange={handleFileChange}
+                                onReset={handleResetItem}
+                                onSaved={handleItemSaved}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
+        </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import type { ItemType } from '@/app/generated/prisma/client';
-import { ItemClient } from "../Types";
+import { ItemClient } from "@/app/Types/items";
 
 export type SortOrder = "High to Low" | "Low to High" | "Default";
 

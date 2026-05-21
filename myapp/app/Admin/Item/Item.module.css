@@ -14,22 +14,22 @@
 .row {
     display: grid;
     grid-template-columns:
-      minmax(180px, 1.4fr)
-      minmax(90px, 1.6fr)
-      minmax(90px, 0.8fr)
-      minmax(110px, 1.8fr)
-      minmax(140px, 1fr)
-      minmax(90px, 1.6fr);
+        minmax(180px, 1.4fr)
+        minmax(90px, 1.6fr)
+        minmax(90px, 0.8fr)
+        minmax(110px, 1.8fr)
+        minmax(140px, 1fr)
+        minmax(90px, 1.6fr);
     gap: 12px;
     align-items: center;
 
-  }
-  
-  .row > span {
+}
+
+.row > span {
     min-width: 0;
-  }
-  
-  .keywordSearch {
+}
+
+.keywordSearch {
     width: 100%;
     min-width: 0;
     height: 42px;
@@ -40,35 +40,35 @@
     color: #1f2430;
     font-size: 0.95rem;
     transition:
-      border-color 0.18s ease,
-      box-shadow 0.18s ease,
-      background-color 0.18s ease;
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background-color 0.18s ease;
     box-sizing: border-box;
-  }
-  
-  .keywordSearch::placeholder {
+}
+
+.keywordSearch::placeholder {
     color: #98a0af;
-  }
-  
-  .keywordSearch:hover {
+}
+
+.keywordSearch:hover {
     border-color: #b9c1cf;
     background: #fcfcff;
-  }
-  
-  .keywordSearch:focus {
+}
+
+.keywordSearch:focus {
     outline: none;
     border-color: #7c8bff;
     box-shadow: 0 0 0 4px rgba(124, 139, 255, 0.14);
     background: #fff;
-  }
-  
-  .tagsEditorWrapper {
+}
+
+.tagsEditorWrapper {
     position: relative;
     display: flex;
     align-items: center;
-  }
-  
-  .tagsEditorButton {
+}
+
+.tagsEditorButton {
     height: 42px;
     padding: 0 14px;
     border: 1px solid #d7dbe3;
@@ -79,23 +79,23 @@
     font-weight: 600;
     cursor: pointer;
     transition:
-      background-color 0.18s ease,
-      border-color 0.18s ease,
-      transform 0.12s ease,
-      box-shadow 0.18s ease;
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.12s ease,
+        box-shadow 0.18s ease;
     white-space: nowrap;
-  }
-  
-  .tagsEditorButton:hover {
+}
+
+.tagsEditorButton:hover {
     background: #eef1ff;
     border-color: #b9c4ff;
-  }
-  
-  .tagsEditorButton:active {
+}
+
+.tagsEditorButton:active {
     transform: translateY(1px);
-  }
-  
-  .tagsEditorDropdown {
+}
+
+.tagsEditorDropdown {
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
@@ -108,23 +108,23 @@
     border-radius: 16px;
     background: #ffffff;
     box-shadow:
-      0 18px 40px rgba(16, 24, 40, 0.14),
-      0 4px 14px rgba(16, 24, 40, 0.08);
-  }
-  
-  .tagsEditorList {
+        0 18px 40px rgba(16, 24, 40, 0.14),
+        0 4px 14px rgba(16, 24, 40, 0.08);
+}
+
+.tagsEditorList {
     display: grid;
     gap: 10px;
-  }
-  
-  .tagEditorRow {
+}
+
+.tagEditorRow {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 8px;
     align-items: center;
-  }
-  
-  .tagActionButton {
+}
+
+.tagActionButton {
     height: 38px;
     padding: 0 12px;
     border: 1px solid #d7dbe3;
@@ -135,22 +135,22 @@
     font-weight: 600;
     cursor: pointer;
     transition:
-      background-color 0.18s ease,
-      border-color 0.18s ease,
-      transform 0.12s ease;
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.12s ease;
     white-space: nowrap;
-  }
-  
-  .tagActionButton:hover {
+}
+
+.tagActionButton:hover {
     background: #f6f8fc;
     border-color: #bcc6d6;
-  }
-  
-  .tagActionButton:active {
+}
+
+.tagActionButton:active {
     transform: translateY(1px);
-  }
-  
-  .row > button {
+}
+
+.row > button {
     height: 42px;
     padding: 0 16px;
     border: none;
@@ -159,61 +159,10 @@
     font-weight: 700;
     cursor: pointer;
     transition:
-      transform 0.12s ease,
-      box-shadow 0.18s ease,
-      opacity 0.18s ease;
+        transform 0.12s ease,
+        box-shadow 0.18s ease,
+        opacity 0.18s ease;
     white-space: nowrap;
-  }
-  
-  /* .row > button:first-of-type {
-    background: linear-gradient(135deg, #5d6bff 0%, #7d63ff 100%);
-    color: #fff;
-    box-shadow: 0 8px 18px rgba(93, 107, 255, 0.22);
-  }
-  
-  .row > button:first-of-type:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(93, 107, 255, 0.28);
-  }
-  
-  .row > button:last-of-type {
-    background: #eef1f6;
-    color: #273142;
-  }
-  
-  .row > button:last-of-type:hover {
-    background: #e3e8f0;
-    transform: translateY(-1px);
-  } */
-  
-@media (max-width: 1000px) {
-    .row {
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-    }
-
-    .tagsEditorDropdown {
-        left: auto;
-        right: 0;
-    }
-
-    .row > button {
-        width: 100%;
-    }
-}
-
-@media (max-width: 600px) {
-    .row {
-        grid-template-columns: 1fr;
-        padding: 12px;
-    }
-
-    .tagsEditorDropdown {
-        position: static;
-        min-width: 100%;
-        max-width: 100%;
-        margin-top: 10px;
-    }
 }
 
 .field {
@@ -411,5 +360,35 @@
     }
     100% {
         transform: scale(1);
+    }
+}
+
+@media (max-width: 1000px) {
+    .row {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+
+    .tagsEditorDropdown {
+        left: auto;
+        right: 0;
+    }
+
+    .row > button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .row {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+
+    .tagsEditorDropdown {
+        position: static;
+        min-width: 100%;
+        max-width: 100%;
+        margin-top: 10px;
     }
 }

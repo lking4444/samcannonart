@@ -1,4 +1,4 @@
-import ImageUpload from "./ImageUpload/ImageUpload";
+import ImageUpload from "./ImageUpload";
 
 export default function BulkImageUpload(){
     return(

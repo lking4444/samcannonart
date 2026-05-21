@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 import ItemTile from "../../Components/ItemTile";
-import { ItemClient } from '../../Types';
+import { ItemClient } from "@/app/Types/items";
 
 import styles from './ItemList.module.css'
 

@@ -6,9 +6,9 @@ import Link from "next/link";
 
 import SelectedSuggestion from "./SelectedSuggestion";
 import Loading from "../../Loading";
-import { ItemClient } from "../../../Types";
 import { getItemImageSrc } from "@/lib/images/imagepaths";
 import { getSuggestedContent } from "@/lib/contentRecommendation/items";
+import { ItemClient } from "@/app/Types/items";
 
 import styles from './SuggestedContent.module.css'
 

@@ -8,7 +8,7 @@ export const ItemType = {
     ORIGINAL: "ORIGINAL",
     NOTEPAD: "NOTEPAD",
     GIFT: "GIFT",
-  } as const;
+} as const;
 
 export const GiftType = {
     MIXEDMEDIA: 'MIXEDMEDIA',
@@ -49,4 +49,19 @@ export type ItemClientWithTypes = {
     notePad?: NotePad;
 };
 
+export type ItemClient = {
+    id: number;
+    name: string;
+    type: ITEM_TYPE;
+    price: string;
+    image: string;
+    stock: number;
+    tags: string[];
+    dimensions: string | null;
+    media: string | null;
+    description: string | null;
+    year: number | null;
+    popular: boolean;
+    hidden: boolean;
+};
   

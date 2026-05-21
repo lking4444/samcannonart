@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import { ItemClient } from "../../../../Types";
 import { getItemImageSrc } from "@/lib/images/imagepaths";
+import { ItemClient } from "@/app/Types/items";
 
 import styles from './SelectedSuggestion.module.css'
 
