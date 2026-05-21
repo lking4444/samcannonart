@@ -1,5 +1,9 @@
 import styles from './Loading.module.css'
 
-export default function Loading(){
-    return (<div className={styles.spinner} />)
+type LoadingProps = {
+    small?: boolean
+}
+
+export default function Loading({small}: LoadingProps){
+    return (<div className={small ? styles.smallSpinner : styles.spinner} />)
 }

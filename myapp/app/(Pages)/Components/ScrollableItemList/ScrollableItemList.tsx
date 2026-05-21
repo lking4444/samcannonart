@@ -15,7 +15,7 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
     const sortOrders: SortOrder[] = ["High to Low", "Low to High", "Default"];
 
     // UI filters
-    const [dimension, setDimension] = useState<string | undefined>("");
+    const [dimension, setDimension] = useState<string | undefined>("Default");
     const [keyword, setKeyword] = useState<string>("");
     const [sortOrder, setSortOrder] = useState<string | undefined>("Default");
     const [tag, setTag] = useState<string | undefined>("Default");
@@ -39,7 +39,7 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
             sp.set("page", String(p));
             sp.set("pageSize", String(pageSize));
             sp.set("keyword", debouncedKeyword);
-            sp.set("dimension", dimension ?? "");
+            sp.set("dimension", dimension ?? "Default");
             sp.set("sortOrder", sortOrder ?? "Default");
             sp.set("tag", tag ?? "Default");
             return `/api/items/by-type?${sp.toString()}`;
@@ -79,7 +79,7 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
         sp.set("page", "1");
         sp.set("pageSize", String(pageSize));
         sp.set("keyword", debouncedKeyword ?? "");
-        sp.set("dimension", dimension ?? "");
+        sp.set("dimension", dimension ?? "Default");
         console.log(tag);
         sp.set("tag", tag ?? "Default");
         sp.set("sortOrder", sortOrder ?? "Default");
@@ -122,7 +122,7 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
 
     // dimension options based on the currently loaded items
     const dimensionOptions = useMemo(() => {
-        return [ ...new Set(items.map((i) => i.dimensions).filter((d): d is string => d != null)), ];
+        return ["Default", ...new Set(items.map((i) => i.dimensions).filter((d): d is string => d != null)), ];
     }, [items]);
 
     const tagOptions = useMemo(() => {
@@ -148,8 +148,8 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
             </div>
             {error && <p style={{ marginTop: 12 }}>Error: {error}</p>}
             {loading && <Loading/>}
-            {!hasMore && !loading && items.length > 0 && (
-                <p style={{ marginTop: 12 }}>You’ve reached the end.</p>
+            {!hasMore && !loading && (
+                <p style={{ marginTop: 12 }}>You’ve reached the end</p>
             )}
             <div ref={sentinelRef} style={{ height: 1 }} />
         </>

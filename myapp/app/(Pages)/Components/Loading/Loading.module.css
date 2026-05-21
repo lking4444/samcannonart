@@ -8,10 +8,22 @@
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
     z-index: 1;
-  }
+}
+
+.smallSpinner{
+  top: 50%;
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  border: 3px solid #d1d5db;
+  border-top: 3px solid #4b5563;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  z-index: 1;
+}
   
   @keyframes spin {
     to {
       transform: rotate(360deg);
     }
-  }
+}

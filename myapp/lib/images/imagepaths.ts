@@ -7,7 +7,7 @@ export const getBaseFolder = (itemType: ItemType): string => {
         case ItemType.ORIGINAL:
             return "Originals/OriginalsLowRes";
         case ItemType.PRINT:
-            return "Prints/PrintsWithIdLowRes";
+            return "Prints";
         case ItemType.CALENDAR:
             return "Calendars/CalendarsWithIdLowRes";
         case ItemType.SLATE:

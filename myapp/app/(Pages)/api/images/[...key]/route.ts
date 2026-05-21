@@ -1,5 +1,7 @@
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
+export const runtime = "nodejs";
+
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
   credentials: {
@@ -27,11 +29,11 @@ export async function GET(
       return new Response("Image not found", { status: 404 });
     }
 
-    return new Response(result.Body as ReadableStream, {
+    return new Response(result.Body.transformToWebStream(), {
       status: 200,
       headers: {
         "Content-Type": result.ContentType || "image/png",
-        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Cache-Control": "public, max-age=31536000, immutable",
       },
     });
   } catch (error) {

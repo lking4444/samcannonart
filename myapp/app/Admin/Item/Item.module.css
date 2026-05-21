@@ -1,6 +1,7 @@
 
 .rowWrapper{
     padding: 14px 16px;
+    padding-top: 10px;
     border: 1px solid #e7e7ec;
     border-radius: 16px;
     background: linear-gradient(180deg, #ffffff 0%, #fcfcfe 100%);

@@ -41,3 +41,10 @@
         display:block;
     }
 }
+
+@media (max-width: 420px){
+    .container{
+        flex-direction: column;
+        gap: 10px;
+    }
+}

@@ -164,7 +164,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                 </span>
                             </span>
                             <button className={styles.checkoutButton} onClick={() => {setLoading(true); goToCheckout(total, cartItems);}}>
-                                {loading ? <Loading /> : "Checkout"}
+                                {loading ? <Loading small={true} /> : "Checkout"}
                             </button>
                         </div>
                     </div>

@@ -4,10 +4,11 @@ import { useCartActions } from "@/app/Hooks/useCartActions"
 import styles from "./AddToBasket.module.css"
 
 type AddToBasketProps = {
-  itemId: number
+  itemId: number;
+  secondary?: boolean;
 }
 
-export default function AddToBasket({ itemId }: AddToBasketProps) {
+export default function AddToBasket({ itemId, secondary }: AddToBasketProps) {
   const { addToCart, isLoading } = useCartActions()
 
   async function handleAddToBasket() {
@@ -20,8 +21,12 @@ export default function AddToBasket({ itemId }: AddToBasketProps) {
 
   return (
     <button
-      className={styles.addToBasket}
-      onClick={handleAddToBasket}
+      className={secondary ? styles.addToBasketSecondary : styles.addToBasket}
+      onClick={(e) => {
+        e.preventDefault();
+    
+        handleAddToBasket();
+      }}
       disabled={isLoading}
     >
       {isLoading ? "Adding..." : "Add To Basket"}

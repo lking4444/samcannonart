@@ -55,10 +55,14 @@ export default function CartItemUI({ itemName, id, imgSrc, price, quantity, type
 
             <span>
             <div className={styles.adjustStock}>
-                <div
-                className={styles.plusContainer}
-                onClick={handleIncreaseQuantity}
-                >
+            <div
+                className={styles.plusContainer} 
+                onClick={(e) => { 
+                    e.preventDefault(); 
+                    e.stopPropagation(); 
+                    handleIncreaseQuantity(); 
+                }}
+            >
                 <Image
                     className={styles.plus}
                     src="/icons/plus.svg"
@@ -66,12 +70,16 @@ export default function CartItemUI({ itemName, id, imgSrc, price, quantity, type
                     width={24}
                     height={24}
                 />
-                </div>
+            </div>
 
-                <div
+            <div
                 className={styles.minusContainer}
-                onClick={handleDecreaseQuantity}
-                >
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleDecreaseQuantity();
+                }}
+            >
                 <Image
                     className={styles.minus}
                     src="/icons/minus.svg"
@@ -79,7 +87,7 @@ export default function CartItemUI({ itemName, id, imgSrc, price, quantity, type
                     width={24}
                     height={24}
                 />
-                </div>
+            </div>
             </div>
             </span>
         </span>

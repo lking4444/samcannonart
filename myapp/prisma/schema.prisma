@@ -77,7 +77,7 @@ model Card {
 model Print {
   itemId Int   @id
   item   Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  printId String @unique
+  printId String 
 }
 
 model Calendar {

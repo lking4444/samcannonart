@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
 
-import AddToBasket from './AddToBasket';
+import AddToBasket from '../AddToBasket';
 import BuyNow from './BuyNow';
 import SuggestedContent from './SuggestedContent';
 
@@ -13,6 +13,7 @@ import { ClientItem } from './types';
 
 import styles from './ItemDetails.module.css'
 import Loading from '../Loading';
+import CalendarPages from '../CalendarPages';
 
 type ItemDetailsProps = {
     item: ClientItem
@@ -87,7 +88,7 @@ export default function ItemDetails({ item }: ItemDetailsProps) {
                     </div>
                 </div>
             </div>
-
+            {item.type == 'CALENDAR' && (<CalendarPages/>)}
             <SuggestedContent id={String(item.id)} />
         </div>
     )

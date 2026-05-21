@@ -15,7 +15,7 @@ export async function GET(req: Request) {
 
     // Sorting and Search Params
     const keyword = searchParams.get("keyword") ?? "";
-    const dimension = searchParams.get("dimension") ?? "";
+    const dimension = searchParams.get("dimension") ?? "Default";
     const tag = searchParams.get("tag") ?? "Default";
     const sortOrder = (searchParams.get("sortOrder") ?? "Default") as
         | "High to Low"

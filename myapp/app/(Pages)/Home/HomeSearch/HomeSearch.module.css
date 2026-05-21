@@ -5,24 +5,38 @@
     width: 100%;
 }
 
-.result{
-    padding: 15px 15px 15px 15px;
-    background-color: white;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: row;
-    box-shadow: -4px 0 5px rgba(121, 121, 121, 0.15);
-    transform: scale(1);
-    transition: transform 500ms cubic-bezier(.2,.9,.2,1);
-    will-change: transform;
+.result {
+  padding: 15px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+
+  background: rgba(212, 212, 212, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: -4px 0 20px rgba(121, 121, 121, 0.18);
+
+  transform: scale(1);
+  transition:
+      transform 500ms cubic-bezier(.2,.9,.2,1),
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  will-change: transform;
 }
+
 .result:hover {
-transform: scale(1.06);
+  background: rgba(245, 245, 245, 0.65);
+  box-shadow: -4px 0 24px rgba(121, 121, 121, 0.24);
+  transform: scale(1.01);
 }
 
 .results {
     max-height: 500px;    
     overflow-y: auto;
+    align-items: center;
   
     display: flex;
     flex-direction: column;
@@ -30,7 +44,6 @@ transform: scale(1.06);
   
     padding: 30px;
     border-radius: 12px;
-    width: 700px;
   }
 
 .nameAndType{
@@ -39,7 +52,6 @@ transform: scale(1.06);
     gap: 5px;
     font-family: var(--font-inter);
     font-size: large;
-
 }
 
 .itemInfo{
@@ -55,7 +67,7 @@ transform: scale(1.06);
     display: inline-block;
     min-width: 0; 
     width: max-content;
-    max-width: 250px;
+    max-width: 200px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -66,7 +78,7 @@ transform: scale(1.06);
 }
 
 .itemType{
-    color: rgb(154, 154, 154);
+    color: rgb(255, 255, 255);
 }
 
 .searchBar{
@@ -85,50 +97,94 @@ transform: scale(1.06);
     justify-content: center;
 }
 
-.button{
-    background-color: var(--button-secondary);
-    padding: 10px 14px;
-    color: white;
-    font-family: var(--font-inter);
-    border-radius: 10px;
-    font-weight: 600;
-  
-    border: 1px solid var(--button-secondary);
-    cursor: pointer;
-  
-    transform: scale(1);
-    transition:
-      transform 220ms cubic-bezier(.2,.9,.2,1),
-      background-color 220ms cubic-bezier(.2,.9,.2,1),
-      color 220ms cubic-bezier(.2,.9,.2,1),
-      border-color 220ms cubic-bezier(.2,.9,.2,1),
-      box-shadow 220ms cubic-bezier(.2,.9,.2,1);
-    will-change: transform;
-  }
-  
-  .button:hover{
-    transform: scale(1.08);
-  
-    /* colour inversion */
-    background-color: white;
-    color: rgb(206, 106, 0);
-    border-color: rgb(206, 106, 0);
-  
-    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-  }
-  
-  .button:active{
-    transform: scale(1.04);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.10);
-  }
-  
-  .button:focus-visible{
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(206, 106, 0, 0.25);
-  }
+.button {
+  background-image: linear-gradient(
+      90deg,
+      rgb(196, 82, 25),
+      rgb(212, 135, 28)
+  );
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  color: white;
+  font-family: var(--font-inter);
+  font-size: medium;
+  font-weight: 600;
+
+  padding: 10px 14px;
+  border-radius: 30px;
+
+  border: 1px solid rgba(255, 220, 180, 0.55);
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  transform: scale(1);
+  box-shadow: 0 4px 18px rgba(196, 82, 25, 0.28);
+
+  transition:
+      background-image 0.2s ease,
+      transform 0.15s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+}
+
+.button:hover {
+  background-image: linear-gradient(
+      90deg,
+      rgb(215, 100, 38),
+      rgb(230, 154, 45)
+  );
+
+  color: white;
+  border-color: rgba(255, 230, 200, 0.75);
+  transform: scale(1.03);
+  box-shadow: 0 6px 22px rgba(196, 82, 25, 0.34);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow:
+      0 0 0 4px rgba(206, 106, 0, 0.25),
+      0 4px 18px rgba(196, 82, 25, 0.28);
+}
   
   @media (prefers-reduced-motion: reduce){
     .button{
       transition: none;
     }
   }
+
+@media (max-width: 800) {
+  .result{
+    width: 500px;
+  }
+  .itemName{
+    display: none;
+  }
+}
+
+@media (max-width: 550) {
+  .result{
+    width: 400px;
+  }
+}
+
+@media (max-width: 400) {
+  .result{
+    width: 320px;
+  }
+
+  .buttonContainer{
+    width: 100px;
+  }
+}

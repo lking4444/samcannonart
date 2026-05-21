@@ -14,17 +14,32 @@
     object-fit: cover;
   }
 
-.overlayBackground {
+  .overlayBackground {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 30%;
-    background: rgba(0, 0, 0, 0.4);
+  
     z-index: 1;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-}
+    height: 30%;
+  
+    background: rgba(170, 170, 170, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  
+    border-top: 1px solid rgba(255, 255, 255, 0.45);
+  
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.10);
+  
+    transform: scale(1);
+    will-change: transform, background-color, box-shadow;
+  
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+  }
 
 .overlayText {
     position: absolute;
@@ -49,9 +64,12 @@
 }
 
 .itemName {
+    max-height: 2.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     font-weight: 600;
     line-height: 1.2;
-    word-break: break-word;
     font-family: var(--font-inter);
-
 }

@@ -7,6 +7,5 @@ export default async function CalendarsPage(){
 return  <div className={styles.pageHeader}>
           <h1 className={styles.cardTitle}>Calendars</h1>
           <ScrollableItemList type={ItemType.CALENDAR} pageSize={10} />
-          <CalendarShowcase/>
         </div>
 }

@@ -18,6 +18,12 @@ type UpdateItemInput = {
     tags: string[];
 };
 
+
+type StockDecrementInput = {
+    itemId: number;
+    quantity: number;
+};
+
 function tokenize(text: string): string[] {
     return text
         .toLowerCase()
@@ -72,10 +78,11 @@ export async function getRandomPopularItems(limit = 5) {
       SELECT *
       FROM "Item"
       WHERE "popular" = true
+        AND "hidden" = false
       ORDER BY RANDOM()
       LIMIT ${safeLimit}
     `;
-}
+  }
   
 export async function deleteItem(itemId: number) {
     return prisma.item.delete({
@@ -195,12 +202,12 @@ export async function getRecommendedItems(itemId: number, limit = 12) {
     const baseDescTokens = unique(tokenize(base.description ?? ""));
   
     const candidates = await prisma.item.findMany({
-      where: { id: { not: base.id }, stock: { gt: 0 } },
-      select: {
-        id: true, name: true, type: true, price: true, image: true,
-        stock: true, dimensions: true, description: true, year: true, tags: true,
-      },
-      take: 250,
+        where: { id: { not: base.id }, stock: { gt: 0 }, hidden: false },
+        select: {
+            id: true, name: true, type: true, price: true, image: true,
+            stock: true, dimensions: true, description: true, year: true, tags: true,
+        },
+        take: 250,
     });
   
     // if the catalog can't supply 
@@ -323,7 +330,7 @@ export async function getItemsByPageFiltered(params: { page?: number; pageSize?:
     const page = params.page ?? 1;
   
     const keyword = (params.keyword ?? "").trim();
-    const dimension = (params.dimension ?? "").trim();
+    const dimension = (params.dimension ?? "Default").trim();
     const tag = (params.tag ?? "Default").trim();
     const sortOrder = (params.sortOrder ?? "Default") as SortOrder;
   
@@ -334,7 +341,7 @@ export async function getItemsByPageFiltered(params: { page?: number; pageSize?:
       type: params.type,
       hidden: false,
       stock: { gt: 0 },
-      ...(dimension ? { dimensions: dimension } : {}),
+      ...(dimension != "Default" ? { dimensions: dimension } : {}),
       ...(keyword
         ? {
             name: {
@@ -436,4 +443,53 @@ export async function searchItems(params: {query: string; page?: number; pageSiz
         pageSize,
         hasMore: skip + items.length < total,
     };
+}
+  
+export async function decrementPurchasedStock(items: StockDecrementInput[]) {
+    if (items.length === 0) return;
+
+    // Combine duplicate item IDs 
+    const quantityByItemId = new Map<number, number>();
+
+    for (const item of items) {
+        const quantity = Math.max(0, item.quantity ?? 0);
+
+        if (quantity === 0) continue;
+
+        quantityByItemId.set(
+            item.itemId,
+            (quantityByItemId.get(item.itemId) ?? 0) + quantity
+        );
+    }
+
+    const stockUpdates = Array.from(quantityByItemId.entries()).map(
+        ([itemId, quantity]) => ({
+            itemId,
+            quantity,
+        })
+    );
+
+    return prisma.$transaction(async (tx) => {
+        for (const { itemId, quantity } of stockUpdates) {
+            const result = await tx.item.updateMany({
+                where: {
+                id: itemId,
+                stock: {
+                    gte: quantity,
+                },
+                },
+                data: {
+                stock: {
+                    decrement: quantity,
+                },
+                },
+        });
+
+        if (result.count !== 1) {
+            throw new Error(
+                `Not enough stock available for item ${itemId}, or item does not exist.`
+            );
+        }
+        }
+    });
 }

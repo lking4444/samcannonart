@@ -113,4 +113,10 @@
       .homeTitle{
         font-size: 7ch;
       }
+  }
+
+  @media (max-width: 510) {
+    .homeTitle{
+      font-size: 5ch;
     }
+}

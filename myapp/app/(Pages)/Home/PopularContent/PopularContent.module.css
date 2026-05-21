@@ -25,32 +25,64 @@
 
   .carouselButtonLeft,
   .carouselButtonRight {
-    position: absolute;
-    top: 100%;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    border: none;
-    border-radius: 999px;
-    padding: 0.5rem 0.9rem;
-    cursor: pointer;
+      position: absolute;
+      top: 100%;
+      z-index: 2;
+  
+      width: 50px;
+      height: 50px;
+      padding: 0;
+  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      border-radius: 50%;
+  
+      background: rgba(95, 95, 95, 0.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+  
+      color: rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      cursor: pointer;
+  
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+      transition:
+          background-color 0.2s ease,
+          transform 0.15s ease,
+          box-shadow 0.2s ease;
   }
   
   .carouselButtonLeft {
-    left: 50%;
-    transform: translateX(-110%);
+      left: 50%;
+      transform: translateX(-110%) scale(1);
   }
   
   .carouselButtonRight {
-    left: 50%;
-    transform: translateX(10%);
+      left: 50%;
+      transform: translateX(10%) scale(1);
   }
-
-.carouselButtonLeft:hover,
-.carouselButtonRight:hover{
-  background: rgba(69, 69, 69, 0.7);
-  transition: background-color 0.2s ease, transform 0.15s ease;
-}
+  
+  .carouselButtonLeft:hover {
+      background: rgba(167, 167, 167, 0.6);
+      transform: translateX(-110%) scale(1.05);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+  }
+  
+  .carouselButtonRight:hover {
+      background: rgba(167, 167, 167, 0.6);
+      transform: translateX(10%) scale(1.05);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+  }
+  
+  .carouselButtonLeft:active {
+      transform: translateX(-110%) scale(0.96);
+  }
+  
+  .carouselButtonRight:active {
+      transform: translateX(10%) scale(0.96);
+  }
 
 .carouselChevron {
     color: white !important;
@@ -82,7 +114,7 @@ margin: 0px 20px 0px 20px;
 }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 .innerImage {
   display: none;
 }

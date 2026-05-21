@@ -6,6 +6,8 @@ import { getItemImageSrc } from "@/lib/images/imagepaths";
 import { prisma } from "@/lib/prisma"
 
 import styles from './success.module.css'
+import { decrementPurchasedStock } from "@/lib/db/items";
+import ClearCartOnSuccess from "./ClearCartOnSuccess";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
@@ -64,7 +66,15 @@ export default async function Success({ searchParams }: Props){
             price: String(ri.item.price),
             type: ri.item.type
         })),
-      });
+    });
+
+    await decrementPurchasedStock(
+        reservation.items.map((ri) => ({
+            itemId: ri.item.id,
+            quantity: ri.quantity ?? 1,
+        }))
+    );
+
     
     const ids = reservation.items.map((ri) => ri.item.id)
 
@@ -75,6 +85,7 @@ export default async function Success({ searchParams }: Props){
 
     return (
         <div className={styles.pageContainer}>
+            <ClearCartOnSuccess />
             <h1 className={styles.thankYouHeader}>Thank you!</h1>
             <div className={styles.orderConfirmationContainer}>
                 <div className={styles.halfPageContainer}>

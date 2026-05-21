@@ -4,19 +4,20 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import KeyWordSearch from "../../Components/KeyWordSearch";
 import Loading from "../../Components/Loading";
 import { getItemImageSrc } from "@/lib/images/imagepaths";
 import { ItemType } from "@/app/generated/prisma/enums";
 
 import styles from "./HomeSearch.module.css";
+import KeyWordSearch from "./KeyWordSearch";
+import AddToBasket from "../../Components/AddToBasket";
 
 
 type SearchItem = {
   id: number;
   name: string;
   type: ItemType;
-  price: string; // Decimal often serializes as string
+  price: string;
   image: string;
   stock: number;
 };
@@ -83,7 +84,7 @@ export default function HomeSearch() {
               <p className={styles.price}>£{Number(item.price).toFixed(2)}</p>
             </div>
             <div className={styles.buttonContainer}>
-              <button className={styles.button}>Add to Basket</button>
+              <AddToBasket itemId={item.id} secondary={true}/>
             </div>
           </div>
           </Link>
