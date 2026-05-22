@@ -1,13 +1,13 @@
 import Stripe from "stripe"
 import Image from "next/image"
 
-import { createOrderFromCheckoutSession } from "@/lib/orders/orders";
 import { getItemImageSrc } from "@/lib/images/imagepaths";
 import { prisma } from "@/lib/prisma"
 
 import styles from './success.module.css'
 import { decrementPurchasedStock } from "@/lib/db/items";
 import ClearCartOnSuccess from "./ClearCartOnSuccess";
+import { createOrderFromCheckoutSession } from "@/lib/orders/createOrderFromCheckoutSession";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 

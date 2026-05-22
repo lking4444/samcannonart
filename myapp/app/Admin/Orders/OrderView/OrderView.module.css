@@ -1,0 +1,71 @@
+.orderView {
+    display: grid;
+    height: 80vh;
+    gap: 1.5rem;
+}
+
+.sidebar,
+.detailsPanel {
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.header {
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #6b7280;
+}
+
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.loadingMessage {
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    padding: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #6b7280;
+}
+
+.errorMessage {
+    border-radius: 1rem;
+    border: 1px solid #fecaca;
+    background-color: #fef2f2;
+    padding: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #b91c1c;
+}
+
+.emptyMessage {
+    border-radius: 1rem;
+    border: 1px dashed #d1d5db;
+    padding: 2rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #6b7280;
+}
+
+
+@media (min-width: 1024px) {
+    .orderView {
+        grid-template-columns: 420px minmax(0, 1fr);
+    }
+}
