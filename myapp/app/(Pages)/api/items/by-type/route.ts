@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 import { getItemsByPageFiltered } from "@/lib/db/items";
 import type { ItemType } from '@/app/generated/prisma/client';
 
@@ -32,5 +33,5 @@ export async function GET(req: Request) {
         sortOrder,
     });
 
-  return NextResponse.json(data);
+    return NextResponse.json(data);
 }

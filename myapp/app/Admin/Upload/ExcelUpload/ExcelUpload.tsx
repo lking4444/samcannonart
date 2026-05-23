@@ -2,7 +2,7 @@
 
 import { useRef, useState, DragEvent, ChangeEvent } from "react";
 
-import UploadItem from "../UploadItem";
+import UploadItem from "../../UploadItem";
 import { fetchExistingUploadIds, filterItemsNotInDatabase, isExcelFile, parseUploadSpreadsheet, saveAllUploadItems, } from "@/lib/uploads/uploads";
 import { saveAllImages } from "@/lib/images/uploads";
 import {SelectedFilesMap, UploadClientItem } from "@/app/Types/upload";
@@ -112,7 +112,7 @@ export default function ExcelUpload() {
         if (file) { await handleFile(file); }
     };
 
-  return (
+    return (
         <div className={styles.wrapper}>
             <input
                 ref={inputRef}
@@ -171,5 +171,5 @@ export default function ExcelUpload() {
                 </>
             )}
         </div>
-  );
+    );
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 import { prisma } from "@/lib/prisma";
 import { Prisma, ItemType } from "@/app/generated/prisma/client";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
@@ -28,31 +29,15 @@ export async function GET(req: Request) {
         const skip = (safePage - 1) * safePageSize;
 
         const where: Prisma.ItemWhereInput = {
-        ...(type ? { type: type as ItemType } : {}),
-        ...(keyword
-            ? {
-                name: {
-                contains: keyword,
-                mode: "insensitive",
-                },
-            }
-            : {}),
-        ...(tag !== "Default"
-            ? {
-                tags: {
-                has: tag,
-                },
-            }
-            : {}),
+          ...(type ? { type: type as ItemType } : {}),
+          ...(keyword ? { name: { contains: keyword, mode: "insensitive", }, } : {}),
+          ...(tag !== "Default" ? { tags: { has: tag, }, } : {}),
         };
 
         const [items, total] = await Promise.all([
           prisma.item.findMany({
             where,
-            orderBy: [
-              { hidden: "asc" },
-              { id: "desc" },
-            ],
+            orderBy: [ { hidden: "asc" }, { id: "desc" }, ],
             skip,
             take: safePageSize,
           }),
@@ -60,11 +45,11 @@ export async function GET(req: Request) {
         ]);
 
         return NextResponse.json({
-        items,
-        total,
-        page: safePage,
-        pageSize: safePageSize,
-        hasMore: skip + items.length < total,
+          items,
+          total,
+          page: safePage,
+          pageSize: safePageSize,
+          hasMore: skip + items.length < total,
         });
   } catch (error) {
     console.error("Admin items route failed:", error);

@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
+
 import { prisma } from "@/lib/prisma"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -44,7 +45,7 @@ export async function POST(req: Request) {
         billing_address_collection: "required", 
         payment_intent_data: {
             description: `Thank you so much for choosing Sam Cannon  Art and we hope you enjoy your puchase`
-          },
+        },
         phone_number_collection: { enabled: true },
         line_items:[
             {
@@ -62,5 +63,4 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json({ url: session.url })
-
 }

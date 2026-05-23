@@ -1,6 +1,9 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+
 import { ItemType } from "@/app/generated/prisma/enums";
 import { getImageKey } from "@/lib/images/imagepaths";
+import { UploadMetadataWithId } from "@/app/Admin/Types/upload";
+import { isItemType } from "@/lib/uploads/uploads";
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -9,17 +12,6 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
   },
 });
-
-function isItemType(value: string): value is ItemType {
-  return Object.values(ItemType).includes(value as ItemType);
-}
-
-type UploadMetadata = {
-  uploadId: number;
-  itemType: string;
-  imageId: string;
-  filename: string;
-};
 
 export async function POST(request: Request) {
   try {
@@ -50,7 +42,8 @@ export async function POST(request: Request) {
         return new Response(`Invalid metadata at index ${i}`, { status: 400 });
       }
 
-      let metadata: UploadMetadata;
+      let metadata: UploadMetadataWithId;
+      
       try {
         metadata = JSON.parse(metadataEntry);
       } catch {

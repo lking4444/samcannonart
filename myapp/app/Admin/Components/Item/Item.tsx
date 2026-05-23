@@ -1,13 +1,12 @@
 "use client";
-
 import { useState } from "react";
 
 import TypeDetails from "./TypeDetails";
-import EditImage from "../EditImage";
 import { ItemClientWithTypes } from "@/app/Types/items";
 
 import styles from "./Item.module.css";
 import { handleDelete, handleReset, handleSave } from "@/lib/stock/item";
+import EditImage from "./EditImage";
 
 type ItemProps = {
     item: ItemClientWithTypes;

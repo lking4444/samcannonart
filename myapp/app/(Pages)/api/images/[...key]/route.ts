@@ -10,10 +10,7 @@ const s3 = new S3Client({
   },
 });
 
-export async function GET(
-  _request: Request,
-  context: { params: Promise<{ key: string[] }> }
-) {
+export async function GET( _request: Request, context: { params: Promise<{ key: string[] }> } ) {
   try {
     const { key } = await context.params;
     const objectKey = key.join("/");

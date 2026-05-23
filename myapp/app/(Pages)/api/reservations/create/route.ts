@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
+
 import { createReservationWithStockCheck } from "@/lib/db/item_reservations"
 
 type CreateReservationInput = {
-  items: {
-    itemId: number
-    quantity: number
-  }[]
+    items: {
+        itemId: number
+        quantity: number
+    }[]
 }
 
 export async function POST(req: Request) {
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json(
             { error: (err as Error).message ?? "Reservation failed" },
-            { status: 409 } // conflict = stock issue
+            { status: 409 }
         )
     }
 }

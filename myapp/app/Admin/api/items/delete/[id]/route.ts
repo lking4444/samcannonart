@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 import { deleteItem } from "@/lib/db/items";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -7,10 +8,10 @@ export async function DELETE( request: Request, { params }: { params: Promise<{ 
     const session = await requireAdmin();
 
     if (!session) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
+        return NextResponse.json(
+                { error: "Unauthorized" },
+                { status: 401 }
+        );
     }
 
     try {

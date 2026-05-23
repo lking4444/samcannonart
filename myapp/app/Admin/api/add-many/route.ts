@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
 
     if (!session) {
       return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
+            { error: "Unauthorized" },
+            { status: 401 }
       );
     }
 
@@ -32,30 +32,25 @@ export async function POST(req: NextRequest) {
         const { type, items } = body;
 
         if (!Array.isArray(items) || items.length === 0) {
-        return NextResponse.json(
-            { error: "items must be a non-empty array" },
-            { status: 400 }
-        );
+            return NextResponse.json(
+                { error: "items must be a non-empty array" },
+                { status: 400 }
+            );
         }
 
         const invalidTypeItem = items.find((item) => item.type !== type);
 
         if (invalidTypeItem) {
-        return NextResponse.json(
-            { error: "All items must match the requested bulk type" },
-            { status: 400 }
-        );
+            return NextResponse.json(
+                { error: "All items must match the requested bulk type" },
+                { status: 400 }
+            );
         }
 
         const missingPriceItem = items.find((item) => !item.price?.trim());
 
         if (missingPriceItem) {
-            return NextResponse.json(
-                {
-                    error: `Price is required for item ${missingPriceItem.uploadId}`,
-                },
-                { status: 400 }
-            );
+            return NextResponse.json( { error: `Price is required for item ${missingPriceItem.uploadId}`, }, { status: 400 } );
         }
 
         const baseItems = items.map((item) => ({
@@ -115,7 +110,6 @@ export async function POST(req: NextRequest) {
 
             case "NOTEPAD":
                 const notePadItems = items.map((item, index) =>{
-
                     return {
                         ...baseItems[index],
                         notePadName: item.notePadName

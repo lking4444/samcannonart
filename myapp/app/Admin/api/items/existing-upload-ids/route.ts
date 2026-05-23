@@ -1,5 +1,5 @@
-// app/api/items/existing-upload-ids/route.ts
 import { NextRequest, NextResponse } from "next/server";
+
 import { getExistingUploadIds } from "@/lib/db/items";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 

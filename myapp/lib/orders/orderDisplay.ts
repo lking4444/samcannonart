@@ -64,6 +64,10 @@ export const ORDER_STATUSES: OrderStatus[] = [
     "REFUNDED",
 ];
 
+export function fromMinorUnits(value: string) {
+    return (Number(value) / 100);
+}
+
 export function formatMoney(value: string, currency: string) {
     const numericValue = Number(value);
 

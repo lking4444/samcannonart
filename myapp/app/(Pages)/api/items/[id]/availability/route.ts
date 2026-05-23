@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server"
 
 import { prisma } from "@/lib/prisma"
-
 import { ItemAvailability } from "@/app/Types/items"
 
 export async function GET( request: Request, { params }: { params: Promise<{ id: string }> } ) {
@@ -10,23 +9,23 @@ export async function GET( request: Request, { params }: { params: Promise<{ id:
 
     if (!Number.isInteger(itemId) || itemId <= 0) {
         return NextResponse.json<ItemAvailability>(
-        {
-            exists: false,
-            available: false,
-            stock: 0,
-        },
-        { status: 400 }
+            {
+                exists: false,
+                available: false,
+                stock: 0,
+            },
+            { status: 400 }
         )
     }
 
     const item = await prisma.item.findUnique({
         where: {
-        id: itemId,
+         id: itemId,
         },
         select: {
-        id: true,
-        stock: true,
-        hidden: true,
+            id: true,
+            stock: true,
+            hidden: true,
         },
     })
 
@@ -43,12 +42,12 @@ export async function GET( request: Request, { params }: { params: Promise<{ id:
 
     const reserved = await prisma.reservationItem.aggregate({
         where: {
-        itemId,
-        reservation: {
-            expiresAt: {
-            gt: new Date(),
+            itemId,
+            reservation: {
+                expiresAt: {
+                gt: new Date(),
+                },
             },
-        },
         },
         _sum: {
         quantity: true,
@@ -62,5 +61,5 @@ export async function GET( request: Request, { params }: { params: Promise<{ id:
         exists: true,
         available: availableStock > 0,
         stock: availableStock,
-})
+    });
 }

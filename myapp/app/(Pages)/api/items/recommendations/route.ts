@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 import { getRecommendedItems } from "@/lib/db/items";
 
 export async function GET(request: Request) {

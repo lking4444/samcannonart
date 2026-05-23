@@ -1,7 +1,6 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { ItemType } from "@/app/generated/prisma/enums";
 import { getImageKey } from "@/lib/images/imagepaths";
-
+import { isItemType } from "@/lib/uploads/uploads";
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -10,10 +9,6 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
   },
 });
-
-function isItemType(value: string): value is ItemType {
-  return Object.values(ItemType).includes(value as ItemType);
-}
 
 export async function POST(request: Request) {
   try {
@@ -57,7 +52,7 @@ export async function POST(request: Request) {
       url: `/api/images/${key}`,
     });
   } catch (error) {
-    console.error("S3 upload error:", error);
-    return new Response("Failed to upload image", { status: 500 });
+      console.error("S3 upload error:", error);
+      return new Response("Failed to upload image", { status: 500 });
   }
 }

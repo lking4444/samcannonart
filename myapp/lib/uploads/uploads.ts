@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 
 import { RawExcelRow } from "../imports/types";
 import { ItemTypeValue, UploadClientItem, ParsedRow } from "@/app/Types/upload";
-import { GIFT_TYPE, GiftType, ItemType } from "@/app/Types/items";
+import { GIFT_TYPE, GiftType, ITEM_TYPE, ItemType } from "@/app/Types/items";
 
 function toStringValue(value: unknown): string {
     return value == null ? "" : String(value).trim();
@@ -183,4 +183,44 @@ export async function saveAllUploadItems(newItems: UploadClientItem[], setNewIte
     }
   
     setNewItems([]);
+}
+
+export async function saveItem( item: UploadClientItem, selectedFile: File | null, onSaved: (uploadId: string) => void ) {
+    if (!selectedFile) { throw new Error("Please select an image before saving."); }
+   
+    const selectedFileName = selectedFile.name.replace(/\.jpg$/i, "");
+  
+    if (selectedFileName !== item.image) {
+        throw new Error( `Image filename mismatch. Expected "${item.image}", got "${selectedFileName}".` );
+    }
+  
+    const imageId = item.image;
+  
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("itemType", item.type);
+    formData.append("imageId", imageId);
+  
+    const uploadResponse = await fetch("/Admin/api/images/single", {
+        method: "POST",
+        body: formData,
+    });
+  
+    if (!uploadResponse.ok) { throw new Error("Failed to upload image"); }
+  
+    const response = await fetch("/Admin/api/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+    });
+  
+    if (!response.ok) { throw new Error("Failed to save item"); }
+  
+    onSaved(item.uploadId);
+}
+
+export function isItemType(value: string): value is ITEM_TYPE {
+    return Object.values(ItemType).includes(value as ITEM_TYPE);            
 }

@@ -16,8 +16,8 @@ export async function POST(req: NextRequest) {
 
     if (!session) {
       return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
+            { error: "Unauthorized" },
+            { status: 401 }
       );
     }
 
@@ -118,8 +118,8 @@ export async function POST(req: NextRequest) {
         console.error('Error creating upload item:', error);
 
         return NextResponse.json(
-        { error: 'Failed to create item' },
-        { status: 500 }
+            { error: 'Failed to create item' },
+            { status: 500 }
         );
     }
 }

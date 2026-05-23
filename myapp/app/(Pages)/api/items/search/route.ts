@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 import { searchItems } from "@/lib/db/items";
 
 export async function GET(req: Request) {
