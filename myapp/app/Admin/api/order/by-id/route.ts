@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { OrderStatus } from "@/app/generated/prisma/enums";
+import { OrderStatus } from "@prisma/client";
 import { updateOrder } from "@/lib/db/order";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 

@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import styles from "./CartItem.module.css"
-import { ItemType } from "@/app/generated/prisma/enums"
+import { ItemType } from "@prisma/client"
 import { getItemImageSrc } from "@/lib/images/imagepaths"
 import { useCartActions } from "@/app/Hooks/useCartActions"
 

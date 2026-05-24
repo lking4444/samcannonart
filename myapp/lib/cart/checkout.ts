@@ -1,5 +1,5 @@
 import { CartItem } from "@/app/Store/cartStore"
-import { Reservation } from "@/app/generated/prisma/client"
+import { Reservation } from "@prisma/client"
 
 export async function goToCheckout(cartItems : CartItem[]) {
 

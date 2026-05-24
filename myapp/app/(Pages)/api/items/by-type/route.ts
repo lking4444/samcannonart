@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getItemsByPageFiltered } from "@/lib/db/items";
-import type { ItemType } from '@/app/generated/prisma/client';
+import type { ItemType } from '@prisma/client';
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);

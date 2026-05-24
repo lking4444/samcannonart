@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { ItemType } from '@/app/generated/prisma/enums';
+import { ItemType } from '@prisma/client';
 
 type CreateNotepadsInput = {
     name: string;

@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { ItemType, GiftType } from '@/app/generated/prisma/enums';
+import { ItemType, GiftType } from '@prisma/client';
 
 type CreateGiftInput = {
     name: string;

@@ -1,6 +1,6 @@
 
 import { prisma } from '@/lib/prisma';
-import { ItemType, OrderStatus } from '@/app/generated/prisma/enums';
+import { ItemType, OrderStatus } from '@prisma/client';
 
 type OrderItems = {
     itemId: number, 

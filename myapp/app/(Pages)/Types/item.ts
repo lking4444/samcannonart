@@ -1,4 +1,4 @@
-import { ItemType } from "@/app/generated/prisma/enums";
+import { ItemType } from "@prisma/client";
 
 export type Item = "Card" | "Calendar" | "Print" | "Original" | "Gift"
 

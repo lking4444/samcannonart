@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import type { Item, ItemType } from '@/app/generated/prisma/client';
+import type { Item, ItemType } from '@prisma/client';
 import { normaliseTag } from '../filtering/tags';
 
 type SortOrder = "High to Low" | "Low to High" | "Default";

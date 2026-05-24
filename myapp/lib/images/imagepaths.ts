@@ -1,4 +1,4 @@
-import { ItemType } from "@/app/generated/prisma/enums";
+import { ItemType } from "@prisma/client";
   
 export const getBaseFolder = (itemType: ItemType): string => {
     switch (itemType) {

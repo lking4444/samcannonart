@@ -1,4 +1,4 @@
-import { Calendar, Card, Gift, NotePad, Original, Print, Slate } from "@/app/generated/prisma/client";
+import { Calendar, Card, Gift, NotePad, Original, Print, Slate } from "@prisma/client";
 
 export const ItemType = {
     SLATE: "SLATE",

@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import type { ItemType } from "@/app/generated/prisma/client";
+import type { ItemType } from "@prisma/client";
 
 import Loading from "../Loading";
 import ItemTile from "../ItemTile";

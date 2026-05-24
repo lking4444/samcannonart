@@ -7,7 +7,7 @@ import { CartItem, useCartStore } from "@/app/Store/cartStore"
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import CartItemUI from "./CartItem/CartItem"
-import type { ItemType, Reservation } from "@/app/generated/prisma/client"
+import type { ItemType, Reservation } from "@prisma/client"
 import Loading from "@/app/(Pages)/Components/Loading"
 
 type CartDrawerProps = {

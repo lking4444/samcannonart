@@ -1,6 +1,5 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
-import { ItemType } from "@/app/generated/prisma/enums";
 import { getImageKey } from "@/lib/images/imagepaths";
 import { UploadMetadataWithId } from "@/app/Admin/Types/upload";
 import { isItemType } from "@/lib/uploads/uploads";

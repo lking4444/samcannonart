@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import Loading from "../../Components/Loading";
 import { getItemImageSrc } from "@/lib/images/imagepaths";
-import { ItemType } from "@/app/generated/prisma/enums";
+import { ItemType } from "@prisma/client";
 
 import styles from "./HomeSearch.module.css";
 import KeyWordSearch from "./KeyWordSearch";

@@ -1,5 +1,5 @@
 import styles from '../Cards/Cards.module.css'
-import { ItemType} from '@/app/generated/prisma/client';
+import { ItemType} from '@prisma/client';
 import ScrollableItemList from '../Components/ScrollableItemList';
 
 export default async function OriginalsPage(){

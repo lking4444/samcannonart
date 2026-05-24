@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { CarouselItem } from "../../Types";
 import SelectedSuggestion from "./SelectedSuggestion";
-import { ItemType } from "@/app/generated/prisma/enums";
+import { ItemType } from "@prisma/client";
 import { getItemImageSrc } from "@/lib/images/imagepaths";
 
 import styles from "./PopularContent.module.css";

@@ -1,4 +1,4 @@
-import type { ItemType } from '@/app/generated/prisma/client';
+import type { ItemType } from '@prisma/client';
 
 export type ClientItem = {
     name: string;
