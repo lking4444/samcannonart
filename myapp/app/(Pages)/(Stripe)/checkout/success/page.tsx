@@ -111,7 +111,7 @@ export default async function Success({ searchParams }: Props){
                 </div>
                 <div className={styles.halfPageContainer}>
                     <h1 className={styles.header}>Summary</h1>
-                    {items.map((item) => (
+                    {items.map((item :any) => (
                         <div key={item.id} className={styles.summaryContainer}>
                             <Image className={styles.image} src={getItemImageSrc(item.type, item.image)} width={100} height={100} alt={item.name}/>
                             <div className={styles.summaryInfoContainer}>
