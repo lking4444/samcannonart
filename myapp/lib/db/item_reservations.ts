@@ -15,15 +15,18 @@ const RESERVATION_DURATION_MS = 5 * 60 * 1000
 
 async function getReservedItemMap(transaction: Prisma.TransactionClient, itemIds: number[],now: Date): Promise<Map<number, number>> {
     // compute the number of reservation per basket item,  null if there are none
-    const reserved: { itemId: number; _sum: { quantity: number | null } }[] =
-        await transaction.reservationItem.groupBy({
-                by: ["itemId"],
-                where: {
-                    itemId: { in: itemIds },
-                    reservation: { expiresAt: { gt: now } },
-                },
-                _sum: { quantity: true },
-        })
+    const reserved = await transaction.reservationItem.groupBy({
+        by: ["itemId"],
+        where: {
+          itemId: { in: itemIds },
+          reservation: {
+            expiresAt: { gt: new Date() },
+          },
+        },
+        _sum: {
+          quantity: true,
+        },
+      });
   
     const reservedItemMap = new Map<number, number>()
   
