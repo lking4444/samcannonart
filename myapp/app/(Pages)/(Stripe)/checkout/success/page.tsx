@@ -60,7 +60,7 @@ export default async function Success({ searchParams }: Props){
         .join(", "),
         paidAt: new Date(),
         status: "PAID",
-        items: reservation.items.map((ri) => ({
+        items: reservation.items.map((ri:any) => ({
             itemId: ri.item.id,         
             quantity: ri.quantity ?? 1,  
             price: String(ri.item.price),
@@ -69,14 +69,14 @@ export default async function Success({ searchParams }: Props){
     });
 
     await decrementPurchasedStock(
-        reservation.items.map((ri) => ({
+        reservation.items.map((ri:any) => ({
             itemId: ri.item.id,
             quantity: ri.quantity ?? 1,
         }))
     );
 
     
-    const ids = reservation.items.map((ri) => ri.item.id)
+    const ids = reservation.items.map((ri:any) => ri.item.id)
 
     const items = await prisma.item.findMany({
         where: { id: { in: ids } },
