@@ -105,7 +105,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                 <Dialog.Content className={styles.cartDrawer}>
                     <div className={styles.cartContent}>
                         <span className={styles.topBar}>
-                            <button onClick={onClose}>
+                            <button onClick={onClose} className={styles.iconButton}>
                                 <span className={styles.circle}>
                                     <Image   
                                         src="/api/images/Icons/cross.svg"
@@ -116,7 +116,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                     />
                                 </span>
                             </button>
-                            <button onClick={clearCart}>
+                            <button onClick={clearCart} className={styles.iconButton}>
                                 <span className={styles.circle}>
                                     <Image   
                                         src="/api/images/Icons/trash.svg"

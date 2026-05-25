@@ -25,7 +25,7 @@ export default function MobileNav({ open, onClose, onCartClick }: MobileNavProps
 
           <div className={styles.container}>
             <span className={styles.logoContainer}>
-              <button onClick={onCartClick} aria-label="Open cart">
+              <button onClick={onCartClick} className={styles.cartButton} aria-label="Open cart">
                 <span className={styles.circle}>
                   <Image
                     src="/api/images/Icons/cart.svg"
