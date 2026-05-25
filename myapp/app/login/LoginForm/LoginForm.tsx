@@ -15,12 +15,24 @@ export default function LoginForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    await signIn("credentials", {
+  
+    const result = await signIn("credentials", {
+      redirect: false,
       email,
       password,
       callbackUrl,
     });
+  
+    console.log("signIn result:", result);
+  
+    if (result?.error) {
+      alert(result.error);
+      return;
+    }
+  
+    if (result?.url) {
+      window.location.href = result.url;
+    }
   }
 
   return (
