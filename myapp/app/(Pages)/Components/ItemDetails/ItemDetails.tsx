@@ -35,7 +35,7 @@ export default function ItemDetails({ item }: ItemDetailsProps) {
                     aria-label="Go back"
                 >
                     <Image
-                        src={"/icons/back.svg"}
+                        src={"/api/images/Icons/back.svg"}
                         width={25}
                         height={25}
                         className={styles.backIcon}
