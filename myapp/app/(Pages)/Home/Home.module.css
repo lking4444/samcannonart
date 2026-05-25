@@ -1,6 +1,7 @@
 .homeTitle {
   font-size: 8ch;
   font-weight: 800;
+  line-height: 60px;
   padding-right: 20px;
   text-align: center;
   font-family: var(--font-inter);
@@ -61,7 +62,6 @@
     width: 40%;
     font-weight: 700;
     text-align: center;
-    margin: 0 auto;
     font-family: var(--font-inter);
     transition: transform 400ms cubic-bezier(.2,.9,.2,1);
 }
@@ -82,7 +82,7 @@
 .siteBackground {
     min-height: 100vh;
     width: 100%;
-    background-image: url("/Images/Art/image.png");
+    background-image: url("/api/images/HomePage/background.jpeg");
     background-size: cover;
     background-position: center calc(50% + 130px);
     background-repeat: no-repeat;
@@ -117,6 +117,17 @@
 
   @media (max-width: 510) {
     .homeTitle{
-      font-size: 5ch;
+      font-size: 6ch;
+      padding-bottom: 10px;
     }
+
+    .artistDescription{
+      width: 90%;
+    }
+
+    .siteBackground {
+      background-position: center calc(50% + 100px);
+      height: 400px;
+      min-height: 700px;
+  }
 }

@@ -65,7 +65,7 @@ export default function CartItemUI({ itemName, id, imgSrc, price, quantity, type
             >
                 <Image
                     className={styles.plus}
-                    src="/icons/plus.svg"
+                    src="/api/images/Icons/plus.svg"
                     alt="Increase quantity"
                     width={24}
                     height={24}

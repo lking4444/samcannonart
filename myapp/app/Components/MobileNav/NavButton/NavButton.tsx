@@ -1,26 +1,20 @@
 import Link from 'next/link'
+
 import styles from './NavButton.module.css'
 
 type NavButtonProps = {
-    buttonName: string,
+    buttonName: string
     displayName: string
+    onClick?: () => void
 }
 
-export default function NavButton( {buttonName, displayName} : NavButtonProps) {
+export default function NavButton({ buttonName, displayName, onClick, }: NavButtonProps) {
+    const link = '/' + buttonName
+    const label = displayName || buttonName
 
-    const link = "/" + buttonName;
-
-    if (displayName != '') {
-        return (
-            <Link href={link} className={styles.button}>
-                {displayName}
-            </Link>
-        )
-    } else {
-        return (
-            <Link href={link} className={styles.button}>
-                    {buttonName}
-            </Link>
-        )
-    }
+    return (
+        <Link href={link} className={styles.button} onClick={onClick}>
+            {label}
+        </Link>
+  )
 }

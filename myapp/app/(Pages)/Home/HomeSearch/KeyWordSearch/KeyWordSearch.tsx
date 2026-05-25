@@ -14,7 +14,7 @@ export default function KeyWordSearch({keyword, setKeyword} : KeyWordSearchProps
     return (
         <div className={styles.searchContainer}>
             <Image   
-                src="/icons/search.svg"
+                src="/api/images/Icons/search.svg"
                 alt="Search"
                 width={24}
                 height={24}

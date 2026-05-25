@@ -23,7 +23,7 @@ export default function FilterDropDown({dimensionOptions, setDimension, sortOrde
           <button className={styles.filterButton} onClick={() =>setIsOpen(prev => !prev)}>
             <p>Filter</p>
             <Image   
-              src="/icons/filter.svg"
+              src="/api/images/Icons/filter.svg"
               alt="Left"
               width={24}
               height={24}

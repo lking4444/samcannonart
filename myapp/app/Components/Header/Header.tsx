@@ -16,7 +16,7 @@ export default function Header({ onCartClick, onNavClick }: HeaderProps)  {
     return (
         <div className={styles.headerContainer}>
             <span className={styles.pagesContainer}>
-                <PageButton buttonName='' icon='/icons/home.svg'></PageButton>
+                <PageButton buttonName='' icon='/api/images/Icons/home.svg'></PageButton>
                 <PageButton buttonName='Cards'></PageButton>
                 <PageButton buttonName='Calendars'></PageButton>
                 <PageButton buttonName='Originals'></PageButton>
@@ -29,7 +29,7 @@ export default function Header({ onCartClick, onNavClick }: HeaderProps)  {
                     <button onClick={onCartClick}>
                         <span className={styles.circle}>
                             <Image   
-                                src="/icons/cart.svg"
+                                src="/api/images/Icons/cart.svg"
                                 alt="Left"
                                 width={24}
                                 height={24}
@@ -42,7 +42,7 @@ export default function Header({ onCartClick, onNavClick }: HeaderProps)  {
                     <button onClick={onNavClick}>
                         <span  className={styles.circle}>
                             <Image   
-                                src="/icons/nav.svg"
+                                src="/api/images/Icons/nav.svg"
                                 alt="Left"
                                 width={24}
                                 height={24}

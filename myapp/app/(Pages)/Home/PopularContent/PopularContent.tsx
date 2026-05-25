@@ -133,7 +133,7 @@ export default function PopularContent() {
           <div className={styles.selectedWrapper}>
             <button onClick={shiftLeft} className={styles.carouselButtonLeft}>
               <Image
-                src="/icons/chevron-left.svg"
+                src="/api/images/Icons/chevron-left.svg"
                 alt="Previous popular item"
                 width={24}
                 height={24}
@@ -145,7 +145,7 @@ export default function PopularContent() {
 
             <button onClick={shiftRight} className={styles.carouselButtonRight}>
               <Image
-                src="/icons/chevron-right.svg"
+                src="/api/images/Icons/chevron-right.svg"
                 alt="Next popular item"
                 width={24}
                 height={24}

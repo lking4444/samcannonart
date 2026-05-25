@@ -28,7 +28,7 @@ export default function MobileNav({ open, onClose, onCartClick }: MobileNavProps
               <button onClick={onCartClick} aria-label="Open cart">
                 <span className={styles.circle}>
                   <Image
-                    src="/icons/cart.svg"
+                    src="/api/images/Icons/cart.svg"
                     alt=""
                     width={40}
                     height={40}
@@ -39,13 +39,13 @@ export default function MobileNav({ open, onClose, onCartClick }: MobileNavProps
             </span>
 
             <span className={styles.linkContainer}>
-              <NavButton buttonName="" displayName="Home" />
-              <NavButton buttonName="Cards" displayName="" />
-              <NavButton buttonName="Calendars" displayName="" />
-              <NavButton buttonName="Originals" displayName="" />
-              <NavButton buttonName="Prints" displayName="" />
-              <NavButton buttonName="Gifts" displayName="" />
-              <NavButton buttonName="NotePads" displayName="" />
+              <NavButton buttonName="" displayName="Home" onClick={onClose} />
+              <NavButton buttonName="Cards" displayName="" onClick={onClose} />
+              <NavButton buttonName="Calendars" displayName="" onClick={onClose} />
+              <NavButton buttonName="Originals" displayName="" onClick={onClose} />
+              <NavButton buttonName="Prints" displayName="" onClick={onClose} />
+              <NavButton buttonName="Gifts" displayName="" onClick={onClose} />
+              <NavButton buttonName="NotePads" displayName="" onClick={onClose} />
             </span>
           </div>
         </Dialog.Content>

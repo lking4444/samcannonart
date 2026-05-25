@@ -10,7 +10,7 @@ export default function SocialLinks(){
                     <Link href={'/'} className={styles.button}>
                         <Image  
                             className={styles.icon} 
-                            src={'/icons/facebook.svg'}
+                            src={'/api/images/Icons/facebook.svg'}
                             alt="Left"
                             width={24}
                             height={24}
@@ -21,7 +21,7 @@ export default function SocialLinks(){
                     <Link href={'/'} className={styles.button}>
                         <Image  
                             className={styles.icon} 
-                            src={'/icons/instagram.svg'}
+                            src={'/api/images/Icons/instagram.svg'}
                             alt="Left"
                             width={24}
                             height={24}
@@ -32,7 +32,7 @@ export default function SocialLinks(){
                     <Link href={'/'} className={styles.button}>
                         <Image  
                             className={styles.icon} 
-                            src={'/icons/pinterest.svg'}
+                            src={'/api/images/Icons/pinterest.svg'}
                             alt="Left"
                             width={24}
                             height={24}
@@ -43,7 +43,7 @@ export default function SocialLinks(){
                     <Link href={'/'} className={styles.button}>
                         <Image  
                             className={styles.icon} 
-                            src={'/icons/email.svg'}
+                            src={'/api/images/Icons/email.svg'}
                             alt="Left"
                             width={24}
                             height={24}

@@ -108,7 +108,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                             <button onClick={onClose}>
                                 <span className={styles.circle}>
                                     <Image   
-                                        src="/icons/cross.svg"
+                                        src="/api/images/Icons/cross.svg"
                                         alt="Left"
                                         width={24}
                                         height={24}
@@ -119,7 +119,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                             <button onClick={clearCart}>
                                 <span className={styles.circle}>
                                     <Image   
-                                        src="/icons/trash.svg"
+                                        src="/api/images/Icons/trash.svg"
                                         alt="Left"
                                         width={24}
                                         height={24}

@@ -12,7 +12,7 @@ export default function AdminHeader()  {
                 <PageButton buttonName="Upload" prefix="Admin" />
                 <PageButton buttonName="Orders" prefix="Admin" />
                 <PageButton buttonName="BulkImageUpload" prefix="Admin" />
-                <PageButton buttonName="Admin" icon="/icons/home.svg" />
+                <PageButton buttonName="Admin" icon="/api/images/Icons/home.svg" />
             </span>
         </div>
     )

@@ -9,24 +9,45 @@
   }
   
   .filterButton {
-    background-color: rgb(221, 221, 221);
+    background: rgba(155, 155, 155, 0.40);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(100, 100, 100, 0.42);
     border-radius: 25px;
-    padding: 10px 20px 10px 20px;
+    color: rgba(0, 0, 0, 0.88);
+
+    padding: 10px 20px;
     font-weight: 600;
     font-family: var(--font-inter);
-    transition: background-color 0.2s ease, transform 0.15s ease;
-    border: 1px solid rgb(221, 221, 221);
+
     display: flex;
     align-items: center;
     flex-direction: row;
     gap: 5px;
-  }
-  
-  .filterButton:hover {
-    border: 1px solid #dedede;
-    background-color: #f1f1f1;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.filterButton:hover {
+    background: rgba(185, 185, 185, 0.55);
+    border-color: rgba(0, 0, 0, 0.70);   
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.20);
     color: rgb(62, 62, 62);
-  }
+}
+
+.filterButton:focus-visible {
+    outline: none;
+    background: rgba(185, 185, 185, 0.52);
+    border-color: rgba(0, 0, 0, 0.70);   
+}
   
   .filterContainer {
     position: absolute;
