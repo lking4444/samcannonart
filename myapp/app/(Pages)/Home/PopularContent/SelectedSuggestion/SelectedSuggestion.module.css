@@ -73,3 +73,9 @@
   line-height: 1.2;
   font-family: var(--font-inter);
 }
+
+@media (max-width: 510px) {
+  .selectedImage {
+    height: 250px;
+  }
+}

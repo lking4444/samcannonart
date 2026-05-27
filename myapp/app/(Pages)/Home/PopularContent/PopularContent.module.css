@@ -4,6 +4,7 @@
     position: relative;
     background-color: rgb(246, 246, 246);
     height: 70%;
+    width: 100%;
 }
 
 .carouselItemContainer{
@@ -14,6 +15,10 @@
 
 .container{
     padding-top: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .selectedWrapper {

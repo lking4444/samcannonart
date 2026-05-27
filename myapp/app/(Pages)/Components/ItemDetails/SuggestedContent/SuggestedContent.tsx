@@ -11,6 +11,7 @@ import { getSuggestedContent } from "@/lib/contentRecommendation/items";
 import { ItemClient } from "@/app/Types/items";
 
 import styles from './SuggestedContent.module.css'
+import ErrorState from "@/app/Components/Error";
 
 type SuggestedContentProps = {
   id: string;
@@ -74,17 +75,15 @@ export default function SuggestedContent({ id }: SuggestedContentProps) {
   };
 
   if (loading) {
-    return (
-      <div className={styles.loading}>
-        <Loading />
-      </div>
-    );
+    return <div className={styles.container}><Loading/></div>;
   }
 
-  if (error) return <p>Error</p>;
+  if (error || items.length < 5) {
+    return <div className={styles.container}><ErrorState/></div>;
+  }
 
   if (items.length < 5) {
-    return <p>Not enough suggestions available.</p>;
+    return <div className={styles.container}><ErrorState/></div>;
   }
 
   const leftOuter = items[order[0]];

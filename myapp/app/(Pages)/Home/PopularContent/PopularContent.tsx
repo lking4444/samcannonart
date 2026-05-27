@@ -9,6 +9,8 @@ import { ItemType } from "@prisma/client";
 import { getItemImageSrc } from "@/lib/images/imagepaths";
 
 import styles from "./PopularContent.module.css";
+import Loading from "../../Components/Loading";
+import ErrorState from "@/app/Components/Error";
 
 type PopularItem = {
   id: number;
@@ -95,11 +97,11 @@ export default function PopularContent() {
   };
 
   if (isLoading) {
-    return <div className={styles.container}>Loading popular items...</div>;
+    return <div className={styles.container}><Loading/></div>;
   }
 
   if (hasError || items.length < 5) {
-    return <div className={styles.container}>Could not load popular items.</div>;
+    return <div className={styles.container}><ErrorState/></div>;
   }
 
   const leftOuter = items[order[0]];

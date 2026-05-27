@@ -1,8 +1,6 @@
 .homeTitle {
   font-size: 8ch;
   font-weight: 800;
-  line-height: 60px;
-  padding-right: 20px;
   text-align: center;
   font-family: var(--font-inter);
 
@@ -112,6 +110,7 @@
   @media (max-width: 800) {
       .homeTitle{
         font-size: 7ch;
+        line-height: 60px;
       }
   }
 
@@ -119,6 +118,7 @@
     .homeTitle{
       font-size: 6ch;
       padding-bottom: 10px;
+      line-height: 60px;
     }
 
     .artistDescription{
