@@ -6,6 +6,11 @@
     font-weight: bolder;
     padding-bottom: 5px;
     font-family: var(--font-inter);
+
+    width: 180px;        
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .price{

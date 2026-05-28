@@ -13,7 +13,9 @@ export const ItemType = {
 export const GiftType = {
     MIXEDMEDIA: 'MIXEDMEDIA',
     PEBBLES: 'PEBBLES',
-    TINYPEBBLES: 'TINYPEBBLES'
+    TINYPEBBLES: 'TINYPEBBLES',
+    WOOD: 'WOOD',
+    SLATE: 'SLATE'
 } as const;
 
 export type ITEM_TYPE = typeof ItemType[keyof typeof ItemType];
@@ -64,4 +66,14 @@ export type ItemClient = {
     popular: boolean;
     hidden: boolean;
 };
+
+export type DbItem = {
+    id: number
+    name: string
+    image: string
+    type: ITEM_TYPE
+    price: any
+    dimensions: string
+    gift: Gift
+}
   

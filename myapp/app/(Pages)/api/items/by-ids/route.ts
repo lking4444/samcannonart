@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
   const items = await prisma.item.findMany({
     where: { id: { in: ids } },
-    select: { id: true, name: true, image: true, price: true, type: true },
+    select: { id: true, name: true, image: true, price: true, type: true , dimensions: true, gift: true},
   })
 
   return NextResponse.json(items)

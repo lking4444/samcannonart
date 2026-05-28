@@ -63,6 +63,10 @@ function parseGiftType(value: unknown):  GIFT_TYPE{
             return GiftType.PEBBLES;
         case "TINYPEBBLES":
             return GiftType.TINYPEBBLES;
+        case "SLATE":
+            return GiftType.SLATE;
+        case "WOOD":
+            return GiftType.WOOD;
         default:
             return GiftType.MIXEDMEDIA;
     }   

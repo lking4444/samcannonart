@@ -1,33 +1,26 @@
 'use client'
 
 import * as Dialog from "@radix-ui/react-dialog"
-import styles from './Cart.module.css'
-import Image from 'next/image'
-import { CartItem, useCartStore } from "@/app/Store/cartStore"
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
+import Image from 'next/image'
+
+import { CartItem, useCartStore } from "@/app/Store/cartStore"
 import CartItemUI from "./CartItem/CartItem"
-import type { ItemType, Reservation } from "@prisma/client"
+import type { Reservation } from "@prisma/client"
 import Loading from "@/app/(Pages)/Components/Loading"
+import { DbItem } from "@/app/Types/items"
+
+import styles from './Cart.module.css'
+import { computeShipping } from "@/lib/shipping/calculateShipping"
+import { computeDiscount } from "@/lib/discount/computeDiscount"
 
 type CartDrawerProps = {
   open: boolean
   onClose: () => void
 }
 
-type DbItem = {
-    id: number
-    name: string
-    image: string
-    type: ItemType
-    price: any
-}
-
 async function goToCheckout(total : number, cartItems : CartItem[]) {
-
-    const itemids = cartItems.map((item => item.itemId))
-
-    console.log("Creating reservation for itemIds:", itemids);
 
     const response = await fetch("/api/reservations/create", {
         method: "POST",
@@ -44,28 +37,33 @@ async function goToCheckout(total : number, cartItems : CartItem[]) {
     const reservationId = reservation.id as string
 
     const res = await fetch("/api/stripe/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({reservationId}),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({reservationId}),
     })
 
     const { url } = await res.json()
     window.location.href = url
-  }
+}
 
 export default function Cart({ open, onClose }: CartDrawerProps) {
     const cartItems = useCartStore((s) => s.items);
     const clearCart = useCartStore((s) => s.clear);
 
     const cartIds = useMemo(() => cartItems.map((i) => i.itemId), [cartItems]);
+    const cartIdsKey = cartIds.join(",");
 
-    const [items, setItems] = useState<DbItem[]>([])
+    const [items, setItems] = useState<DbItem[]>([]);
+    const [shippingCost, setShippingCost] = useState<number>(0);
+
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!open) return
+
         if (cartIds.length === 0) {
             setItems([])
+            setShippingCost(0)
             return
         }
 
@@ -75,28 +73,38 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ ids: cartIds }),
             })
+
             const data = await res.json()
             setItems(data)
         })()
-    }, [open, cartIds])
+    }, [open, cartIdsKey])
 
     const itemMap = useMemo(() => new Map(items.map((i) => [i.id, i])), [items])
 
-    const itemsWithQuantity = cartItems
-        .map((ci) => {
-        const item = itemMap.get(ci.itemId)
-        if (!item) return null
-        return { ...item, quantity: ci.quantity }
-        })
-        .filter(Boolean) as Array<DbItem & { quantity: number }>
+    const itemsWithQuantity = useMemo(() => {
+        return cartItems
+            .map((ci) => {
+                const item = itemMap.get(ci.itemId)
+                if (!item) return null
+                return { ...item, quantity: ci.quantity }
+            })
+            .filter(Boolean) as Array<DbItem & { quantity: number }>
+    }, [cartItems, itemMap])
+
+    useEffect(() => {
+        setShippingCost(computeShipping(itemsWithQuantity))
+    }, [itemsWithQuantity])
 
     const subtotal = itemsWithQuantity.reduce((sum, item) => {
         return sum + Number(item.price) * item.quantity
-    }, 0);
+    }, 0)
 
-    const delivery = 2.0;
+    const discount = computeDiscount(itemsWithQuantity);
 
-    const total = subtotal + delivery;
+    const total = subtotal + shippingCost - discount;
+
+    const totalItemCount = itemsWithQuantity.reduce((sum, item) => { return sum + item.quantity }, 0)
+    const deliveryText = totalItemCount >= 1 && shippingCost === 0 ? "Free" : `£${Number(shippingCost).toFixed(2)}`
 
     return (
         <Dialog.Root open={open} onOpenChange={(o) => !o && onClose()}>
@@ -116,7 +124,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                     />
                                 </span>
                             </button>
-                            <button onClick={clearCart} className={styles.iconButton}>
+                            <button   onClick={() => { clearCart(); setItems([]); setShippingCost(0) }}className={styles.iconButton}>
                                 <span className={styles.circle}>
                                     <Image   
                                         src="/api/images/Icons/trash.svg"
@@ -153,10 +161,15 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                     <p>Subtotal</p>
                                     <p>£{Number(subtotal).toFixed(2)}</p>
                                 </span>
+                                <span className={styles.checkoutInfo}>
+                                    <p>Discount</p>
+                                    <p className={styles.checkoutInfoDiscount}>-£{Number(discount).toFixed(2)}</p>
+                                </span>
                                 <span className={styles.checkoutDeliveryInfo}>
                                     <p>Delivery</p>
-                                    <p>£{Number(delivery).toFixed(2)}</p>
+                                   <p>{deliveryText}</p>
                                 </span>
+                           
                                 <hr className={styles.break}></hr>
                                 <span className={styles.checkoutInfoTotal}>
                                     <p>Total</p>
