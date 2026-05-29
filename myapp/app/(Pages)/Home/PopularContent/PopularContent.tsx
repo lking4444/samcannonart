@@ -80,29 +80,29 @@ export default function PopularContent() {
     };
   }, []);
 
-useEffect(() => {
-  if (isLoading || hasError || items.length < 5) return;
+  useEffect(() => {
+    if (isLoading || hasError || items.length < 5) return;
 
-  const container = containerRef.current;
-  if (!container) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.unobserve(container);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(container);
+        }
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -80px 0px",
       }
-    },
-    {
-      threshold: 0.2,
-      rootMargin: "0px 0px -80px 0px",
-    }
-  );
+    );
 
-  observer.observe(container);
+    observer.observe(container);
 
-  return () => observer.disconnect();
-}, [isLoading, hasError, items.length]);
+    return () => observer.disconnect();
+  }, [isLoading, hasError, items.length]);
 
   const imageSrcs = useMemo(() => {
     return items.map((item) => getItemImageSrc(item.type, item.image));
@@ -146,72 +146,81 @@ useEffect(() => {
   const rightOuter = items[order[4]];
 
   return (
-    <div
-      ref={containerRef}
-      className={`${styles.container} ${isVisible ? styles.visible : ""}`}
-    >
-      <div className={styles.suggestContentContainer}>
-        <span className={styles.carouselItemContainer}>
-          <img
-            key={`left-outer-${leftOuter.id}`}
-            src={imageSrcs[order[0]]}
-            width={75}
-            height={75}
-            className={`${styles.outerImage} ${styles.leftOuterImage}`}
-            alt={leftOuter.name}
-          />
+    <div ref={containerRef} className={styles.container}>
+      <div className={`${styles.introMotion} ${isVisible ? styles.visible : ""}`}>
+        <div className={styles.suggestContentContainer}>
+          <span className={styles.carouselItemContainer}>
+            <img
+              key={`left-outer-${leftOuter.id}`}
+              src={imageSrcs[order[0]]}
+              width={75}
+              height={75}
+              className={`${styles.outerImage} ${styles.leftOuterImage}`}
+              alt={leftOuter.name}
+            />
 
-          <img
-            key={`left-inner-${leftInner.id}`}
-            src={imageSrcs[order[1]]}
-            width={75}
-            height={75}
-            className={`${styles.innerImage} ${styles.leftInnerImage}`}
-            alt={leftInner.name}
-          />
+            <img
+              key={`left-inner-${leftInner.id}`}
+              src={imageSrcs[order[1]]}
+              width={75}
+              height={75}
+              className={`${styles.innerImage} ${styles.leftInnerImage}`}
+              alt={leftInner.name}
+            />
 
-          <div className={styles.selectedWrapper}>
-            <button onClick={shiftLeft} className={styles.carouselButtonLeft}>
-              <Image
-                src="/api/images/Icons/chevron-left.svg"
-                alt="Previous popular item"
-                width={24}
-                height={24}
-                className={styles.carouselChevron}
-              />
-            </button>
+            <div className={styles.selectedWrapper}>
+              <button
+                type="button"
+                onClick={shiftLeft}
+                className={styles.carouselButtonLeft}
+                aria-label="Previous popular item"
+              >
+                <Image
+                  src="/api/images/Icons/chevron-left.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className={styles.carouselChevron}
+                />
+              </button>
 
-            <SelectedSuggestion item={center} />
+              <SelectedSuggestion item={center} />
 
-            <button onClick={shiftRight} className={styles.carouselButtonRight}>
-              <Image
-                src="/api/images/Icons/chevron-right.svg"
-                alt="Next popular item"
-                width={24}
-                height={24}
-                className={styles.carouselChevron}
-              />
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={shiftRight}
+                className={styles.carouselButtonRight}
+                aria-label="Next popular item"
+              >
+                <Image
+                  src="/api/images/Icons/chevron-right.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className={styles.carouselChevron}
+                />
+              </button>
+            </div>
 
-          <img
-            key={`right-inner-${rightInner.id}`}
-            src={imageSrcs[order[3]]}
-            width={75}
-            height={75}
-            className={`${styles.innerImage} ${styles.rightInnerImage}`}
-            alt={rightInner.name}
-          />
+            <img
+              key={`right-inner-${rightInner.id}`}
+              src={imageSrcs[order[3]]}
+              width={75}
+              height={75}
+              className={`${styles.innerImage} ${styles.rightInnerImage}`}
+              alt={rightInner.name}
+            />
 
-          <img
-            key={`right-outer-${rightOuter.id}`}
-            src={imageSrcs[order[4]]}
-            width={75}
-            height={75}
-            className={`${styles.outerImage} ${styles.rightOuterImage}`}
-            alt={rightOuter.name}
-          />
-        </span>
+            <img
+              key={`right-outer-${rightOuter.id}`}
+              src={imageSrcs[order[4]]}
+              width={75}
+              height={75}
+              className={`${styles.outerImage} ${styles.rightOuterImage}`}
+              alt={rightOuter.name}
+            />
+          </span>
+        </div>
       </div>
     </div>
   );

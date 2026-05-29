@@ -4,14 +4,20 @@
     flex-direction: column;
     align-items: center;
 
+    position: relative;
+    z-index: 3;
+    width: 100%;
+}
+
+.introMotion {
     opacity: 0;
     transform: translateY(60px);
     transition:
         opacity 750ms ease,
         transform 750ms cubic-bezier(.2,.9,.2,1);
     will-change: opacity, transform;
-    position: relative;
-    z-index: 3;
+
+    width: 100%;
 }
 
 .visible {
@@ -37,7 +43,7 @@
 }
 
 .selectedWrapper {
-    position: relative; 
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,7 +53,7 @@
 .carouselButtonLeft,
 .carouselButtonRight {
     position: absolute;
-    top: 100%;
+    top: 102%;
     z-index: 999;
 
     width: 50px;
