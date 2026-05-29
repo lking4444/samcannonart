@@ -132,7 +132,7 @@
     flex-shrink: 0;
     min-height: 220px;
     height: auto;
-    padding-bottom: calc(30px + env(safe-area-inset-bottom));
+    padding-bottom: calc(50px + env(safe-area-inset-bottom));
 
     background: rgba(212, 212, 212, 0.96);
     backdrop-filter: none;
