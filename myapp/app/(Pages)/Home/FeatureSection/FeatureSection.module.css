@@ -1,17 +1,65 @@
-/* Section background variant */
+.visible .imageItem {
+    animation: imagePopIn 650ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+.visible .imageItem:nth-child(1) {
+    animation-delay: 120ms;
+}
+
+.visible .imageItem:nth-child(2) {
+    animation-delay: 220ms;
+}
+
+.visible .imageItem:nth-child(3) {
+    animation-delay: 320ms;
+}
+
+@keyframes imagePopIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.section {
+    opacity: 0;
+    transition:
+        opacity 700ms ease,
+        transform 700ms cubic-bezier(.2,.9,.2,1);
+    will-change: opacity, transform;
+}
+
+.slideFromLeft {
+    transform: translateX(-80px);
+}
+
+.slideFromRight {
+    transform: translateX(80px);
+}
+
+.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 .leftSection {
     background-color: rgb(255, 255, 255);
-  }
+}
 
 .rightSection{
     background-color: rgb(246, 246, 246);
 }
-  
+
 .sectionContentContainer {
-display: flex;
-align-items: center;
-gap: 40px;
-padding: 4em;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 4em;
 }
 
 
@@ -97,10 +145,10 @@ color: rgb(0, 0, 0);
 
 
 .gridWrapper {
-flex: 1 1 0;
-min-width: 0;              
-display: flex;
-justify-content: center;  
+    flex: 1 1 0;
+    min-width: 0;              
+    display: flex;
+    justify-content: center;  
 }
 
 .imagesContainer {
@@ -122,16 +170,16 @@ justify-content: center;
 
 
 @media (max-width: 1650px) {
-.imagesContainer .imageItem:nth-child(3) {
-    display: none;
-}
+    .imagesContainer .imageItem:nth-child(3) {
+        display: none;
+    }
 }
 
 
 @media (max-width: 1150px) {
-.imagesContainer .imageItem:nth-child(2) {
-    display: none;
-}
+    .imagesContainer .imageItem:nth-child(2) {
+        display: none;
+    }
 }
 
 @media (max-width: 800) {
@@ -146,4 +194,3 @@ justify-content: center;
         padding: 2em;
         }
 }
-  

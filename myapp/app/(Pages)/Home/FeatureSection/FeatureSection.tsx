@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,9 +18,40 @@ type FeatureSectionProps = {
 
 export default function FeatureSection({ title, description, images, href, side = "left", }: FeatureSectionProps) {
   const isRight = side === "right";
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(section);
+        }
+      },
+      {
+        threshold: 0.25,
+      }
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className={`${styles.section} ${!isRight ? styles.leftSection : styles.rightSection}`}>
+    <section
+      ref={sectionRef}
+      className={`
+        ${styles.section}
+        ${!isRight ? styles.leftSection : styles.rightSection}
+        ${isRight ? styles.slideFromRight : styles.slideFromLeft}
+        ${isVisible ? styles.visible : ""}
+      `}
+    >
       <div
         className={`${styles.sectionContentContainer} ${
           isRight ? styles.sectionContentRight : ""
@@ -38,13 +72,19 @@ export default function FeatureSection({ title, description, images, href, side 
         <div className={styles.gridWrapper}>
           <div className={styles.imagesContainer}>
             <div className={styles.imageItem}>
-              <Image src={images[0]} width={300} height={100} alt="image" />
+              <Image src={images[0]} width={300} height={100} alt={`${title} artwork 1`} />
             </div>
             <div className={styles.imageItem}>
-              <Image className={styles.picture} src={images[1]} width={300} height={100} alt="image" />
+              <Image
+                className={styles.picture}
+                src={images[1]}
+                width={300}
+                height={100}
+                alt={`${title} artwork 2`}
+              />
             </div>
             <div className={styles.imageItem}>
-              <Image src={images[2]} width={300} height={100} alt="image" />
+              <Image src={images[2]} width={300} height={100} alt={`${title} artwork 3`} />
             </div>
           </div>
         </div>

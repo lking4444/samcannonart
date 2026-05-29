@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
 import { CarouselItem } from "../../Types";
@@ -27,6 +27,9 @@ export default function PopularContent() {
   const [order, setOrder] = useState<number[]>([0, 1, 2, 3, 4]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -77,6 +80,30 @@ export default function PopularContent() {
     };
   }, []);
 
+useEffect(() => {
+  if (isLoading || hasError || items.length < 5) return;
+
+  const container = containerRef.current;
+  if (!container) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.unobserve(container);
+      }
+    },
+    {
+      threshold: 0.2,
+      rootMargin: "0px 0px -80px 0px",
+    }
+  );
+
+  observer.observe(container);
+
+  return () => observer.disconnect();
+}, [isLoading, hasError, items.length]);
+
   const imageSrcs = useMemo(() => {
     return items.map((item) => getItemImageSrc(item.type, item.image));
   }, [items]);
@@ -97,11 +124,19 @@ export default function PopularContent() {
   };
 
   if (isLoading) {
-    return <div className={styles.container}><Loading/></div>;
+    return (
+      <div className={styles.container}>
+        <Loading />
+      </div>
+    );
   }
 
   if (hasError || items.length < 5) {
-    return <div className={styles.container}><ErrorState/></div>;
+    return (
+      <div className={styles.container}>
+        <ErrorState />
+      </div>
+    );
   }
 
   const leftOuter = items[order[0]];
@@ -111,7 +146,10 @@ export default function PopularContent() {
   const rightOuter = items[order[4]];
 
   return (
-    <div className={styles.container}>
+    <div
+      ref={containerRef}
+      className={`${styles.container} ${isVisible ? styles.visible : ""}`}
+    >
       <div className={styles.suggestContentContainer}>
         <span className={styles.carouselItemContainer}>
           <img
@@ -119,7 +157,7 @@ export default function PopularContent() {
             src={imageSrcs[order[0]]}
             width={75}
             height={75}
-            className={styles.outerImage}
+            className={`${styles.outerImage} ${styles.leftOuterImage}`}
             alt={leftOuter.name}
           />
 
@@ -128,7 +166,7 @@ export default function PopularContent() {
             src={imageSrcs[order[1]]}
             width={75}
             height={75}
-            className={styles.innerImage}
+            className={`${styles.innerImage} ${styles.leftInnerImage}`}
             alt={leftInner.name}
           />
 
@@ -161,7 +199,7 @@ export default function PopularContent() {
             src={imageSrcs[order[3]]}
             width={75}
             height={75}
-            className={styles.innerImage}
+            className={`${styles.innerImage} ${styles.rightInnerImage}`}
             alt={rightInner.name}
           />
 
@@ -170,7 +208,7 @@ export default function PopularContent() {
             src={imageSrcs[order[4]]}
             width={75}
             height={75}
-            className={styles.outerImage}
+            className={`${styles.outerImage} ${styles.rightOuterImage}`}
             alt={rightOuter.name}
           />
         </span>

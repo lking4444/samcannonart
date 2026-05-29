@@ -1,3 +1,42 @@
+.infoContainer {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: pageLoadFadeUp 0.8s ease-out forwards;
+}
+
+.titleContainer {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: pageLoadFadeUp 0.7s ease-out forwards;
+  animation-delay: 0.15s;
+}
+
+.artistDescription {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: pageLoadFadeUp 0.7s ease-out forwards;
+  animation-delay: 0.35s;
+}
+
+.searchAnimation {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: pageLoadFadeUp 0.7s ease-out forwards;
+  animation-delay: 0.55s;
+}
+
+@keyframes pageLoadFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .homeTitle {
   font-size: 8ch;
   font-weight: 800;

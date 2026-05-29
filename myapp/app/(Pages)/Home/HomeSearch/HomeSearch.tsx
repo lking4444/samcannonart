@@ -72,23 +72,35 @@ export default function HomeSearch() {
       </div>
 
       <div className={styles.results}>
-        {keyword.length > 0 && items.map((item) => (
-          <Link key={item.id} href={`/Item/${item.id}`} >
-          <div key={item.id} className={styles.result}>
-            <Image src={getItemImageSrc(item.type, item.image)} width={110} height={110} alt={item.name} />
-            <div className={styles.itemInfo}>
-              <div className={styles.nameAndType}>
-                <p className={styles.itemName}>{item.name}</p>
-                <p className={styles.itemType}>{item.type}</p>
+       {keyword.length > 0 && items.map((item, index) => (
+          <Link
+            key={item.id}
+            href={`/Item/${item.id}`}
+            className={styles.resultLink}
+            style={{ animationDelay: `${index * 90}ms` }}
+          >
+            <div className={styles.result}>
+              <Image
+                src={getItemImageSrc(item.type, item.image)}
+                width={110}
+                height={110}
+                alt={item.name}
+              />
+
+              <div className={styles.itemInfo}>
+                <div className={styles.nameAndType}>
+                  <p className={styles.itemName}>{item.name}</p>
+                  <p className={styles.itemType}>{item.type}</p>
+                </div>
+
+                <p className={styles.price}>£{Number(item.price).toFixed(2)}</p>
               </div>
-              <p className={styles.price}>£{Number(item.price).toFixed(2)}</p>
+
+              <div className={styles.buttonContainer}>
+                <AddToBasket itemId={item.id} secondary={true} />
+              </div>
             </div>
-            <div className={styles.buttonContainer}>
-              <AddToBasket itemId={item.id} secondary={true}/>
-            </div>
-          </div>
           </Link>
-          
         ))}
 
       {loading && 

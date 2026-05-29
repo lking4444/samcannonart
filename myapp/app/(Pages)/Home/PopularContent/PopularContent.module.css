@@ -1,24 +1,39 @@
-.suggestContentContainer{
+.container {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    opacity: 0;
+    transform: translateY(60px);
+    transition:
+        opacity 750ms ease,
+        transform 750ms cubic-bezier(.2,.9,.2,1);
+    will-change: opacity, transform;
+    position: relative;
+    z-index: 3;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.suggestContentContainer {
     display: flex;
     justify-content: center;
     position: relative;
     background-color: rgb(246, 246, 246);
     height: 70%;
+    overflow: visible;
     width: 100%;
 }
 
-.carouselItemContainer{
+.carouselItemContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
-}
-
-.container{
-    padding-top: 30px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    overflow: visible;
 }
 
 .selectedWrapper {
@@ -26,105 +41,155 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+    overflow: visible;
+}
 
-  .carouselButtonLeft,
-  .carouselButtonRight {
-      position: absolute;
-      top: 100%;
-      z-index: 2;
-  
-      width: 50px;
-      height: 50px;
-      padding: 0;
-  
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  
-      border-radius: 50%;
-  
-      background: rgba(95, 95, 95, 0.35);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-  
-      color: rgba(0, 0, 0, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      cursor: pointer;
-  
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
-      transition:
-          background-color 0.2s ease,
-          transform 0.15s ease,
-          box-shadow 0.2s ease;
-  }
-  
-  .carouselButtonLeft {
-      left: 50%;
-      transform: translateX(-110%) scale(1);
-  }
-  
-  .carouselButtonRight {
-      left: 50%;
-      transform: translateX(10%) scale(1);
-  }
-  
-  .carouselButtonLeft:hover {
-      background: rgba(167, 167, 167, 0.6);
-      transform: translateX(-110%) scale(1.05);
-      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
-  }
-  
-  .carouselButtonRight:hover {
-      background: rgba(167, 167, 167, 0.6);
-      transform: translateX(10%) scale(1.05);
-      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
-  }
-  
-  .carouselButtonLeft:active {
-      transform: translateX(-110%) scale(0.96);
-  }
-  
-  .carouselButtonRight:active {
-      transform: translateX(10%) scale(0.96);
-  }
+.carouselButtonLeft,
+.carouselButtonRight {
+    position: absolute;
+    top: 100%;
+    z-index: 999;
+
+    width: 50px;
+    height: 50px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(95, 95, 95, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    color: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.carouselButtonLeft {
+    left: 50%;
+    transform: translateX(-110%) scale(1);
+}
+
+.carouselButtonRight {
+    left: 50%;
+    transform: translateX(10%) scale(1);
+}
+
+.carouselButtonLeft:hover {
+    background: rgba(167, 167, 167, 0.6);
+    transform: translateX(-110%) scale(1.05);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+}
+
+.carouselButtonRight:hover {
+    background: rgba(167, 167, 167, 0.6);
+    transform: translateX(10%) scale(1.05);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+}
+
+.carouselButtonLeft:active {
+    transform: translateX(-110%) scale(0.96);
+}
+
+.carouselButtonRight:active {
+    transform: translateX(10%) scale(0.96);
+}
 
 .carouselChevron {
     color: white !important;
 }
 
-
-
-.outerImage{
-  height: 150px;
-  width: 150px;
-  object-fit: cover;
-  margin: 0px 20px 0px 20px;
-}
-
-.innerImage{
-height: 150px;
-width: 150px;
-object-fit: cover;
-margin: 0px 20px 0px 20px;
-}
-
-.sideImage{
-  padding: 0px 10px 0px 10px;
-}
-
-@media (max-width: 1000px) {
 .outerImage {
-  display: none;
-}
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    margin: 0px 20px 0px 20px;
 }
 
-@media (max-width: 700px) {
 .innerImage {
-  display: none;
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    margin: 0px 20px 0px 20px;
 }
 
-.outerImage {
-  display: none;
+.sideImage {
+    padding: 0px 10px 0px 10px;
 }
+
+.leftOuterImage,
+.leftInnerImage,
+.rightInnerImage,
+.rightOuterImage {
+    opacity: 0;
+    transition:
+        opacity 650ms ease,
+        transform 650ms cubic-bezier(.2,.9,.2,1);
+    will-change: opacity, transform;
+}
+
+.leftOuterImage {
+    transform: translateX(-90px) scale(0.92);
+}
+
+.leftInnerImage {
+    transform: translateX(-55px) scale(0.96);
+}
+
+.rightInnerImage {
+    transform: translateX(55px) scale(0.96);
+}
+
+.rightOuterImage {
+    transform: translateX(90px) scale(0.92);
+}
+
+.visible .leftOuterImage {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    transition-delay: 120ms;
+}
+
+.visible .leftInnerImage {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    transition-delay: 220ms;
+}
+
+.visible .rightInnerImage {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    transition-delay: 320ms;
+}
+
+.visible .rightOuterImage {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    transition-delay: 420ms;
+}
+
+@media (max-width: 1150px) {
+    .outerImage {
+        display: none;
+    }
+}
+
+@media (max-width: 850px) {
+    .innerImage {
+        display: none;
+    }
+
+    .outerImage {
+        display: none;
+    }
 }
