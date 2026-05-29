@@ -82,7 +82,7 @@ export default function CartItemUI({ itemName, id, imgSrc, price, quantity, type
             >
                 <Image
                     className={styles.minus}
-                    src="/icons/minus.svg"
+                    src="/api/images/Icons/minus.svg"
                     alt="Decrease quantity"
                     width={24}
                     height={24}

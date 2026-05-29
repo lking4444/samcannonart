@@ -114,11 +114,12 @@
       }
   }
 
-  @media (max-width: 510) {
+  @media (max-width: 530) {
     .homeTitle{
       font-size: 6ch;
       padding-bottom: 10px;
       line-height: 60px;
+      max-width: 95%;
     }
 
     .artistDescription{
