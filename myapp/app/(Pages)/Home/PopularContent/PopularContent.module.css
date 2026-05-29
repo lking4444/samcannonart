@@ -25,6 +25,11 @@
     transform: translateY(0);
 }
 
+.introFinished {
+    transform: none;
+    will-change: auto;
+}
+
 .suggestContentContainer {
     display: flex;
     justify-content: center;

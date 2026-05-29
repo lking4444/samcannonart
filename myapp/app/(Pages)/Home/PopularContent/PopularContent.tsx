@@ -27,7 +27,9 @@ export default function PopularContent() {
   const [order, setOrder] = useState<number[]>([0, 1, 2, 3, 4]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+
   const [isVisible, setIsVisible] = useState(false);
+  const [hasIntroFinished, setHasIntroFinished] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -89,6 +91,7 @@ export default function PopularContent() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          setHasIntroFinished(false);
           setIsVisible(true);
           observer.unobserve(container);
         }
@@ -147,7 +150,18 @@ export default function PopularContent() {
 
   return (
     <div ref={containerRef} className={styles.container}>
-      <div className={`${styles.introMotion} ${isVisible ? styles.visible : ""}`}>
+      <div
+        className={`
+          ${styles.introMotion}
+          ${isVisible ? styles.visible : ""}
+          ${hasIntroFinished ? styles.introFinished : ""}
+        `}
+        onTransitionEnd={(event) => {
+          if (event.propertyName === "transform") {
+            setHasIntroFinished(true);
+          }
+        }}
+      >
         <div className={styles.suggestContentContainer}>
           <span className={styles.carouselItemContainer}>
             <img
