@@ -103,8 +103,8 @@ export default function HomeSearch() {
           </Link>
         ))}
 
-      {loading && 
-        <div className={styles.loading}>
+      {loading && items.length >=1 &&
+        <div className={styles.loading} >
           <Loading/>
         </div>
       }
