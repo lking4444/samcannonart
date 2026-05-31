@@ -29,7 +29,7 @@ export async function GET( _request: Request, context: { params: Promise<{ key: 
     return new Response(result.Body.transformToWebStream(), {
       status: 200,
       headers: {
-        "Content-Type": result.ContentType || "image/png",
+        "Content-Type": result.ContentType || "image/jpg",
         "Cache-Control": "public, max-age=31536000, immutable",
       },
     });

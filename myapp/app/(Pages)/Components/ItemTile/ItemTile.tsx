@@ -1,8 +1,9 @@
 'use client'
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
-import { getImageKey } from "@/lib/images/imagepaths";
+import { getImageKey, getItemImageSrc } from "@/lib/images/imagepaths";
 import Loading from '../Loading';
 import { ItemClient } from '@/app/Types/items';
 
@@ -15,7 +16,7 @@ type ItemTileProps = {
 export default function ItemTile({item} : ItemTileProps){
     
     const [imageLoaded, setImageLoaded] = useState(false);
-    const imagePath = getImageKey(item.type, item.image);
+    const imagePath = getItemImageSrc(item.type, item.image);
     
     return (
         <Link href={`/Item/${item.id}`} className={styles.link}>
@@ -29,11 +30,14 @@ export default function ItemTile({item} : ItemTileProps){
                     </span>
                 )}
 
-                <img
+               <Image
                     className={styles.image}
-                    src={`/api/images/${imagePath}`}
+                    src={imagePath}
                     width={300}
+                    height={300}
                     alt={item.name}
+                    quality={20}
+                    sizes="300px"
                     onLoad={() => setImageLoaded(true)}
                     style={{
                         opacity: imageLoaded ? 1 : 0,

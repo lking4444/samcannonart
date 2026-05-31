@@ -1,37 +1,53 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server"
 
-import { getItemsByPageFiltered } from "@/lib/db/items";
-import type { ItemType } from '@prisma/client';
+import { getItemsByPageFiltered } from "@/lib/db/items"
+import { isItemType, isSortOrder, parsePositiveInteger } from "@/lib/cart/getItems"
+
+const MAX_PAGE_SIZE = 50
 
 export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url);
+  try {
+        const { searchParams } = new URL(req.url)
 
-    // Need item type
-    const type = searchParams.get("type") as ItemType | null;
-    if (!type) return NextResponse.json({ error: "Missing type" }, { status: 400 });
+        const typeParam = searchParams.get("type")
 
-    // If no page default to 1
-    const page = Number(searchParams.get("page") ?? "1");
-    const pageSize = Number(searchParams.get("pageSize") ?? "20");
+        if (!isItemType(typeParam)) {
+            return NextResponse.json(
+                { error: "Invalid or missing type" },
+                { status: 400 }
+            )
+        }
 
-    // Sorting and Search Params
-    const keyword = searchParams.get("keyword") ?? "";
-    const dimension = searchParams.get("dimension") ?? "Default";
-    const tag = searchParams.get("tag") ?? "Default";
-    const sortOrder = (searchParams.get("sortOrder") ?? "Default") as
-        | "High to Low"
-        | "Low to High"
-        | "Default";
+        const page = parsePositiveInteger(searchParams.get("page"), 1)
 
-    const data = await getItemsByPageFiltered({
-        type,
-        page,
-        pageSize,
-        keyword,
-        dimension,
-        tag,
-        sortOrder,
-    });
+        const requestedPageSize = parsePositiveInteger( searchParams.get("pageSize"), 20 )
 
-    return NextResponse.json(data);
+        const pageSize = Math.min(requestedPageSize, MAX_PAGE_SIZE)
+
+        const keyword = searchParams.get("keyword")?.trim() ?? ""
+        const dimension = searchParams.get("dimension")?.trim() || "Default"
+        const tag = searchParams.get("tag")?.trim() || "Default"
+
+        const sortOrderParam = searchParams.get("sortOrder")
+        const sortOrder = isSortOrder(sortOrderParam) ? sortOrderParam : "Default"
+
+        const data = await getItemsByPageFiltered({
+            type: typeParam,
+            page,
+            pageSize,
+            keyword,
+            dimension,
+            tag,
+            sortOrder,
+        })
+
+        return NextResponse.json(data)
+  } catch (error) {
+        console.error("Filtered item lookup failed:", error)
+
+        return NextResponse.json(
+            { error: "Failed to fetch items" },
+            { status: 500 }
+        )
+  }
 }

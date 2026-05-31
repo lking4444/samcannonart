@@ -1,5 +1,8 @@
 import { ItemType } from "@prisma/client";
   
+const IMAGE_BASE_URL =
+  process.env.NEXT_PUBLIC_CDN_URL
+
 export const getBaseFolder = (itemType: ItemType): string => {
     switch (itemType) {
         case ItemType.CARD:
@@ -25,7 +28,10 @@ export const getImageKey = (itemType: ItemType, imageId: string | null): string 
     return `${getBaseFolder(itemType)}/${imageId}.jpg`;
 };
 
+
+
 export function getItemImageSrc(type: ItemType, image: string) {
   const imagePath = getImageKey(type, image);
-  return `/api/images/${imagePath}`;
+
+  return `${IMAGE_BASE_URL}/${imagePath}`;
 }

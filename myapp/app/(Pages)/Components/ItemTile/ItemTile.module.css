@@ -58,22 +58,18 @@
 }
 
 .imageLoading {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
+  width: 300px;
+  height: 300px;
 
-    min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #ffffff;
-    border-radius: 8px;
+  background: #eeeeee;
 }
 
 .loadingInner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
