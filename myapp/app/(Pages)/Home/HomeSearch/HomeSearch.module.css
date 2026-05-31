@@ -168,6 +168,10 @@
   .result{
     width: 500px;
   }
+
+  .results{
+    max-height: 400px;    
+  }
   .itemName{
     display: none;
   }
@@ -175,7 +179,8 @@
 
 @media (max-width: 550) {
   .result{
-    width: 400px;
+    width: 400px; 
+
   }
 }
 
