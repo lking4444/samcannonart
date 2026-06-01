@@ -8,7 +8,7 @@ import AddToBasket from '../AddToBasket';
 import BuyNow from './BuyNow';
 import SuggestedContent from './SuggestedContent';
 
-import { getImageKey } from '@/lib/images/imagepaths';
+import { getImageKey, getItemImageSrc } from '@/lib/images/imagepaths';
 import { ClientItem } from './types';
 
 import styles from './ItemDetails.module.css'
@@ -21,7 +21,7 @@ type ItemDetailsProps = {
 
 export default function ItemDetails({ item }: ItemDetailsProps) {
     const router = useRouter();
-    const imagePath = getImageKey(item.type, item.image);
+    const imagePath = getItemImageSrc(item.type, item.image);
 
     const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -56,7 +56,7 @@ export default function ItemDetails({ item }: ItemDetailsProps) {
                         )}
 
                         <Image
-                            src={`/api/images/${imagePath}`}
+                            src={`${imagePath}`}
                             width={400}
                             height={400}
                             alt={item.name}

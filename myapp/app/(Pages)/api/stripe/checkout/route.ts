@@ -3,6 +3,8 @@ import { NextResponse } from "next/server"
 
 import { prisma } from "@/lib/prisma"
 import { isValidReservationId } from "@/lib/cart/reservation"
+import { computeShipping } from "@/lib/shipping/calculateShipping"
+import { computeDiscount } from "@/lib/discount/computeDiscount"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
@@ -24,10 +26,10 @@ export async function POST(req: Request) {
             },
             include: {
                 items: {
-                select: {
-                    itemId: true,
-                    quantity: true,
-                },
+                    select: {
+                        itemId: true,
+                        quantity: true,
+                    },
                 },
             },
         })
@@ -58,33 +60,65 @@ export async function POST(req: Request) {
         const dbItems = await prisma.item.findMany({
             where: {
                 id: {
-                in: itemIds,
+                    in: itemIds,
                 },
                 hidden: false,
             },
             select: {
                 id: true,
                 price: true,
+                type: true,
+                gift: true,
+                name: true,
+                description: true,
+                dimensions: true,
+                uploadId: true,
+                hidden: true,
+                image: true,
+                stock: true,
+                tags: true,
             },
         })
 
-        const priceMap = new Map(dbItems.map((item) => [item.id, item.price]))
+        const itemMap = new Map(dbItems.map((item) => [item.id, item]))
 
-        let amountInPence = 0
+        const itemsWithQuantity = reservation.items.map((line) => {
+            const item = itemMap.get(line.itemId)
 
-        for (const line of reservation.items) {
-            const price = priceMap.get(line.itemId)
-
-            if (price === undefined || line.quantity <= 0) {
-                return NextResponse.json(
-                    { error: "Invalid reservation item" },
-                    { status: 400 }
-                )
+            if (!item || line.quantity <= 0) {
+                return null
             }
 
-            const unitPence = Math.round(Number(price.toString()) * 100)
-            amountInPence += unitPence * line.quantity
+            return {
+                ...item,
+                quantity: line.quantity,
+            }
+        })
+
+        if (itemsWithQuantity.some((item) => item === null)) {
+            return NextResponse.json(
+                { error: "Invalid reservation item" },
+                { status: 400 }
+            )
         }
+
+        const validItemsWithQuantity = itemsWithQuantity as Array<
+            NonNullable<(typeof itemsWithQuantity)[number]>
+        >
+
+        const subtotalInPence = validItemsWithQuantity.reduce((sum, item) => {
+            const unitPence = Math.round(Number(item.price.toString()) * 100)
+            return sum + unitPence * item.quantity
+        }, 0)
+
+        const shippingCost = computeShipping(validItemsWithQuantity)
+        const discount = computeDiscount(validItemsWithQuantity)
+
+        const shippingInPence = Math.round(Number(shippingCost) * 100)
+        const discountInPence = Math.round(Number(discount) * 100)
+
+        const amountInPence =
+            subtotalInPence + shippingInPence - discountInPence
 
         if (!Number.isInteger(amountInPence) || amountInPence <= 0) {
             return NextResponse.json(
@@ -104,35 +138,99 @@ export async function POST(req: Request) {
             )
         }
 
+        const checkoutLineItems = validItemsWithQuantity.map((item) => ({
+            quantity: item.quantity,
+            price_data: {
+                currency: "gbp",
+                unit_amount: Math.round(Number(item.price.toString()) * 100),
+                product_data: {
+                name: item.name,
+                description: item.description ?? undefined,
+                images: item.image ? [item.image] : undefined,
+                },
+            },
+        }))
+
+        let couponId: string | undefined
+
+        if (discountInPence > 0) {
+            const coupon = await stripe.coupons.create({
+                amount_off: discountInPence,
+                currency: "gbp",
+                duration: "once",
+                name: "Order discount",
+            })
+
+            couponId = coupon.id
+        }
+
         const session = await stripe.checkout.sessions.create({
             mode: "payment",
+
             billing_address_collection: "required",
+
+            // Add this if you want Stripe to collect delivery address too
+            shipping_address_collection: {
+                allowed_countries: ["GB"],
+            },
+
+            line_items: checkoutLineItems,
+
+            shipping_options:
+                shippingInPence > 0
+                ? [
+                    {
+                        shipping_rate_data: {
+                        type: "fixed_amount",
+                        fixed_amount: {
+                            amount: shippingInPence,
+                            currency: "gbp",
+                        },
+                        display_name: "Delivery",
+                        },
+                    },
+                    ]
+                : [
+                    {
+                        shipping_rate_data: {
+                        type: "fixed_amount",
+                        fixed_amount: {
+                            amount: 0,
+                            currency: "gbp",
+                        },
+                        display_name: "Free delivery",
+                        },
+                    },
+                    ],
+
+            discounts: couponId
+                ? [
+                    {
+                    coupon: couponId,
+                    },
+                ]
+                : undefined,
+
             payment_intent_data: {
                 description:
                 "Thank you so much for choosing Sam Cannon Art and we hope you enjoy your purchase",
             },
+
             phone_number_collection: {
                 enabled: true,
             },
-            line_items: [
-                {
-                    quantity: 1,
-                    price_data: {
-                        currency: "gbp",
-                        unit_amount: amountInPence,
-                        product_data: {
-                            name: "Order Total",
-                        },
-                    },
-                },
-            ],
+
             metadata: {
                 reservationId,
+                subtotalInPence: String(subtotalInPence),
+                shippingInPence: String(shippingInPence),
+                discountInPence: String(discountInPence),
+                totalInPence: String(amountInPence),
             },
-                success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-                cancel_url: `${appUrl}/checkout/cancel`,
-        })
 
+            success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${appUrl}/checkout/cancel`,
+        })
         if (!session.url) {
             return NextResponse.json(
                 { error: "Failed to create checkout session" },

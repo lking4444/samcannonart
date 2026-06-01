@@ -38,6 +38,7 @@
 .nameContainer {
     color: #999;
     font-size: small;
+    padding-top: 5px;
 }
 
 .image{
@@ -72,4 +73,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.dimensions{
+    font-weight: bold;
+    display: inline;
 }

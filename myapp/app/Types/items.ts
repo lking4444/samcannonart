@@ -73,7 +73,7 @@ export type DbItem = {
     image: string
     type: ITEM_TYPE
     price: any
-    dimensions: string
-    gift: Gift
+    dimensions: string | null
+    gift: Gift | null
 }
   

@@ -108,7 +108,7 @@ export default function PopularContent() {
   }, [isLoading, hasError, items.length]);
 
   const imageSrcs = useMemo(() => {
-    return items.map((item) => getItemImageSrc(item.type, item.image));
+    return items.map((item) => getItemImageSrc(item.type, item.image, true));
   }, [items]);
 
   useEffect(() => {

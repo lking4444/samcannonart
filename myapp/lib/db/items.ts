@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import type { Item, ItemType } from '@prisma/client';
+import type { Item, ItemType, Prisma } from '@prisma/client';
 import { normaliseTag } from '../filtering/tags';
 
 type SortOrder = "High to Low" | "Low to High" | "Default";
@@ -398,30 +398,24 @@ export async function getItemsByPageFiltered(params: { page?: number; pageSize?:
     };
   }
 
-export async function searchItems(params: {query: string; page?: number; pageSize?: number;}) {
+
+export async function searchItems(params: { query: string; page?: number; pageSize?: number; }) {
     const pageSize = params.pageSize ?? 10;
     const page = params.page ?? 1;
     const skip = (page - 1) * pageSize;
 
     const query = params.query.trim();
 
-    const where =
-        query.length === 0
-        ? {} 
-        : {
-            name: {
-                contains: query,
-                mode: "insensitive" as const, 
-            },
-            };
-
-    const [items, total] = await Promise.all([
+    if (query.length === 0) {
+        const [items, total] = await Promise.all([
         prisma.item.findMany({
-        where,
-        orderBy: [{ year: "desc" }, { id: "desc" }],
-        take: pageSize, 
-        skip,
-        select: {
+            where: {
+            hidden: false,
+            },
+            orderBy: [{ year: "desc" }, { id: "desc" }],
+            take: pageSize,
+            skip,
+            select: {
             id: true,
             name: true,
             type: true,
@@ -431,10 +425,107 @@ export async function searchItems(params: {query: string; page?: number; pageSiz
             dimensions: true,
             description: true,
             year: true,
-        },
+            tags: true,
+            },
         }),
-        prisma.item.count({ where }),
-    ]);
+        prisma.item.count({
+            where: {
+            hidden: false,
+            },
+        }),
+        ]);
+
+        return {
+        items,
+        total,
+        page,
+        pageSize,
+        hasMore: skip + items.length < total,
+        };
+    }
+
+    const keyword = `%${query}%`;
+
+    const items = await prisma.$queryRaw<
+        {
+        id: number;
+        name: string;
+        type: string;
+        price: Prisma.Decimal;
+        image: string;
+        stock: number;
+        dimensions: string | null;
+        description: string | null;
+        year: number | null;
+        tags: string[];
+        }[]
+    >`
+        SELECT
+        i.id,
+        i.name,
+        i.type,
+        i.price,
+        i.image,
+        i.stock,
+        i.dimensions,
+        i.description,
+        i.year,
+        i.tags
+        FROM "Item" i
+        WHERE
+        i.hidden = false
+        AND (
+            i.name ILIKE ${keyword}
+            OR EXISTS (
+            SELECT 1
+            FROM unnest(i.tags) AS tag
+            WHERE tag ILIKE ${keyword}
+            )
+        )
+        ORDER BY
+        CASE
+            WHEN i.name ILIKE ${keyword}
+            AND EXISTS (
+                SELECT 1
+                FROM unnest(i.tags) AS tag
+                WHERE tag ILIKE ${keyword}
+            )
+            THEN 1
+
+            WHEN EXISTS (
+            SELECT 1
+            FROM unnest(i.tags) AS tag
+            WHERE tag ILIKE ${keyword}
+            )
+            THEN 2
+
+            WHEN i.name ILIKE ${keyword}
+            THEN 3
+
+            ELSE 4
+        END ASC,
+        i.year DESC NULLS LAST,
+        i.id DESC
+        LIMIT ${pageSize}
+        OFFSET ${skip}
+    `;
+
+    const countResult = await prisma.$queryRaw<{ count: bigint }[]>`
+        SELECT COUNT(*)::bigint AS count
+        FROM "Item" i
+        WHERE
+        i.hidden = false
+        AND (
+            i.name ILIKE ${keyword}
+            OR EXISTS (
+            SELECT 1
+            FROM unnest(i.tags) AS tag
+            WHERE tag ILIKE ${keyword}
+            )
+        )
+    `;
+
+    const total = Number(countResult[0]?.count ?? 0);
 
     return {
         items,

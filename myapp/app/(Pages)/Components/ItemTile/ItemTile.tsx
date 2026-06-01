@@ -16,7 +16,7 @@ type ItemTileProps = {
 export default function ItemTile({item} : ItemTileProps){
     
     const [imageLoaded, setImageLoaded] = useState(false);
-    const imagePath = getItemImageSrc(item.type, item.image);
+    const imagePath = getItemImageSrc(item.type, item.image, true);
     
     return (
         <Link href={`/Item/${item.id}`} className={styles.link}>
@@ -45,7 +45,7 @@ export default function ItemTile({item} : ItemTileProps){
                 />
             </span>
                 <span className={styles.namePriceContainer}>
-                    <p className={styles.nameContainer}>{item.name} {item.dimensions}</p>
+                    <span className={styles.nameContainer}>{item.name} <p className={styles.dimensions}>{item.dimensions}</p></span>
                     <p className={styles.itemPrice}>£{Number(item.price).toFixed(2)}</p>
                 </span>
             </span>
