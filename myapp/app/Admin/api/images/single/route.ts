@@ -1,6 +1,9 @@
+export const runtime = "nodejs";
+
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getImageKey } from "@/lib/images/imagepaths";
+import { getThumbnailKey } from "@/lib/images/imagepaths";
 import { isItemType } from "@/lib/uploads/uploads";
+import { fileToWebpBuffer } from "@/lib/images/imageProcessing";
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -34,15 +37,17 @@ export async function POST(request: Request) {
       return new Response("Only image files are allowed", { status: 400 });
     }
 
-    const key = getImageKey(itemTypeValue, imageIdValue.trim());
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const key = getThumbnailKey(itemTypeValue, imageIdValue.trim());
+
+    const processedImage = await fileToWebpBuffer(file);
 
     await s3.send(
       new PutObjectCommand({
         Bucket: process.env.S3_BUCKET_NAME!,
         Key: key,
-        Body: buffer,
-        ContentType: file.type || "application/octet-stream",
+        Body: processedImage.buffer,
+        ContentType: processedImage.contentType,
+        CacheControl: "public, max-age=31536000, immutable",
       })
     );
 

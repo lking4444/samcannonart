@@ -5,58 +5,36 @@ import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import Image from 'next/image'
 
-import { CartItem, useCartStore } from "@/app/Store/cartStore"
-import CartItemUI from "./CartItem/CartItem"
-import type { Reservation } from "@prisma/client"
+import { useCartStore } from "@/app/Store/cartStore"
 import Loading from "@/app/(Pages)/Components/Loading"
 import { DbItem } from "@/app/Types/items"
+import CartItemUI from "./CartItem/CartItem"
 
 import styles from './Cart.module.css'
 import { computeShipping } from "@/lib/shipping/calculateShipping"
 import { computeDiscount } from "@/lib/discount/computeDiscount"
+import { goToCheckout, goToCheckoutInternational } from "@/lib/cart/checkout"
+import { loadCartItemsByIds } from "@/lib/cart/loadCartItems"
 
 type CartDrawerProps = {
   open: boolean
   onClose: () => void
 }
 
-async function goToCheckout(total : number, cartItems : CartItem[]) {
-
-    const response = await fetch("/api/reservations/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: cartItems }),
-    })
-    
-    if (!response.ok) {
-        const { error } = await response.json()
-        throw new Error(error ?? "Failed to reserve items")
-    }
-
-    const reservation : Reservation = await response.json()
-    const reservationId = reservation.id as string
-
-    const res = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({reservationId}),
-    })
-
-    const { url } = await res.json()
-    window.location.href = url
-}
-
 export default function Cart({ open, onClose }: CartDrawerProps) {
-    const cartItems = useCartStore((s) => s.items);
-    const clearCart = useCartStore((s) => s.clear);
+    const cartItems = useCartStore((s) => s.items)
+    const clearCart = useCartStore((s) => s.clear)
 
-    const cartIds = useMemo(() => cartItems.map((i) => i.itemId), [cartItems]);
-    const cartIdsKey = cartIds.join(",");
+    const cartIds = useMemo(() => cartItems.map((i) => i.itemId), [cartItems])
+    const cartIdsKey = cartIds.join(",")
 
-    const [items, setItems] = useState<DbItem[]>([]);
-    const [shippingCost, setShippingCost] = useState<number>(0);
+    const [items, setItems] = useState<DbItem[]>([])
+    const [itemsError, setItemsError] = useState<string | null>(null)
+    const [shippingCost, setShippingCost] = useState<number>(0)
 
-    const [loading, setLoading] = useState(false);
+    const [ukLoading, setUkLoading] = useState(false)
+    const [internationalLoading, setInternationalLoading] = useState(false)
+    const [checkoutError, setCheckoutError] = useState<string | null>(null)
 
     useEffect(() => {
         if (!open) return
@@ -64,20 +42,25 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
         if (cartIds.length === 0) {
             setItems([])
             setShippingCost(0)
+            setItemsError(null)
             return
         }
 
-        (async () => {
-            const res = await fetch("/api/items/by-ids", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ids: cartIds }),
-            })
+        ;(async () => {
+            try {
+                setItemsError(null)
 
-            const data = await res.json()
-            setItems(data)
+                const data = await loadCartItemsByIds(cartIds)
+
+                setItems(data)
+            } catch (error) {
+                console.error(error)
+                setItems([])
+                setShippingCost(0)
+                setItemsError("Unable to load your cart items.")
+            }
         })()
-    }, [open, cartIdsKey])
+    }, [open, cartIds.length, cartIdsKey])
 
     const itemMap = useMemo(() => new Map(items.map((i) => [i.id, i])), [items])
 
@@ -99,12 +82,43 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
         return sum + Number(item.price) * item.quantity
     }, 0)
 
-    const discount = computeDiscount(itemsWithQuantity);
+    const discount = computeDiscount(itemsWithQuantity)
 
-    const total = subtotal + shippingCost - discount;
+    const total = subtotal + shippingCost - discount
 
-    const totalItemCount = itemsWithQuantity.reduce((sum, item) => { return sum + item.quantity }, 0)
-    const deliveryText = totalItemCount >= 1 && shippingCost === 0 ? "Free" : `£${Number(shippingCost).toFixed(2)}`
+    const totalItemCount = itemsWithQuantity.reduce((sum, item) => {
+        return sum + item.quantity
+    }, 0)
+
+    const deliveryText =
+        totalItemCount >= 1 && shippingCost === 0
+            ? "Free"
+            : `£${Number(shippingCost).toFixed(2)}`
+
+    async function handleUkCheckout() {
+        try {
+            setCheckoutError(null)
+            setUkLoading(true)
+
+            await goToCheckout(cartItems)
+        } catch (error) {
+            console.error(error)
+            setCheckoutError( "Something went wrong. Please refresh the page and try again." )
+            setUkLoading(false)
+        }
+    }
+
+    async function handleInternationalCheckout() {
+        try {
+            setCheckoutError(null)
+            setInternationalLoading(true)
+            await goToCheckoutInternational(cartItems)
+        } catch (error) {
+            console.error(error)
+            setCheckoutError( "Something went wrong. Please refresh the page and try again." )
+            setInternationalLoading(false)
+        }
+    }
 
     return (
         <Dialog.Root open={open} onOpenChange={(o) => !o && onClose()}>
@@ -115,20 +129,28 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                         <span className={styles.topBar}>
                             <button onClick={onClose} className={styles.iconButton}>
                                 <span className={styles.circle}>
-                                    <Image   
+                                    <Image
                                         src="/api/images/Icons/cross.svg"
-                                        alt="Left"
+                                        alt="Close"
                                         width={24}
                                         height={24}
                                         className={styles.chevron}
                                     />
                                 </span>
                             </button>
-                            <button   onClick={() => { clearCart(); setItems([]); setShippingCost(0) }}className={styles.iconButton}>
+
+                            <button
+                                onClick={() => {
+                                    clearCart()
+                                    setItems([])
+                                    setShippingCost(0)
+                                }}
+                                className={styles.iconButton}
+                            >
                                 <span className={styles.circle}>
-                                    <Image   
+                                    <Image
                                         src="/api/images/Icons/trash.svg"
-                                        alt="Left"
+                                        alt="Clear cart"
                                         width={24}
                                         height={24}
                                         className={styles.chevron}
@@ -136,49 +158,102 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                 </span>
                             </button>
                         </span>
+
                         <span className={styles.cartHeader}>
-                            <Dialog.Title className={styles.cartTitle}>My Cart</Dialog.Title>
+                            <Dialog.Title className={styles.cartTitle}>
+                                My Cart
+                            </Dialog.Title>
                         </span>
+
                         <div className={styles.itemContainer}>
-                            {itemsWithQuantity.map(item => (
-                                <Link href={`/Item/${item.id}`} className={styles.link} key={item.id}>
-                                     <CartItemUI
+                            {itemsError ? (
+                                <div className={styles.cartError}>
+                                    <p>Unable to load your cart items.</p>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setItemsError(null)
+                                            setItems([])
+                                        }}
+                                        className={styles.retryButton}
+                                    >
+                                        Try again
+                                    </button>
+                                </div>
+                            ) : (
+                                itemsWithQuantity.map((item) => (
+                                    <Link
+                                        href={`/Item/${item.id}`}
+                                        className={styles.link}
                                         key={item.id}
-                                        type={item.type}
-                                        imgSrc={item.image}
-                                        id={item.id}
-                                        itemName={item.name}
-                                        price={item.price.toString()}
-                                        quantity={item.quantity}
-                                    />
-                                </Link>
-                            ))}
+                                    >
+                                        <CartItemUI
+                                            type={item.type}
+                                            imgSrc={item.image}
+                                            id={item.id}
+                                            itemName={item.name}
+                                            price={item.price.toString()}
+                                            quantity={item.quantity}
+                                        />
+                                    </Link>
+                                ))
+                            )}
                         </div>
-                        
+
                         <div className={styles.checkoutContainer}>
                             <span className={styles.priceInfo}>
                                 <span className={styles.checkoutInfo}>
                                     <p>Subtotal</p>
                                     <p>£{Number(subtotal).toFixed(2)}</p>
                                 </span>
+
                                 <span className={styles.checkoutInfo}>
                                     <p>Discount</p>
-                                    <p className={styles.checkoutInfoDiscount}>-£{Number(discount).toFixed(2)}</p>
+                                    <p className={styles.checkoutInfoDiscount}>
+                                        -£{Number(discount).toFixed(2)}
+                                    </p>
                                 </span>
+
                                 <span className={styles.checkoutDeliveryInfo}>
                                     <p>Delivery</p>
-                                   <p>{deliveryText}</p>
+                                    <p>{deliveryText}</p>
                                 </span>
-                           
-                                <hr className={styles.break}></hr>
+
+                                <hr className={styles.break} />
+
                                 <span className={styles.checkoutInfoTotal}>
                                     <p>Total</p>
                                     <p>£{Number(total).toFixed(2)}</p>
                                 </span>
                             </span>
-                            <button className={styles.checkoutButton} onClick={() => {setLoading(true); goToCheckout(total, cartItems);}}>
-                                {loading ? <Loading small={true} /> : "Checkout"}
+                            {checkoutError && (
+                                <div className={styles.checkoutError}>
+                                    <p>{checkoutError}</p>
+                                </div>
+                            )}
+                            <button
+                                className={styles.checkoutButton}
+                                onClick={handleUkCheckout}
+                                disabled={ukLoading || internationalLoading || cartItems.length === 0 || !!itemsError}
+                            >
+                                {ukLoading ? <Loading small={true} /> : "Checkout"}
                             </button>
+
+                            <button
+                                className={styles.checkoutButtonInt}
+                                onClick={handleInternationalCheckout}
+                                disabled={ukLoading || internationalLoading || cartItems.length === 0 || !!itemsError}
+                            >
+                                {internationalLoading ? (
+                                    <Loading small={true} />
+                                ) : (
+                                    "Non-UK Checkout"
+                                )}
+                            </button>
+
+                            <p className={styles.internationalCheckoutDescription}>
+                                For non-UK shipping locations, please use the international checkout.
+                            </p>
                         </div>
                     </div>
                 </Dialog.Content>

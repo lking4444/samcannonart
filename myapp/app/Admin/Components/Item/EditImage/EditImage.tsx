@@ -20,7 +20,7 @@ export default function EditImage({ item, onFileSelect, disabled = false, }: Ima
     const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-    const existingImageUrl = item.image ? getItemImageSrc(item.type, item.image) : null;
+    const existingImageUrl = item.image ? getItemImageSrc(item.type, item.image, true) : null;
 
     const displayedImageUrl = previewUrl ?? existingImageUrl;
 
