@@ -3,19 +3,20 @@ import Image from "next/image"
 
 import { getItemImageSrc } from "@/lib/images/imagepaths";
 import { prisma } from "@/lib/prisma"
+import { decrementPurchasedStock } from "@/lib/db/items";
+import { createOrderFromCheckoutSession } from "@/lib/orders/createOrderFromCheckoutSession";
+import { getCustomerNoteFromSession } from "@/lib/orders/getCustomNote";
 
 import styles from './success.module.css'
-import { decrementPurchasedStock } from "@/lib/db/items";
 import ClearCartOnSuccess from "./ClearCartOnSuccess";
-import { createOrderFromCheckoutSession } from "@/lib/orders/createOrderFromCheckoutSession";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
-type Props = {
+type SuccessProps = {
     searchParams: Promise<{ session_id?: string }>
 }
 
-export default async function Success({ searchParams }: Props){
+export default async function Success({ searchParams }: SuccessProps){
 
     const sp = await searchParams
     const sessionId = sp.session_id
@@ -41,7 +42,9 @@ export default async function Success({ searchParams }: Props){
     
     if (!reservation) return <p>Reservation not found</p>
 
-    await createOrderFromCheckoutSession({
+    const customerNote = getCustomerNoteFromSession(session)
+
+    const { created } = await createOrderFromCheckoutSession({
         sessionId,
         value: String(session.amount_total ?? 0),
         currency: session.currency ?? "gbp",
@@ -56,25 +59,27 @@ export default async function Success({ searchParams }: Props){
             customer?.address?.postal_code,
             customer?.address?.country,
         ]
-        .filter(Boolean)
-        .join(", "),
+            .filter(Boolean)
+            .join(", "),
+        customerNote,
         paidAt: new Date(),
         status: "PAID",
-        items: reservation.items.map((ri:any) => ({
-            itemId: ri.item.id,         
-            quantity: ri.quantity ?? 1,  
-            price: String(ri.item.price),
-            type: ri.item.type
-        })),
-    });
-
-    await decrementPurchasedStock(
-        reservation.items.map((ri:any) => ({
+        items: reservation.items.map((ri: any) => ({
             itemId: ri.item.id,
             quantity: ri.quantity ?? 1,
-        }))
-    );
+            price: String(ri.item.price),
+            type: ri.item.type,
+        })),
+    })
 
+    if (created) {
+        await decrementPurchasedStock(
+            reservation.items.map((ri: any) => ({
+                itemId: ri.item.id,
+                quantity: ri.quantity ?? 1,
+            }))
+        )
+    }
     
     const ids = reservation.items.map((ri:any) => ri.item.id)
 
@@ -108,6 +113,12 @@ export default async function Success({ searchParams }: Props){
                         <p className={styles.smallHeader}> {customer?.address?.postal_code}</p>
                         <p className={styles.smallHeader}>{customer?.address?.country}</p>
                     </div>
+                    {customerNote && (
+                        <div className={styles.orderInfoWrapper}>
+                            <p className={styles.header}>Order Note</p>
+                            <p className={styles.smallHeader}>{customerNote}</p>
+                        </div>
+                    )}
                 </div>
                 <div className={styles.halfPageContainer}>
                     <h1 className={styles.header}>Summary</h1>

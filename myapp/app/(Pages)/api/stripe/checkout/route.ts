@@ -167,12 +167,26 @@ export async function POST(req: Request) {
         const session = await stripe.checkout.sessions.create({
             mode: "payment",
 
-            billing_address_collection: "required",
+            billing_address_collection: "auto",
 
-            // Add this if you want Stripe to collect delivery address too
             shipping_address_collection: {
                 allowed_countries: ["GB"],
             },
+
+            custom_fields: [
+                {
+                    key: "customer_note",
+                    label: {
+                        type: "custom",
+                        custom: "Personalised Message (If sending as gift)",
+                    },
+                    type: "text",
+                    optional: true,
+                    text: {
+                        maximum_length: 255,
+                    },
+                },
+            ],
 
             line_items: checkoutLineItems,
 
@@ -216,9 +230,17 @@ export async function POST(req: Request) {
                 "Thank you so much for choosing Sam Cannon Art and we hope you enjoy your purchase",
             },
 
-            phone_number_collection: {
-                enabled: true,
+            custom_text: {
+                shipping_address: {
+                    message:
+                    "We use your delivery address to fulfil and deliver your order.",
+                },
+                submit: {
+                    message:
+                    "We use your checkout details to process payment, deliver your order, handle support, and meet accounting/audit obligations. We do not use this data for marketing. See our Privacy Policy on our website.",
+                },
             },
+
 
             metadata: {
                 reservationId,

@@ -24,6 +24,7 @@ export async function GET() {
             userEmail: order.userEmail,
             userPhoneNumber: order.userPhoneNumber,
             userAddress: order.userAddress,
+            customerNote: order.customerNote ?? null,
 
             status: order.status,
 

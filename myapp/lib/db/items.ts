@@ -71,6 +71,25 @@ export async function getAllTagsByType(type: ItemType): Promise<string[]> {
         .sort((a, b) => a.localeCompare(b));
 }
 
+export async function getAllDimensionsByType(type: ItemType): Promise<string[]> {
+    const items = await prisma.item.findMany({
+        where: {
+            type,
+            stock: { gt: 0 },
+        },
+        select: {
+            dimensions: true,
+        },
+        });
+
+    const allTags = items.flatMap((item) => item.dimensions ?? []);
+
+    return [...new Set(allTags)]
+        .map((tag) => tag.trim())
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b));
+}
+
 export async function getRandomPopularItems(limit = 5) {
     const safeLimit = Math.max(1, Math.min(limit, 20));
   
@@ -410,7 +429,10 @@ export async function searchItems(params: { query: string; page?: number; pageSi
         const [items, total] = await Promise.all([
         prisma.item.findMany({
             where: {
-            hidden: false,
+                hidden: false,
+                stock: {
+                    gt: 0,
+                },
             },
             orderBy: [{ year: "desc" }, { id: "desc" }],
             take: pageSize,
@@ -473,7 +495,8 @@ export async function searchItems(params: { query: string; page?: number; pageSi
         i.tags
         FROM "Item" i
         WHERE
-        i.hidden = false
+            i.hidden = false
+            AND i.stock > 0
         AND (
             i.name ILIKE ${keyword}
             OR EXISTS (

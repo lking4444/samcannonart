@@ -1,25 +1,35 @@
-import { prisma } from "@/lib/prisma"; 
-import { ItemType } from "@prisma/client";
+import { prisma } from "@/lib/prisma"
+import { ItemType } from "@prisma/client"
 
 export async function createOrderFromCheckoutSession(params: {
-    sessionId: string;
-    value: string;
-    currency: string;
-    userEmail: string;
-    userPhoneNumber: string;
-    userAddress: string;
-    paidAt: Date;
-    status: "PAID"; 
-    items: { itemId: number; quantity: number; price: string, type: ItemType }[];
-  }) {
-  
+    sessionId: string
+    value: string
+    currency: string
+    userEmail: string
+    userPhoneNumber: string
+    userAddress: string
+    customerNote?: string | null
+    paidAt: Date
+    status: "PAID"
+    items: { itemId: number, quantity: number, price: string, type: ItemType }[]
+}) {
     const existing = await prisma.order.findUnique({
-        where: { SessionId: params.sessionId },
-    });
-  
-    if (existing) return existing;
-  
-    return prisma.order.create({
+        where: {
+            SessionId: params.sessionId,
+        },
+        include: {
+            items: true,
+        },
+    })
+
+    if (existing) {
+        return {
+            order: existing,
+            created: false,
+        }
+    }
+
+    const order = await prisma.order.create({
         data: {
             SessionId: params.sessionId,
             value: params.value,
@@ -27,19 +37,29 @@ export async function createOrderFromCheckoutSession(params: {
             userEmail: params.userEmail,
             userPhoneNumber: params.userPhoneNumber,
             userAddress: params.userAddress,
+            customerNote: params.customerNote ?? null,
             status: params.status,
             paidAt: params.paidAt,
             items: {
-            create: params.items.map((item) => ({
-                quantity: item.quantity,
-                unitPrice: item.price,
-                type: item.type,
-                item: {
-                connect: { id: item.itemId },
-                },
-            })),
+                create: params.items.map((item) => ({
+                    quantity: item.quantity,
+                    unitPrice: item.price,
+                    type: item.type,
+                    item: {
+                        connect: {
+                            id: item.itemId,
+                        },
+                    },
+                })),
             },
         },
-        include: { items: true },
-    });
-  }
+        include: {
+            items: true,
+        },
+    })
+
+    return {
+        order,
+        created: true,
+    }
+}

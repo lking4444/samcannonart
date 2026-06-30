@@ -10,11 +10,12 @@ import Loading from "@/app/(Pages)/Components/Loading"
 import { DbItem } from "@/app/Types/items"
 import CartItemUI from "./CartItem/CartItem"
 
-import styles from './Cart.module.css'
 import { computeShipping } from "@/lib/shipping/calculateShipping"
 import { computeDiscount } from "@/lib/discount/computeDiscount"
-import { goToCheckout, goToCheckoutInternational } from "@/lib/cart/checkout"
+import { CheckoutStockError, goToCheckout, goToCheckoutInternational } from "@/lib/cart/checkout"
 import { loadCartItemsByIds } from "@/lib/cart/loadCartItems"
+
+import styles from './Cart.module.css'
 
 type CartDrawerProps = {
   open: boolean
@@ -24,6 +25,7 @@ type CartDrawerProps = {
 export default function Cart({ open, onClose }: CartDrawerProps) {
     const cartItems = useCartStore((s) => s.items)
     const clearCart = useCartStore((s) => s.clear)
+    const removeItem = useCartStore((s) => s.removeItem)
 
     const cartIds = useMemo(() => cartItems.map((i) => i.itemId), [cartItems])
     const cartIdsKey = cartIds.join(",")
@@ -35,6 +37,12 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
     const [ukLoading, setUkLoading] = useState(false)
     const [internationalLoading, setInternationalLoading] = useState(false)
     const [checkoutError, setCheckoutError] = useState<string | null>(null)
+
+    const [outOfStockItems, setOutOfStockItems] = useState<{ itemId: number, requested: number, available: number }[]>([])
+    const outOfStockMap = useMemo(() => {
+        return new Map(outOfStockItems.map((item) => [item.itemId, item]))
+    }, [outOfStockItems])
+
 
     useEffect(() => {
         if (!open) return
@@ -98,12 +106,20 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
     async function handleUkCheckout() {
         try {
             setCheckoutError(null)
+            setOutOfStockItems([])
             setUkLoading(true)
 
             await goToCheckout(cartItems)
         } catch (error) {
             console.error(error)
-            setCheckoutError( "Something went wrong. Please refresh the page and try again." )
+
+            if (error instanceof CheckoutStockError) {
+                setOutOfStockItems(error.items)
+                setCheckoutError("Some items in your cart are no longer available.")
+            } else {
+                setCheckoutError("Something went wrong. Please refresh the page and try again.")
+            }
+
             setUkLoading(false)
         }
     }
@@ -111,11 +127,20 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
     async function handleInternationalCheckout() {
         try {
             setCheckoutError(null)
+            setOutOfStockItems([])
             setInternationalLoading(true)
+
             await goToCheckoutInternational(cartItems)
         } catch (error) {
             console.error(error)
-            setCheckoutError( "Something went wrong. Please refresh the page and try again." )
+
+            if (error instanceof CheckoutStockError) {
+                setOutOfStockItems(error.items)
+                setCheckoutError("Some items in your cart are no longer available.")
+            } else {
+                setCheckoutError("Something went wrong. Please refresh the page and try again.")
+            }
+
             setInternationalLoading(false)
         }
     }
@@ -138,7 +163,11 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                     />
                                 </span>
                             </button>
-
+                            <span className={styles.cartHeader}>
+                                                        <Dialog.Title className={styles.cartTitle}>
+                                                            Cart
+                                                        </Dialog.Title>
+                            </span>
                             <button
                                 onClick={() => {
                                     clearCart()
@@ -159,11 +188,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                             </button>
                         </span>
 
-                        <span className={styles.cartHeader}>
-                            <Dialog.Title className={styles.cartTitle}>
-                                My Cart
-                            </Dialog.Title>
-                        </span>
+                       
 
                         <div className={styles.itemContainer}>
                             {itemsError ? (
@@ -181,22 +206,57 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                     </button>
                                 </div>
                             ) : (
-                                itemsWithQuantity.map((item) => (
-                                    <Link
-                                        href={`/Item/${item.id}`}
-                                        className={styles.link}
-                                        key={item.id}
-                                    >
-                                        <CartItemUI
-                                            type={item.type}
-                                            imgSrc={item.image}
-                                            id={item.id}
-                                            itemName={item.name}
-                                            price={item.price.toString()}
-                                            quantity={item.quantity}
-                                        />
-                                    </Link>
-                                ))
+                                itemsWithQuantity.map((item) => {
+                                    const stockIssue = outOfStockMap.get(item.id)
+
+                                    return (
+                                        <div
+                                            key={item.id}
+                                            className={`${styles.cartItemWrapper} ${
+                                                stockIssue ? styles.cartItemUnavailable : ""
+                                            }`}
+                                        >
+                                            <Link
+                                                href={`/Item/${item.id}`}
+                                                className={styles.link}
+                                            >
+                                                <CartItemUI
+                                                    type={item.type}
+                                                    imgSrc={item.image}
+                                                    id={item.id}
+                                                    itemName={item.name}
+                                                    price={item.price.toString()}
+                                                    quantity={item.quantity}
+                                                />
+                                            </Link>
+
+                                            {stockIssue && (
+                                                <div className={styles.stockWarning}>
+                                                    {stockIssue.available > 0 ? (
+                                                        <p>
+                                                            Only {stockIssue.available} left. Please remove this item and add it again with a lower quantity.
+                                                        </p>
+                                                    ) : (
+                                                        <p>This item is no longer available.</p>
+                                                    )}
+
+                                                    <button
+                                                        type="button"
+                                                        className={styles.removeUnavailableButton}
+                                                        onClick={() => {
+                                                            removeItem(item.id)
+                                                            setOutOfStockItems((current) =>
+                                                                current.filter((stockItem) => stockItem.itemId !== item.id)
+                                                            )
+                                                        }}
+                                                    >
+                                                        Remove item
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })
                             )}
                         </div>
 
@@ -215,7 +275,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                                 </span>
 
                                 <span className={styles.checkoutDeliveryInfo}>
-                                    <p>Delivery</p>
+                                    <p>Estimated Delivery</p>
                                     <p>{deliveryText}</p>
                                 </span>
 

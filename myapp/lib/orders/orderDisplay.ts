@@ -29,6 +29,8 @@ export type DisplayOrder = {
     userPhoneNumber: string;
     userAddress: string;
 
+    customerNote?: string;
+
     status: OrderStatus;
     paidAt?: string | null;
     cancelledAt?: string | null;

@@ -138,6 +138,8 @@ model Order {
   userPhoneNumber String
   userAddress     String
 
+  customerNote    String?
+
   status      OrderStatus @default(PENDING)
   paidAt      DateTime?
   cancelledAt DateTime?

@@ -11,11 +11,7 @@ export async function POST(req: Request) {
     try {
         const body = await req.json()
 
-       console.log("internationalCheckout body:", body)
-
         const reservationId = body.reservationId ?? body.resId
-
-        console.log("reservationId:", reservationId)
 
         if (!isValidReservationId(reservationId)) {
             return NextResponse.json(
@@ -106,9 +102,7 @@ export async function POST(req: Request) {
             )
         }
 
-        const validItemsWithQuantity = itemsWithQuantity as Array<
-            NonNullable<(typeof itemsWithQuantity)[number]>
-        >
+        const validItemsWithQuantity = itemsWithQuantity as Array< NonNullable<(typeof itemsWithQuantity)[number]> >
 
         const subtotalInPence = validItemsWithQuantity.reduce((sum, item) => {
             const unitPence = Math.round(Number(item.price.toString()) * 100)
@@ -138,18 +132,25 @@ export async function POST(req: Request) {
             )
         }
 
-        const checkoutLineItems = validItemsWithQuantity.map((item) => ({
-            quantity: item.quantity,
-            price_data: {
-                currency: "gbp",
-                unit_amount: Math.round(Number(item.price.toString()) * 100),
-                product_data: {
-                    name: item.name,
-                    description: item.description ?? undefined,
-                    images: item.image ? [item.image] : undefined,
+        const checkoutLineItems = validItemsWithQuantity.map((item) => {
+            const name = item.name?.trim() || "Artwork"
+            const description = item.description?.trim()
+            const image = item.image?.trim()
+            const imageUrl = image?.startsWith("http") ? image : undefined
+
+            return {
+                quantity: item.quantity,
+                price_data: {
+                    currency: "gbp",
+                    unit_amount: Math.round(Number(item.price.toString()) * 100),
+                    product_data: {
+                        name,
+                        ...(description ? { description } : {}),
+                        ...(imageUrl ? { images: [imageUrl] } : {}),
+                    },
                 },
-            },
-        }))
+            }
+        })
 
         let couponId: string | undefined
 

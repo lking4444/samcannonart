@@ -63,6 +63,7 @@ export async function getAllOrders() {
       userEmail: true,
       userAddress: true,
       userPhoneNumber: true,
+      customerNote: true,
       status: true,
       paidAt: true,
       cancelledAt: true,

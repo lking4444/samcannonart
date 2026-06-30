@@ -81,7 +81,7 @@ export default function HomeSearch() {
           >
             <div className={styles.result}>
               <Image
-                src={getItemImageSrc(item.type, item.image)}
+                src={getItemImageSrc(item.type, item.image, true)}
                 width={110}
                 height={110}
                 alt={item.name}
@@ -109,7 +109,7 @@ export default function HomeSearch() {
         </div>
       }
 
-        {!loading && hasMore && (keyword.length > 0) && (
+        {!loading && hasMore && (keyword.length > 0) && items.length >=1 && (
           <button className={styles.button} onClick={() => setPage((p) => p + 1)}>
             Load more
           </button>

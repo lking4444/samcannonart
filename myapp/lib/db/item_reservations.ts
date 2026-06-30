@@ -1,3 +1,4 @@
+import { StockReservationError } from '@/app/Types/stock';
 import { prisma } from '@/lib/prisma';
 import { Prisma } from "@prisma/client"
 
@@ -60,22 +61,53 @@ export async function createReservationWithStockCheck(data: CreateReservationInp
 
         // Get current stock of items in basket
         const items = await transaction.item.findMany({
-            where: { id: { in: itemIds } },
-            select: { id: true, stock: true },
+            where: {
+                id: { in: itemIds },
+                hidden: false,
+            },
+            select: {
+                id: true,
+                stock: true,
+            },
         })
 
         // compute the number of reservation per basket item,  null if there are none
         const reservedItemMap :  Map<number, number> = await getReservedItemMap(transaction, itemIds, now)
 
-        // Check item availability
+        const unavailableItems: {
+            itemId: number
+            requested: number
+            available: number
+        }[] = []
+
+        const foundItemIds = new Set(items.map((item) => item.id))
+
+        for (const itemId of itemIds) {
+            if (!foundItemIds.has(itemId)) {
+                unavailableItems.push({
+                    itemId,
+                    requested: itemStockMap[itemId] ?? 0,
+                    available: 0,
+                })
+            }
+        }
+
         for (const item of items) {
             const requestedStock = itemStockMap[item.id] ?? 0
             const numberOfReserved = reservedItemMap.get(item.id) ?? 0
             const available = item.stock - numberOfReserved
 
             if (available < requestedStock) {
-                throw new Error(`Item ${item.id} out of stock`)
+                unavailableItems.push({
+                    itemId: item.id,
+                    requested: requestedStock,
+                    available: Math.max(available, 0),
+                })
             }
+        }
+
+        if (unavailableItems.length > 0) {
+            throw new StockReservationError(unavailableItems)
         }
 
         // Create reservation + reservation items

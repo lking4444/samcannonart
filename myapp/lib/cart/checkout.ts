@@ -1,6 +1,22 @@
 import { CartItem } from "@/app/Store/cartStore"
 import { Reservation } from "@prisma/client"
 
+type OutOfStockItem = {
+    itemId: number
+    requested: number
+    available: number
+}
+
+export class CheckoutStockError extends Error {
+    items: OutOfStockItem[]
+
+    constructor(message: string, items: OutOfStockItem[]) {
+        super(message)
+        this.name = "CheckoutStockError"
+        this.items = items
+    }
+}
+
 export async function goToCheckout(cartItems: CartItem[]) {
     const response = await fetch("/api/reservations/create", {
         method: "POST",
@@ -9,8 +25,16 @@ export async function goToCheckout(cartItems: CartItem[]) {
     })
 
     if (!response.ok) {
-        const { error } = await response.json()
-        throw new Error(error ?? "Failed to reserve items")
+        const data = await response.json()
+
+        if (data.code === "OUT_OF_STOCK") {
+            throw new CheckoutStockError(
+                data.error ?? "Some items are no longer available.",
+                data.items ?? []
+            )
+        }
+
+        throw new Error(data.error ?? "Failed to reserve items")
     }
 
     const reservation: Reservation = await response.json()
@@ -44,8 +68,16 @@ export async function goToCheckoutInternational(cartItems: CartItem[]) {
     })
 
     if (!response.ok) {
-        const { error } = await response.json()
-        throw new Error(error ?? "Failed to reserve items")
+        const data = await response.json()
+
+        if (data.code === "OUT_OF_STOCK") {
+            throw new CheckoutStockError(
+                data.error ?? "Some items are no longer available.",
+                data.items ?? []
+            )
+        }
+
+        throw new Error(data.error ?? "Failed to reserve items")
     }
 
     const reservation: Reservation = await response.json()

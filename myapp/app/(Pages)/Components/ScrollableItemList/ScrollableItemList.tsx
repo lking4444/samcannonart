@@ -20,6 +20,8 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
     const [sortOrder, setSortOrder] = useState<string | undefined>("Default");
     const [tag, setTag] = useState<string | undefined>("Default");
     const [allTags, setAllTags] = useState<string[]>([]);
+    const [allDimensions, setAllDimensions] = useState<string[]>([]);
+
 
     const isInitialisingRef = useRef(true);
     const debouncedKeyword = useDebouncedValue(keyword, 250);
@@ -68,6 +70,27 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
         return () => { cancelled = true; };
     }, [type]);
 
+    // load all dimensions on mount and item type change
+    useEffect(() => {
+        let cancelled = false;
+    
+        async function loadDimensions() {
+            try {
+                const res = await fetch(`/api/items/dimensions?type=${type}`);
+                if (!res.ok) throw new Error("Failed to fetch dimensions");
+    
+                const data: { dimensions: string[] } = await res.json();
+    
+                if (!cancelled) { setAllDimensions(data.dimensions ?? []); }
+            } catch (err) {
+                console.error(err);
+                if (!cancelled) { setAllDimensions([]); }
+            }
+        }
+        loadDimensions();
+        return () => { cancelled = true; };
+    }, [type]);
+
     // load page 1 on mount + when filters change
     useEffect(() => {
         // prevents additional pages loads until the first page load
@@ -85,7 +108,7 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
         sp.set("sortOrder", sortOrder ?? "Default");
       
         fetchPage(`/api/items/by-type?${sp.toString()}`, 1, "replace");
-      }, [type, pageSize, debouncedKeyword, dimension, sortOrder, tag]);
+    }, [type, pageSize, debouncedKeyword, dimension, sortOrder, tag]);
 
 
     // load next page when scrolling
@@ -120,9 +143,8 @@ export default function ItemListInfiniteServerFiltered({type, pageSize = 20,}: {
         return () => obs.disconnect();
     }, [loadNext]);
 
-    // dimension options based on the currently loaded items
     const dimensionOptions = useMemo(() => {
-        return ["Default", ...new Set(items.map((i) => i.dimensions).filter((d): d is string => d != null)), ];
+        return ["Default", ...allDimensions ];
     }, [items]);
 
     const tagOptions = useMemo(() => {

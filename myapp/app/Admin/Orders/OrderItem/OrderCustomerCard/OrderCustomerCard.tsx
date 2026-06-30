@@ -28,6 +28,12 @@ export default function OrderCustomerCard({ order }: OrderCustomerCardProps) {
                         {order.userAddress}
                     </dd>
                 </div>
+                {order.customerNote && 
+                    <div>
+                        <dt className={styles.term}>Custom Note</dt>
+                        <dd className={styles.description}>{order.customerNote}</dd>
+                    </div>
+                }
             </dl>
         </section>
     );

@@ -119,7 +119,7 @@
 .siteBackground {
     min-height: 100vh;
     width: 100%;
-    background-image: url("/api/images/HomePage/background.jpeg");
+    background-image: url("/api/images/HomePage/background.webp");
     background-size: cover;
     background-position: center calc(50% + 130px);
     background-repeat: no-repeat;
@@ -150,6 +150,7 @@
       .homeTitle{
         font-size: 7ch;
         line-height: 60px;
+        padding-bottom: 10px;
       }
   }
 
