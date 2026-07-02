@@ -16,7 +16,7 @@ export default function SelectedSuggestion({ item }: SelectedSuggestionProps) {
       <Link href={`/Item/${item.id}`} className={styles.imageLink}>
         <Image
           className={styles.selectedImage}
-          src={getItemImageSrc(item.type, item.image)}
+          src={getItemImageSrc(item.type, item.image, true)}
           width={250}
           height={300}
           alt={item.name}

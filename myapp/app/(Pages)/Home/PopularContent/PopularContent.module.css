@@ -1,6 +1,6 @@
 .container {
     padding-top: 30px;
-    padding-bottom: 10px;
+    padding-bottom: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,6 +8,7 @@
     position: relative;
     z-index: 3;
     width: 100%;
+    height: 100%;
 }
 
 .introMotion {
@@ -36,7 +37,7 @@
     justify-content: center;
     position: relative;
     background-color: rgb(246, 246, 246);
-    height: 70%;
+    height: 200px;
     overflow: visible;
     width: 100%;
 }

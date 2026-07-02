@@ -9,7 +9,7 @@ import styles from './Home.module.css'
 export default function HomePage() {
 
   return (
-    <div>
+    <div className={styles.homePage}>
         <div className={styles.siteBackground}>
             <div className={styles.infoContainer}>
                 <div className={styles.titleContainer}>

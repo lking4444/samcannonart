@@ -139,36 +139,43 @@
     font-weight: 500;
     display: flex;
     align-items: center;
+    padding-bottom: 30px;
 }
 
 .popularHeader {
     display: flex;
     justify-content: center; 
-  }
+}
 
-  @media (max-width: 800) {
-      .homeTitle{
-        font-size: 7ch;
-        line-height: 60px;
-        padding-bottom: 10px;
-      }
-  }
+.homePage {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
 
-  @media (max-width: 530) {
+@media (max-width: 800) {
     .homeTitle{
-      font-size: 6ch;
-      padding-bottom: 10px;
+      font-size: 7ch;
       line-height: 60px;
-      max-width: 95%;
+      padding-bottom: 10px;
     }
+}
 
-    .artistDescription{
-      width: 90%;
-    }
-
-    .siteBackground {
-      background-position: center calc(50% + 100px);
-      height: 400px;
-      min-height: 700px;
+@media (max-width: 530) {
+  .homeTitle{
+    font-size: 6ch;
+    padding-bottom: 10px;
+    line-height: 60px;
+    max-width: 95%;
   }
+
+  .artistDescription{
+    width: 90%;
+  }
+
+  .siteBackground {
+    background-position: center calc(50% + 100px);
+    height: 400px;
+    min-height: 700px;
+}
 }

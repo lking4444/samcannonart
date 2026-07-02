@@ -14,7 +14,7 @@ export default function SelectedSuggestion({item} : SelectedSuggestionProps){
     return(
         <div>
             <div className={styles.suggestedContentBackground}>
-                <Image  className={styles.selectedImage}src={getItemImageSrc(item.type, item.image)} key={item.image} width={200} quality={40} height={200} alt={"image"}/>
+                <Image  className={styles.selectedImage}src={getItemImageSrc(item.type, item.image, true)} key={item.image} width={200} quality={40} height={200} alt={"image"}/>
                 <div className={styles.overlayBackground}></div>
                 <div className={styles.overlayText}>
                     <p className={styles.itemName}>{item.name}</p>

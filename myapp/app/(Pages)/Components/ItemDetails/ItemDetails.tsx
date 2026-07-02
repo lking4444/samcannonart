@@ -21,7 +21,7 @@ type ItemDetailsProps = {
 
 export default function ItemDetails({ item }: ItemDetailsProps) {
     const router = useRouter();
-    const imagePath = getItemImageSrc(item.type, item.image);
+    const imagePath = getItemImageSrc(item.type, item.image, true);
 
     const [imageLoaded, setImageLoaded] = useState(false);
 
