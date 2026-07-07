@@ -1,31 +1,39 @@
-# Sam Cannon Art — Full-Stack Ecommerce Platform
+# Sam Cannon Art — Full-Stack Ecommerce Website
 
-A production-style ecommerce platform built for an independent artist selling physical artwork, prints, cards, calendars, gifts, and one-off originals.
+A full-stack ecommerce website built for **Sam Cannon Art**, an independent artist selling original artwork, prints, cards, calendars, gifts, and other physical products online.
 
-This project was designed as more than a simple storefront. It handles real ecommerce concerns including limited-stock products, stock-safe checkout reservations, Stripe Checkout payments, admin product management, bulk image uploads, CDN-backed image delivery, order management, and business-specific shipping and discount logic.
+The site provides a complete customer shopping experience: users can browse products, search and filter collections, view product details, add items to a cart, and complete purchases through Stripe Checkout.
+
+Behind the storefront, the application includes a protected admin system for managing products, uploading artwork images, viewing orders, updating order status, and supporting day-to-day ecommerce operations.
+
+This project was designed around the real constraints of selling physical artwork online, including limited-stock and one-off products, stock-safe checkout reservations, image-heavy product pages, UK and international checkout flows, CDN-backed image delivery, and business-specific shipping and discount rules.
 
 ---
 
 ## Project Overview
 
-Sam Cannon Art is a full-stack **Next.js ecommerce application** with a customer-facing storefront, protected admin dashboard, relational database, payment flow, and server-side business logic.
+Sam Cannon Art is a full-stack **Next.js ecommerce website** built for an independent artist’s online store.
+
+The application includes both a public customer storefront and a protected admin dashboard. It combines frontend product discovery, cart behaviour, server-side checkout validation, Stripe payments, Prisma/PostgreSQL persistence, AWS-backed image storage, and order management in a single codebase.
 
 The application supports:
 
-- Product browsing, search, filtering, and recommendations
-- Category-specific product pages
-- Client-side cart state with server-side validation
+- Customer product browsing, search, filtering, and recommendations
+- Category-specific product pages for artwork and related products
+- Product detail pages with image-focused presentation
+- Persistent cart drawer using client-side state
+- Server-side cart validation before checkout
 - Temporary checkout reservations to reduce overselling risk
-- Stripe Checkout integration
+- Stripe Checkout payment flow
 - UK and international checkout branches
-- Admin authentication
-- Product creation, editing, hiding, and deletion
-- Image upload and processing workflows
+- Protected admin authentication
+- Admin product creation, editing, hiding, and deletion
+- Single and bulk image upload workflows
 - AWS S3 and CloudFront image delivery
-- Order viewing and status management
+- Admin order viewing and status management
 - Privacy/GDPR-facing site content
 
-The main goal was to build a maintainable ecommerce system that reflects the kind of edge cases found in real production applications.
+The main goal was to build a maintainable ecommerce site that could support a real artist’s online sales workflow, rather than a simplified demo shop.
 
 ---
 
