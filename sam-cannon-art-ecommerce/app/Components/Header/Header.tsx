@@ -8,52 +8,58 @@ type HeaderProps = {
     onNavClick: () => void
 }
 
-
-export default function Header({ onCartClick, onNavClick }: HeaderProps)  {
-
-
-
+export default function Header({ onCartClick, onNavClick }: HeaderProps) {
     return (
-        <div className={styles.headerContainer}>
-            <span className={styles.pagesContainer}>
-                <PageButton buttonName='' icon='/api/images/Icons/home.svg'></PageButton>
-                <PageButton buttonName='Cards'></PageButton>
-                <PageButton buttonName='Calendars'></PageButton>
-                <PageButton buttonName='Originals'></PageButton>
-                <PageButton buttonName='Prints'></PageButton>
-                <PageButton buttonName='Gifts'></PageButton>
-                <PageButton buttonName='NotePads'></PageButton>
-            </span>
-            <span className={styles.container}>
-                <span className={styles.logoContainer}>
-                    <button onClick={onCartClick}>
+        <header className={styles.headerContainer}>
+            <nav className={styles.pagesContainer} aria-label="Main navigation">
+                <PageButton buttonName="" icon="/api/images/Icons/home.svg" label="Home" />
+                <PageButton buttonName="Cards" />
+                <PageButton buttonName="Calendars" />
+                <PageButton buttonName="Originals" />
+                <PageButton buttonName="Prints" />
+                <PageButton buttonName="Gifts" />
+                <PageButton buttonName="NotePads" />
+            </nav>
+
+            <div className={styles.container}>
+                <div className={styles.logoContainer}>
+                    <button
+                        type="button"
+                        onClick={onCartClick}
+                        className={styles.iconButton}
+                        aria-label="Open cart"
+                    >
                         <span className={styles.circle}>
-                            <Image   
+                            <Image
                                 src="/api/images/Icons/cart.svg"
-                                alt="Left"
+                                alt=""
                                 width={24}
                                 height={24}
                                 className={styles.card}
                             />
                         </span>
                     </button>
-                </span>
-                <span className={styles.navContainer}>
-                    <button onClick={onNavClick}>
-                        <span  className={styles.circle}>
-                            <Image   
+                </div>
+
+                <div className={styles.navContainer}>
+                    <button
+                        type="button"
+                        onClick={onNavClick}
+                        className={styles.iconButton}
+                        aria-label="Open navigation menu"
+                    >
+                        <span className={styles.circle}>
+                            <Image
                                 src="/api/images/Icons/nav.svg"
-                                alt="Left"
+                                alt=""
                                 width={24}
                                 height={24}
                                 className={styles.card}
                             />
                         </span>
                     </button>
-                </span>
-            </span>
-           
-        </div>
+                </div>
+            </div>
+        </header>
     )
 }
-

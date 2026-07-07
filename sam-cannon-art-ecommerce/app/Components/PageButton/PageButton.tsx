@@ -6,20 +6,29 @@ type PageButtonProps = {
     buttonName: string
     icon?: string
     prefix?: string
+    label?: string
 }
 
-export default function PageButton({ buttonName, icon, prefix }: PageButtonProps) {
+export default function PageButton({ buttonName, icon, prefix, label }: PageButtonProps) {
     const href = prefix
         ? `/${prefix}/${buttonName}`
-        : `/${buttonName}`
+        : buttonName
+            ? `/${buttonName}`
+            : '/'
+
+    const accessibleLabel = label ?? buttonName
 
     return (
-        <Link href={href} className={styles.button}>
+        <Link
+            href={href}
+            className={styles.button}
+            aria-label={icon ? accessibleLabel : undefined}
+        >
             {icon ? (
                 <Image
                     className={styles.icon}
                     src={icon}
-                    alt={buttonName}
+                    alt=""
                     width={24}
                     height={24}
                 />
