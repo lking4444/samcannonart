@@ -1,14 +1,14 @@
-
-.rowWrapper{
-    padding: 14px 16px;
-    padding-top: 10px;
-    border: 1px solid #e7e7ec;
-    border-radius: 16px;
-    background: linear-gradient(180deg, #ffffff 0%, #fcfcfe 100%);
-    box-shadow: 0 4px 14px rgba(19, 24, 38, 0.05);
-    margin-bottom: 14px;
+.rowWrapper {
     display: flex;
     flex-direction: column;
+    margin-bottom: 14px;
+    padding: 10px 16px 14px;
+    border: 1px solid rgba(196, 82, 25, 0.16);
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow:
+        0 12px 30px rgba(17, 17, 17, 0.06),
+        0 3px 10px rgba(196, 82, 25, 0.05);
 }
 
 .row {
@@ -22,7 +22,6 @@
         minmax(90px, 1.6fr);
     gap: 12px;
     align-items: center;
-
 }
 
 .row > span {
@@ -34,32 +33,35 @@
     min-width: 0;
     height: 42px;
     padding: 0 14px;
-    border: 1px solid #d7dbe3;
-    border-radius: 12px;
-    background: #fff;
-    color: #1f2430;
+    border: 1px solid #d9d9dd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #2f2f34;
+    font-family: var(--font-inter);
     font-size: 0.95rem;
-    transition:
-        border-color 0.18s ease,
-        box-shadow 0.18s ease,
-        background-color 0.18s ease;
+    font-weight: 400;
     box-sizing: border-box;
+
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease,
+        background-color 150ms ease;
 }
 
 .keywordSearch::placeholder {
-    color: #98a0af;
+    color: #9a9aa1;
 }
 
 .keywordSearch:hover {
-    border-color: #b9c1cf;
-    background: #fcfcff;
+    border-color: rgba(196, 82, 25, 0.38);
+    background-color: #fffdfb;
 }
 
 .keywordSearch:focus {
+    border-color: rgb(196, 82, 25);
     outline: none;
-    border-color: #7c8bff;
-    box-shadow: 0 0 0 4px rgba(124, 139, 255, 0.14);
-    background: #fff;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(196, 82, 25, 0.14);
 }
 
 .tagsEditorWrapper {
@@ -71,28 +73,39 @@
 .tagsEditorButton {
     height: 42px;
     padding: 0 14px;
-    border: 1px solid #d7dbe3;
-    border-radius: 12px;
-    background: #f7f8fc;
-    color: #2a3140;
+    border: 1px solid rgba(196, 82, 25, 0.2);
+    border-radius: 8px;
+    background-color: #fffaf6;
+    color: #3f352f;
+    font-family: var(--font-inter);
     font-size: 0.92rem;
     font-weight: 600;
     cursor: pointer;
-    transition:
-        background-color 0.18s ease,
-        border-color 0.18s ease,
-        transform 0.12s ease,
-        box-shadow 0.18s ease;
     white-space: nowrap;
+
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
 }
 
 .tagsEditorButton:hover {
-    background: #eef1ff;
-    border-color: #b9c4ff;
+    border-color: rgba(196, 82, 25, 0.42);
+    background-color: #fff5ed;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(196, 82, 25, 0.1);
+}
+
+.tagsEditorButton:focus-visible {
+    border-color: rgb(196, 82, 25);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(196, 82, 25, 0.14);
 }
 
 .tagsEditorButton:active {
-    transform: translateY(1px);
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 .tagsEditorDropdown {
@@ -104,12 +117,12 @@
     min-width: 320px;
     max-width: 380px;
     padding: 14px;
-    border: 1px solid #e3e7ef;
-    border-radius: 16px;
-    background: #ffffff;
+    border: 1px solid rgba(196, 82, 25, 0.16);
+    border-radius: 12px;
+    background-color: #ffffff;
     box-shadow:
-        0 18px 40px rgba(16, 24, 40, 0.14),
-        0 4px 14px rgba(16, 24, 40, 0.08);
+        0 18px 42px rgba(17, 17, 17, 0.12),
+        0 4px 14px rgba(196, 82, 25, 0.08);
 }
 
 .tagsEditorList {
@@ -127,42 +140,56 @@
 .tagActionButton {
     height: 38px;
     padding: 0 12px;
-    border: 1px solid #d7dbe3;
-    border-radius: 10px;
-    background: #fff;
-    color: #2d3442;
+    border: 1px solid rgba(196, 82, 25, 0.2);
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #3a3430;
+    font-family: var(--font-inter);
     font-size: 0.88rem;
     font-weight: 600;
     cursor: pointer;
-    transition:
-        background-color 0.18s ease,
-        border-color 0.18s ease,
-        transform 0.12s ease;
     white-space: nowrap;
+
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
 }
 
 .tagActionButton:hover {
-    background: #f6f8fc;
-    border-color: #bcc6d6;
+    border-color: rgba(196, 82, 25, 0.4);
+    background-color: #fff8f3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(196, 82, 25, 0.08);
+}
+
+.tagActionButton:focus-visible {
+    border-color: rgb(196, 82, 25);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(196, 82, 25, 0.14);
 }
 
 .tagActionButton:active {
-    transform: translateY(1px);
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 .row > button {
     height: 42px;
     padding: 0 16px;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
+    font-family: var(--font-inter);
     font-size: 0.92rem;
     font-weight: 700;
     cursor: pointer;
-    transition:
-        transform 0.12s ease,
-        box-shadow 0.18s ease,
-        opacity 0.18s ease;
     white-space: nowrap;
+
+    transition:
+        transform 150ms ease,
+        box-shadow 150ms ease,
+        opacity 150ms ease;
 }
 
 .field {
@@ -173,10 +200,11 @@
 }
 
 .fieldLabel {
+    padding-left: 2px;
+    color: #686369;
+    font-family: var(--font-inter);
     font-size: 0.78rem;
     font-weight: 700;
-    color: #667085;
-    padding-left: 2px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
 }
@@ -188,176 +216,234 @@
 }
 
 .popularButton {
-    border: none;
-    border-radius: 8px;
     padding: 0.65rem 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: var(--font-inter);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
+
     transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.15s ease,
-        box-shadow 0.2s ease;
+        background-color 150ms ease,
+        color 150ms ease,
+        border-color 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
 }
 
 .popularButton:hover {
     transform: translateY(-1px);
 }
 
+.popularButton:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(196, 82, 25, 0.14);
+}
+
+.popularButton:active {
+    transform: translateY(0);
+}
+
 .popularActive {
-    background-color: #facc15;
-    color: #1f2937;
-    box-shadow: 0 2px 8px rgba(250, 204, 21, 0.35);
+    border-color: rgba(196, 82, 25, 0.28);
+    background-color: #fff0e3;
+    color: rgb(156, 61, 15);
+    box-shadow: 0 5px 14px rgba(196, 82, 25, 0.14);
+}
+
+.popularActive:hover {
+    border-color: rgba(196, 82, 25, 0.42);
+    background-color: #ffe7d4;
 }
 
 .popularInactive {
-    background-color: #e5e7eb;
-    color: #374151;
+    border-color: #dddddf;
+    background-color: #f4f4f5;
+    color: #4e4b50;
 }
 
 .popularInactive:hover {
-    background-color: #d1d5db;
+    border-color: rgba(196, 82, 25, 0.24);
+    background-color: #fff9f5;
+    color: #44362e;
 }
 
 .saveButton {
-    border: 1px solid #5d6bff;
-    background: linear-gradient(135deg, #5d6bff 0%, #7d63ff 100%);
     width: 100px;
-    color: #fff;
     padding: 0.5rem 0.85rem;
-    border-radius: 0.5rem;
+    border: 1px solid rgb(196, 82, 25);
+    border-radius: 8px;
+    background: linear-gradient(
+        90deg,
+        rgb(196, 82, 25),
+        rgb(212, 135, 28)
+    );
+    color: #ffffff;
+    font-family: var(--font-inter);
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
+    box-shadow: 0 8px 18px rgba(196, 82, 25, 0.2);
+
     transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        opacity 0.2s ease,
-        transform 0.1s ease,
-        box-shadow 0.2s ease;
+        opacity 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
 }
 
 .saveButton:hover:not(:disabled) {
     transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(93, 107, 255, 0.28);
+    box-shadow: 0 10px 24px rgba(196, 82, 25, 0.28);
+}
+
+.saveButton:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 3px rgba(196, 82, 25, 0.16),
+        0 10px 24px rgba(196, 82, 25, 0.24);
 }
 
 .saveButton:active:not(:disabled) {
-    transform: scale(0.97);
+    transform: translateY(0);
+    box-shadow: 0 5px 12px rgba(196, 82, 25, 0.18);
 }
 
 .saveButton:disabled {
     cursor: not-allowed;
-    opacity: 0.65;
+    opacity: 0.6;
+    box-shadow: none;
 }
 
 .saveButtonSaving {
     animation: savePulse 0.45s ease;
-    transform: scale(0.97);
 }
 
 .saveButtonSuccess {
-    border-color: #16a34a;
-    background: #16a34a;
-    color: #fff;
+    border-color: #248247;
+    background: #248247;
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(36, 130, 71, 0.18);
 }
 
 .resetButton {
-    border: 1px solid #d1d5db;
-    background: #eef1f6;
     width: 100px;
-    color: #273142;
     padding: 0.5rem 0.85rem;
-    border-radius: 0.5rem;
+    border: 1px solid #d7d5d3;
+    border-radius: 8px;
+    background-color: #f5f4f2;
+    color: #3e3a37;
+    font-family: var(--font-inter);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
+
     transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        opacity 0.2s ease,
-        transform 0.1s ease,
-        box-shadow 0.2s ease;
+        background-color 150ms ease,
+        color 150ms ease,
+        border-color 150ms ease,
+        opacity 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
 }
 
 .resetButton:hover:not(:disabled) {
-    background: #e3e8f0;
-    border-color: #bcc6d6;
+    border-color: rgba(196, 82, 25, 0.24);
+    background-color: #fff9f5;
+    color: #46372e;
     transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(124, 124, 124, 0.28);
+    box-shadow: 0 6px 16px rgba(196, 82, 25, 0.09);
+}
+
+.resetButton:focus-visible {
+    border-color: rgb(196, 82, 25);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(196, 82, 25, 0.14);
 }
 
 .resetButton:active:not(:disabled) {
-    transform: scale(0.97);
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 .resetButton:disabled {
     cursor: not-allowed;
-    opacity: 0.65;
+    opacity: 0.6;
 }
 
 .deleteButton {
-    border: 1px solid #dc2626;
     width: 100px;
-    background: #fff;
-    color: #dc2626;
     padding: 0.5rem 0.85rem;
-    border-radius: 0.5rem;
+    border: 1px solid #c74747;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #b63838;
+    font-family: var(--font-inter);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
+
     transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        opacity 0.2s ease,
-        transform 0.1s ease;
+        background-color 150ms ease,
+        color 150ms ease,
+        border-color 150ms ease,
+        opacity 150ms ease,
+        transform 150ms ease,
+        box-shadow 150ms ease;
 }
 
 .deleteButton:hover:not(:disabled) {
+    border-color: #b63838;
+    background-color: #fff7f7;
+    color: #a52f2f;
     transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(124, 124, 124, 0.28);
+    box-shadow: 0 6px 16px rgba(182, 56, 56, 0.12);
+}
+
+.deleteButton:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(182, 56, 56, 0.14);
 }
 
 .deleteButton:active:not(:disabled) {
-    transform: scale(0.97);
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 .deleteButton:disabled {
     cursor: not-allowed;
-    opacity: 0.65;
+    opacity: 0.6;
 }
 
 .deleteButtonDeleting {
     animation: savePulse 0.45s ease;
-    transform: scale(0.97);
 }
 
 .deleteButtonSuccess {
-    border-color: #16a34a;
-    background: #16a34a;
-    color: #fff;
+    border-color: #248247;
+    background-color: #248247;
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(36, 130, 71, 0.18);
 }
 
-.actionWrapper{
+.actionWrapper {
     display: flex;
     flex-direction: row;
     align-self: center;
+    justify-content: center;
     gap: 20px;
-    padding-top:20px;
+    padding-top: 20px;
 }
-
 
 @keyframes savePulse {
     0% {
         transform: scale(1);
     }
+
     40% {
-        transform: scale(0.96);
+        transform: scale(0.97);
     }
+
     100% {
         transform: scale(1);
     }
@@ -370,8 +456,8 @@
     }
 
     .tagsEditorDropdown {
-        left: auto;
         right: 0;
+        left: auto;
     }
 
     .row > button {
@@ -380,9 +466,12 @@
 }
 
 @media (max-width: 600px) {
+    .rowWrapper {
+        padding: 12px;
+    }
+
     .row {
         grid-template-columns: 1fr;
-        padding: 12px;
     }
 
     .tagsEditorDropdown {
@@ -390,5 +479,45 @@
         min-width: 100%;
         max-width: 100%;
         margin-top: 10px;
+        box-sizing: border-box;
+    }
+
+    .actionWrapper {
+        width: 100%;
+        gap: 10px;
+    }
+
+    .saveButton,
+    .resetButton,
+    .deleteButton {
+        flex: 1;
+        width: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .keywordSearch,
+    .tagsEditorButton,
+    .tagActionButton,
+    .popularButton,
+    .saveButton,
+    .resetButton,
+    .deleteButton {
+        transition: none;
+    }
+
+    .tagsEditorButton:hover,
+    .tagActionButton:hover,
+    .popularButton:hover,
+    .saveButton:hover:not(:disabled),
+    .resetButton:hover:not(:disabled),
+    .deleteButton:hover:not(:disabled) {
+        transform: none;
+    }
+
+    .saveButtonSaving,
+    .deleteButtonDeleting {
+        transform: none;
+        animation: none;
     }
 }

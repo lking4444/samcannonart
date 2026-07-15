@@ -245,7 +245,7 @@ This gives the application a cleaner separation between product data, image stor
 
 Shipping and discount rules are kept in `/lib` rather than embedded directly inside route handlers.
 
-This makes the checkout route easier to read and makes business rules easier to test, change, and reason about.
+This makes the checkout route easier to read and makes business rules easier to test, change, and reason with.
 
 Examples of business rules handled by the app include:
 

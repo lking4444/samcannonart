@@ -17,9 +17,6 @@ export default function Admin() {
     return (
         <div>
             <Filter items={items} setItems={setItems}/>
-            {items.map((item) => (
-                <Item key={item.id} item={item} removeItem={removeItemFromList}/>
-            ))}
         </div>
     )
 }

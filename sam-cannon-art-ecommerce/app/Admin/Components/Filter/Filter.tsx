@@ -5,6 +5,7 @@ import { ItemClient, ItemType } from "@/app/Types/items";
 import { fetchAdminItems, fetchItemTags } from "@/lib/filtering/admin";
 
 import styles from "./Filter.module.css";
+import Item from "../Item";
   
 type FilterProps = {
     items: ItemClient[];
@@ -26,6 +27,12 @@ export default function Filter({ items, setItems }: FilterProps) {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const removeItemFromList = (id: number) => {
+        setItems((currentItems) =>
+            currentItems.filter((item) => item.id !== id)
+        );
+    };
 
     useEffect(() => {
         let cancelled = false;
@@ -146,6 +153,33 @@ export default function Filter({ items, setItems }: FilterProps) {
                 </div>
             </div>
 
+            <div className={styles.topRow}>
+                <div className={styles.meta}>
+                    <span>Page {page}</span>
+                    {!loading && !error && <span>{items.length} shown</span>}
+                </div>
+                <div className={styles.pagination}>
+                    <button
+                        type="button"
+                        className={styles.pageButton}
+                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                        disabled={page === 1 || loading}
+                    >
+                        Previous
+                    </button>
+                    <button
+                        type="button"
+                        className={styles.pageButton}
+                        onClick={() => setPage((p) => p + 1)}
+                        disabled={!hasMore || loading}
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+            {items.map((item) => (
+                <Item key={item.id} item={item} removeItem={removeItemFromList}/>
+            ))} 
             <div className={styles.topRow}>
                 <div className={styles.meta}>
                     <span>Page {page}</span>

@@ -128,7 +128,6 @@ export default function ExcelUpload() {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
             >
-                <div className={styles.icon}>📊</div>
                 <h2 className={styles.title}>Upload Spreadsheet</h2>
                 <p className={styles.text}>Drag and drop your Excel file here</p>
                 <p className={styles.subtext}>or click to browse</p>

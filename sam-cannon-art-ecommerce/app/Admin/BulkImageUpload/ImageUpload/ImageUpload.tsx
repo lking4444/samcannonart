@@ -131,7 +131,6 @@ export default function ImageUpload() {
                     }
                 }}
             >
-                <div className={styles.icon}>🖼️</div>
                 <h2 className={styles.title}>Upload Images</h2>
                 <p className={styles.text}>Drag and drop your image files here</p>
                 <p className={styles.subtext}>or click to browse</p>
