@@ -69,11 +69,23 @@ The main goal was to build a maintainable ecommerce site that could support a re
 
 ### Admin Dashboard
 
-![Admin dashboard screenshot](./docs/screenshots/adminhome.webp)
+![Admin dashboard screenshot](./docs/screenshots/items.webp)
 
 ### Order Management
 
 ![Order management screenshot](./docs/screenshots/orders.webp)
+
+### Image Upload
+
+![Order management screenshot](./docs/screenshots/uploadImages.webp)
+
+### Excel Upload
+
+![Order management screenshot](./docs/screenshots/uploadSpreadsheet.webp)
+
+### Quickbooks Order Export
+
+![Order management screenshot](./docs/screenshots/orderHistory.webp)
 
 ---
 
