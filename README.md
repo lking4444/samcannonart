@@ -121,7 +121,6 @@ This project focuses on the engineering details that matter in a real store:
 - Admin routes must be protected and validated server-side
 - Large artwork images need processing, storage, and CDN delivery
 - Shipping and discount rules need to be deterministic and testable
-- Public repos need to be sanitized before being shown to employers
 
 ---
 
@@ -496,7 +495,6 @@ The most important lessons were:
 - Admin workflows matter as much as customer-facing pages
 - Image-heavy websites need careful storage and delivery planning
 - Business rules should live in dedicated modules, not inside route handlers
-- Public portfolio repositories need careful sanitisation
 
 ---
 
