@@ -47,12 +47,6 @@ body {
 
 .pageContent {
   flex: 1;
-
-  /*
-    This creates guaranteed breathing room above the footer.
-    Useful when page sections use transforms, negative margins,
-    absolute/floating elements, or visual offsets.
-  */
   padding-bottom: 96px;
 }
 
