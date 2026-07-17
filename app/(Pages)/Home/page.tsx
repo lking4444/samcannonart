@@ -35,8 +35,8 @@ export default function HomePage() {
         <PopularContent/>
         <FeatureSection
             title="Cards"
-            description="All of my greeting’s cards are digitally printed locally here in Dorset.
-They are all blank inside and come with a plain white envelope. The are availiable in three sizes:
+            description="All of my greetings cards are digitally printed locally here in Dorset.
+They are all blank inside and come with a plain white envelope. They are availiable in three sizes:
 Square cards are 14cm by 14cm, Rectangular cards are 18cm by 13cm and Long Thin cards are 10cm by 20cm. 
 I love turning my paintings into cards so I’m always adding new ones to those available. The thrill of
 seeing your work as a card never gets old.
@@ -57,7 +57,7 @@ below. The dates page also includes the full moons of the year, the equinox date
 my favourite animals.
 Birthday calendars are A4 in size and feature 12 different pictures to my annual calendars and have the painting and dates on 
 the same page. These calendars are perfect for keeping annual dates –
-birthdays, anniversaries and any un changing annual dates.
+birthdays, anniversaries and any unchanging annual dates.
 You buy it once and keep it forever."
             images={[
                 "/api/images/HomePage/Calendars/image1.jpg",
