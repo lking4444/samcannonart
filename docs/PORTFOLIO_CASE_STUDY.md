@@ -29,7 +29,7 @@ I designed and implemented the full-stack application, including:
 
 The client needed an ecommerce site that could support several product types, including limited-stock and one-off items. A standard cart flow would not be enough because stock could be oversold if multiple customers attempted checkout at the same time.
 
-The site also needed to be maintainable by the client/admin, with workflows for adding products, uploading images, viewing orders, and exporting order data.
+The site also needed to be maintainable by the client, with workflows for adding products, uploading images, viewing orders, and exporting order data.
 
 ---
 
@@ -102,9 +102,7 @@ External services
 
 - Production ecommerce is mostly about edge cases: stock, expiry, duplicate sessions, failed payment paths, hidden products, and admin workflows.
 - A clean `/lib` domain layer makes API routes easier to reason about.
-- Payment integration should be treated as a state transition problem, not just a redirect.
 - Image-heavy sites need careful planning around compression, storage, CDN delivery, and frontend rendering.
-- Public portfolio repos need to demonstrate the work without exposing client data or credentials.
 
 ---
 
@@ -113,7 +111,5 @@ External services
 - Add automated unit tests for shipping, discounts, stock reservations, and order creation.
 - Add integration tests for checkout failure/success paths.
 - Add GitHub Actions CI.
-- Add a seeded demo database and safe public demo deployment.
 - Add more explicit API response typing.
 - Add admin audit logging.
-- Add webhook-driven order finalisation if not already present in the production branch.

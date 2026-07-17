@@ -2,11 +2,11 @@
 
 A full-stack ecommerce website built for **Sam Cannon Art**, an independent artist selling original artwork, prints, cards, calendars, gifts, and other physical products online.
 
-The site provides a complete customer shopping experience: users can browse products, search and filter collections, view product details, add items to a cart, and complete purchases through Stripe Checkout.
+The site provides a complete customer shopping experience: users can browse products, search and filter items, view product details, add items to a cart, and complete purchases through Stripe Checkout.
 
 Behind the storefront, the application includes a protected admin system for managing products, uploading artwork images, viewing orders, updating order status, and supporting day-to-day ecommerce operations.
 
-This project was designed around the real constraints of selling physical artwork online, including limited-stock and one-off products, stock-safe checkout reservations, image-heavy product pages, UK and international checkout flows, CDN-backed image delivery, and business-specific shipping and discount rules.
+This project was designed around the constraints of selling physical artwork online, including limited-stock and one-off products, stock-safe checkout reservations, image-heavy product pages, UK and international checkout flows, CDN-backed image delivery, and business-specific shipping and discount rules.
 
 ---
 
@@ -19,7 +19,7 @@ The application includes both a public customer storefront and a protected admin
 The application supports:
 
 - Customer product browsing, search, filtering, and recommendations
-- Category-specific product pages for artwork and related products
+- Category-specific product pages for artwork
 - Product detail pages with image-focused presentation
 - Persistent cart drawer using client-side state
 - Server-side cart validation before checkout
@@ -32,8 +32,6 @@ The application supports:
 - AWS S3 and CloudFront image delivery
 - Admin order viewing and status management
 - Privacy/GDPR-facing site content
-
-The main goal was to build a maintainable ecommerce site that could support a real artist’s online sales workflow, rather than a simplified demo shop.
 
 ---
 
@@ -113,7 +111,7 @@ The main goal was to build a maintainable ecommerce site that could support a re
 
 Many ecommerce projects look impressive visually but avoid the harder backend problems.
 
-This project focuses on the engineering details that matter in a real store:
+This work aims to focus on practical engineering details:
 
 - Limited-stock products need protection from overselling
 - Payment sessions need to be linked safely to internal order state
@@ -485,12 +483,11 @@ This is much better for user experience than a generic checkout failure.
 
 ## What I Learned
 
-This project reinforced that production ecommerce is mostly about edge cases.
+This project taught me that production ecommerce is mostly about edge cases.
 
 The most important lessons were:
 
 - Cart state should never be trusted at payment time
-- Payment integration is a state transition problem, not just a redirect
 - Stock handling needs to account for concurrency
 - Admin workflows matter as much as customer-facing pages
 - Image-heavy websites need careful storage and delivery planning

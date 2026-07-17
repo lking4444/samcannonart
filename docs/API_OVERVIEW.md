@@ -80,20 +80,9 @@ This appears to support a separate international checkout flow from the standard
 
 Updates or calculates shipping details for the international checkout branch.
 
-## other routes
-
-### `GET /api/images/[...key]`
-
-Image proxy/loader route for image keys.
-
-Depending on the current deployment strategy, product images may also be served directly through CloudFront and Next/Image remote patterns.
-
-
 ### `POST /api/reservations/create`
 
 Creates a temporary checkout reservation.
-
-Expected responsibilities:
 
 - validate cart item IDs and quantities;
 - check products exist and are not hidden;

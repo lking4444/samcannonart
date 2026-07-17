@@ -293,23 +293,3 @@ Admin routes:
 /Admin/api/order/by-id
 /Admin/api/order/get-all
 ```
-
----
-
-## Design principles used
-
-### 1. Domain logic outside route handlers
-
-The `/lib` folder separates core behaviours from API request handling. This makes the business logic easier to test and reuse.
-
-### 2. Server-side validation before payment
-
-The app does not trust the client cart directly. Checkout runs through server-side validation and reservation creation.
-
-### 3. Relational modelling for operational data
-
-Orders, items, reservations, and subtype tables are modelled relationally rather than stored as loosely structured blobs.
-
-### 4. Environment-driven secrets
-
-Admin email, password hash, database URL, Stripe credentials, and AWS credentials should all be configured through environment variables.

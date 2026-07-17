@@ -103,8 +103,6 @@ function itemToExportRecord( item: ItemForExport, type: ExportItemType ): Export
             break
         case "CALENDAR":
         case "ORIGINAL":
-            // These models currently have no additional fields
-            // beyond itemId, which duplicates Item.id.
             break
     }
 
