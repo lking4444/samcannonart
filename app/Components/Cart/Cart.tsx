@@ -32,6 +32,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
 
     const [items, setItems] = useState<DbItem[]>([])
     const [itemsError, setItemsError] = useState<string | null>(null)
+    const [shippingError, setShippingError] = useState<string | null>(null)
     const [shippingCost, setShippingCost] = useState<number>(0)
 
     const [ukLoading, setUkLoading] = useState(false)
@@ -83,7 +84,13 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
     }, [cartItems, itemMap])
 
     useEffect(() => {
-        setShippingCost(computeShipping(itemsWithQuantity))
+        try {
+            setShippingCost(computeShipping(itemsWithQuantity))
+            setShippingError(null)
+        } catch {
+            setShippingCost(0)
+            setShippingError("Unable to calculate delivery. Please refresh your cart and try again.")
+        }
     }, [itemsWithQuantity])
 
     const subtotal = itemsWithQuantity.reduce((sum, item) => {
@@ -98,7 +105,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
         return sum + item.quantity
     }, 0)
 
-    const deliveryText =
+    const deliveryText = shippingError ? "Unavailable" :
         totalItemCount >= 1 && shippingCost === 0
             ? "Free"
             : `£${Number(shippingCost).toFixed(2)}`
@@ -283,18 +290,18 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
 
                                 <span className={styles.checkoutInfoTotal}>
                                     <p>Total</p>
-                                    <p>£{Number(total).toFixed(2)}</p>
+                                    <p>{shippingError ? "Unavailable" : `£${Number(total).toFixed(2)}`}</p>
                                 </span>
                             </span>
-                            {checkoutError && (
+                            {(checkoutError || shippingError) && (
                                 <div className={styles.checkoutError}>
-                                    <p>{checkoutError}</p>
+                                    <p>{checkoutError || shippingError}</p>
                                 </div>
                             )}
                             <button
                                 className={styles.checkoutButton}
                                 onClick={handleUkCheckout}
-                                disabled={ukLoading || internationalLoading || cartItems.length === 0 || !!itemsError}
+                                disabled={ukLoading || internationalLoading || cartItems.length === 0 || !!itemsError || !!shippingError}
                             >
                                 {ukLoading ? <Loading small={true} /> : "Checkout"}
                             </button>
@@ -302,7 +309,7 @@ export default function Cart({ open, onClose }: CartDrawerProps) {
                             <button
                                 className={styles.checkoutButtonInt}
                                 onClick={handleInternationalCheckout}
-                                disabled={ukLoading || internationalLoading || cartItems.length === 0 || !!itemsError}
+                                disabled={ukLoading || internationalLoading || cartItems.length === 0 || !!itemsError || !!shippingError}
                             >
                                 {internationalLoading ? (
                                     <Loading small={true} />

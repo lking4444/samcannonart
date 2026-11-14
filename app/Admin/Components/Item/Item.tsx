@@ -1,4 +1,5 @@
 "use client";
+import ShippingAssignment from "./ShippingAssignment";
 import { useState } from "react";
 
 import TypeDetails from "./TypeDetails";
@@ -291,6 +292,7 @@ export default function Item({ item, removeItem }: ItemProps) {
                     </button>
                 </span>
 
+                <ShippingAssignment itemId={item.id} initialRuleId={item.shippingRuleId ?? null} />
                 <TypeDetails item={modifiedItem} />
 
             

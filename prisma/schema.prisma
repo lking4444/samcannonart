@@ -52,6 +52,11 @@ model Item {
 
   tags        String[] @default([])
 
+  shippingRuleId String?
+  shippingRule ShippingRule? @relation(fields: [shippingRuleId], references: [id], onDelete: Restrict)
+
+  @@index([shippingRuleId])
+
   card              Card?
   print             Print?
   calendar          Calendar?
@@ -166,4 +171,30 @@ model OrderItem {
   item  Item  @relation(fields: [itemId], references: [id], onDelete: Restrict)
 
   @@unique([orderId, itemId])
+}
+
+enum ShippingRegion {
+  UK
+  INTERNATIONAL
+}
+
+model ShippingRule {
+  id String @id @default(cuid())
+  name String @unique
+  archived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tiers ShippingTier[]
+  items Item[]
+}
+
+model ShippingTier {
+  id String @id @default(cuid())
+  shippingRuleId String
+  region ShippingRegion
+  minQuantity Int
+  maxQuantity Int?
+  priceInPence Int
+  shippingRule ShippingRule @relation(fields: [shippingRuleId], references: [id], onDelete: Cascade)
+  @@unique([shippingRuleId, region, minQuantity])
 }

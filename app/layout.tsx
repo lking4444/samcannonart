@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-export const inter = Inter({
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 })

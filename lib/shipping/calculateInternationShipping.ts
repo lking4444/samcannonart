@@ -1,11 +1,10 @@
+import { customShippingCharges, validateQuantities } from "./rules";
 import { DbItem } from "@/app/Types/items";
 import { computeInternationalCalendarShippingCost, computeInternationalCardShippingCost, computeInternationalGiftShippingCost, computeInternationalNotepadShippingCost, computeInternationalPrintShippingCost } from "./internationalShippingCostByType";
 import { GiftType } from "@prisma/client";
 
-export function computeInternationalShipping(items: Array<DbItem & { quantity: number }>): number {
-    if (items.some((item) => item.type === "ORIGINAL")) {
-        return 17.53;
-    }
+function computeDefaultInternationalShipping(items: Array<DbItem & { quantity: number }>): number {
+
 
     const cardCount = items .filter((item) => item.type === "CARD") .reduce((sum, item) => sum + item.quantity, 0);
     const calendarCount = items .filter((item) => item.type === "CALENDAR") .reduce((sum, item) => sum + item.quantity, 0);
@@ -28,10 +27,19 @@ export function computeInternationalShipping(items: Array<DbItem & { quantity: n
     const printShippingCost = computeInternationalPrintShippingCost(printDimensions);
 
     return Math.max(
+        items.some(item => item.type === "ORIGINAL") ? 17.53 : 0,
         cardShippingCost,
         giftShippingCost,
         calendarShippingCost,
         printShippingCost,
         notepadShippingCost
     );
+}
+
+export function computeInternationalShipping(items: Array<DbItem & { quantity: number }>): number {
+    validateQuantities(items);
+    const defaults = items.filter(item => item.shippingRuleId === null);
+    const cost = Math.max(computeDefaultInternationalShipping(defaults), ...customShippingCharges(items, "INTERNATIONAL"), 0);
+    if (!Number.isFinite(cost) || cost <= 0) throw new Error("International shipping must be greater than zero.");
+    return cost;
 }

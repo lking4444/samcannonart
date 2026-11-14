@@ -28,6 +28,7 @@ export type ItemAvailability = {
 }
 
 export type ItemClientWithTypes = {
+    shippingRuleId?: string | null;
     id: number;
     name: string;
     type: ITEM_TYPE;
@@ -68,6 +69,8 @@ export type ItemClient = {
 };
 
 export type DbItem = {
+    shippingRuleId: string | null
+    shippingRule: { tiers: import("@/lib/shipping/rules").Tier[] } | null
     id: number
     name: string
     image: string

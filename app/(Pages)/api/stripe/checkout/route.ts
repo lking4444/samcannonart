@@ -69,6 +69,8 @@ export async function POST(req: Request) {
                 price: true,
                 type: true,
                 gift: true,
+                shippingRuleId: true,
+                shippingRule: { select: { tiers: true } },
                 name: true,
                 description: true,
                 dimensions: true,

@@ -10,6 +10,7 @@ export default function AdminHeader()  {
             <span className={styles.pagesContainer}>
                 <LogoutButton/>
                 <PageButton buttonName="Upload" prefix="Admin" />
+                <PageButton buttonName="Shipping" prefix="Admin" />
                 <PageButton buttonName="Orders" prefix="Admin" />
                 <PageButton buttonName="ItemExport" prefix="Admin" />
                 <PageButton buttonName="BulkImageUpload" prefix="Admin" />

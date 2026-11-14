@@ -1,3 +1,4 @@
+import { computeInternationalShipping } from "@/lib/shipping/calculateInternationShipping"
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
 
@@ -69,6 +70,8 @@ export async function POST(req: Request) {
                 price: true,
                 type: true,
                 gift: true,
+                shippingRuleId: true,
+                shippingRule: { select: { tiers: true } },
                 name: true,
                 description: true,
                 dimensions: true,
@@ -132,6 +135,13 @@ export async function POST(req: Request) {
             )
         }
 
+        // International checkout must have a positive rate even before the
+        // address callback runs. Recalculate on address updates as well.
+        const shippingInPence = Math.round(computeInternationalShipping(validItemsWithQuantity) * 100)
+        if (!Number.isSafeInteger(shippingInPence) || shippingInPence <= 0) {
+            return NextResponse.json({ error: "Could not calculate international shipping." }, { status: 400 })
+        }
+
         const checkoutLineItems = validItemsWithQuantity.map((item) => {
             const name = item.name?.trim() || "Artwork"
             const description = item.description?.trim()
@@ -186,10 +196,10 @@ export async function POST(req: Request) {
                     shipping_rate_data: {
                         type: "fixed_amount",
                         fixed_amount: {
-                            amount: 0,
+                            amount: shippingInPence,
                             currency: "gbp",
                         },
-                        display_name: "Shipping calculated after address",
+                        display_name: "US shipping",
                     },
                 },
             ],
@@ -216,6 +226,7 @@ export async function POST(req: Request) {
                 subtotalInPence: String(subtotalInPence),
                 discountInPence: String(discountInPence),
                 checkoutType: "international",
+                shippingInPence: String(shippingInPence),
             },
 
             return_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,

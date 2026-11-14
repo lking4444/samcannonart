@@ -22,6 +22,7 @@ export async function GET(req: Request) {
 
         const keyword = (searchParams.get("keyword") ?? "").trim();
         const type = (searchParams.get("type") ?? "").trim();
+        const shippingRule = searchParams.get("shippingRule");
         const tag = (searchParams.get("tag") ?? "Default").trim();
 
         const safePage = Number.isFinite(page) && page > 0 ? page : 1;
@@ -29,6 +30,7 @@ export async function GET(req: Request) {
         const skip = (safePage - 1) * safePageSize;
 
         const where: Prisma.ItemWhereInput = {
+          ...(shippingRule ? { shippingRuleId: shippingRule === "default" ? null : shippingRule } : {}),
           ...(type ? { type: type as ItemType } : {}),
           ...(keyword ? { name: { contains: keyword, mode: "insensitive", }, } : {}),
           ...(tag !== "Default" ? { tags: { has: tag, }, } : {}),
